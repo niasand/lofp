@@ -684,7 +684,7 @@ const maxInputLength = 500
 func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input string) *CommandResult {
 	input = strings.TrimSpace(input)
 	if input == "" {
-		return &CommandResult{Messages: []string{"What would you like to do?"}}
+		return &CommandResult{Messages: []string{i18n.T("What would you like to do?")}}
 	}
 	if len(input) > maxInputLength {
 		input = input[:maxInputLength]
@@ -711,7 +711,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 		case "DEPART", "LOOK", "WHO", "QUIT", "EXP", "EXPERIENCE", "STATUS", "HEALTH", "HELP":
 			// allowed — fall through to normal processing
 		default:
-			return &CommandResult{Messages: []string{"You are dead and can't do much of anything. Type DEPART to allow Eternity, Inc. to retrieve you."}}
+			return &CommandResult{Messages: []string{i18n.T("You are dead and can't do much of anything. Type DEPART to allow Eternity, Inc. to retrieve you.")}}
 		}
 	}
 
@@ -730,7 +730,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 		// Custom speech pattern overrides the verb (e.g., "says grimly", "squawks")
 		if player.SpeechAdverb != "" {
 			result := &CommandResult{
-				Messages:      []string{fmt.Sprintf("You %s, \"%s\"", player.SpeechAdverb, msg)},
+				Messages:      []string{fmt.Sprintf(i18n.T("You %s, \"%s\""), player.SpeechAdverb, msg)},
 				RoomBroadcast: []string{fmt.Sprintf("%s %ss, \"%s\"", player.FirstName, player.SpeechAdverb, msg)},
 			}
 			// Run IFSAY scripts
@@ -747,7 +747,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 			return result
 		}
 		result := &CommandResult{
-			Messages:      []string{fmt.Sprintf("You %s, \"%s\"", verb, msg)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You %s, \"%s\""), verb, msg)},
 			RoomBroadcast: []string{fmt.Sprintf("%s %s, \"%s\"", player.FirstName, thirdVerb, msg)},
 		}
 		// Run IFSAY scripts
@@ -770,7 +770,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 
 	parts := strings.Fields(strings.ToUpper(input))
 	if len(parts) == 0 {
-		return &CommandResult{Messages: []string{"What would you like to do?"}}
+		return &CommandResult{Messages: []string{i18n.T("What would you like to do?")}}
 	}
 
 	verb := parts[0]
@@ -779,7 +779,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 	// GM commands (@ prefix) — silent fail if not GM, also check bot GM permission
 	if strings.HasPrefix(verb, "@") {
 		if !player.IsGM {
-			return &CommandResult{Messages: []string{fmt.Sprintf("I don't understand \"%s\". Type HELP for commands.", strings.ToLower(input))}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("I don't understand \"%s\". Type HELP for commands."), strings.ToLower(input))}}
 		}
 		if player.IsBot && !player.BotGMAllowed {
 			return &CommandResult{Messages: []string{"This bot does not have permission to use GM commands."}}
@@ -1461,7 +1461,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 				RoomBroadcast: []string{fmt.Sprintf("%s advances toward %s.", player.FirstName, found.FirstName)},
 			}
 		}
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here.", target)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here."), target)}}
 	case "RETREAT":
 		if player.CombatTarget == nil && !player.Joined {
 			return &CommandResult{Messages: []string{"You are not engaged with anything."}}
@@ -1671,7 +1671,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 		}
 		return e.processEmote(player, "LISTEN", args)
 	default:
-		return &CommandResult{Messages: []string{fmt.Sprintf("I don't understand \"%s\". Type HELP for commands.", strings.ToLower(input))}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("I don't understand \"%s\". Type HELP for commands."), strings.ToLower(input))}}
 	}
 }
 
