@@ -9,6 +9,7 @@ primary_region = "ord"
   LOFP_CONFIG = "config/prod.yaml"
   LOFP_STATIC_DIR = "/app/static"
   MONGODB_DATABASE = "lofp"
+  GOMEMLIMIT = "220MB"
 
 [http_service]
   internal_port = 8080
@@ -48,6 +49,6 @@ primary_region = "ord"
     port = 4022
 
 [[vm]]
-  memory = "512mb"
+  memory = "256mb"
   cpu_kind = "shared"
   cpus = 1
