@@ -41,14 +41,14 @@ export default function CaptureViewer({ captureId, onBack }: { captureId: string
     window.open(`/api/captures/${captureId}/text?token=${user.token}`, '_blank')
   }
 
-  if (loading) return <div className="flex items-center justify-center h-full text-gray-600 font-mono">Loading capture...</div>
-  if (!data) return <div className="flex items-center justify-center h-full text-gray-600 font-mono">Capture not found</div>
+  if (loading) return <div className="flex items-center justify-center h-full text-gray-600 font-mono">{t("capture.loading")}</div>
+  if (!data) return <div className="flex items-center justify-center h-full text-gray-600 font-mono">{t("capture.empty")}</div>
 
   return (
     <div className="flex flex-col h-full font-mono text-sm">
       <div className="flex items-center gap-3 px-4 py-2 bg-[#111] border-b border-[#333]">
         <button onClick={onBack} className="text-gray-400 hover:text-white text-sm">&larr; Back</button>
-        <h2 className="text-amber-400 font-bold">Session Capture: {data.player}</h2>
+        <h2 className="text-amber-400 font-bold">{t("capture.viewerTitle").replace("{player}", data.player)}</h2>
         <span className="text-gray-600 text-xs">{new Date(data.startedAt).toLocaleDateString()}</span>
         <span className="text-gray-600 text-xs">{data.lines?.length || 0} lines</span>
         <button
@@ -69,7 +69,7 @@ export default function CaptureViewer({ captureId, onBack }: { captureId: string
           </div>
         ))}
         {(!data.lines || data.lines.length === 0) && (
-          <div className="text-gray-600 text-center py-8">Empty capture</div>
+          <div className="text-gray-600 text-center py-8">{t("capture.empty")}</div>
         )}
       </div>
     </div>

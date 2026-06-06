@@ -4,11 +4,6 @@ import type { Character } from '../App'
 import { useAuth } from '../App'
 import { t, raceName } from '../i18n'
 
-const RACE_NAMES: Record<number, string> = {
-  1: 'Human', 2: 'Aelfen', 3: 'Highlander', 4: 'Wolfling',
-  5: 'Murg', 6: 'Drakin', 7: 'Mechanoid', 8: 'Ephemeral',
-}
-
 const GOOGLE_ENABLED = !!import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 interface SavedPlayer {

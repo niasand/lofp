@@ -76,7 +76,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-[#111] border border-[#444] rounded-lg w-full max-w-lg max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-4 border-b border-[#333]">
-          <h2 className="text-amber-400 font-mono font-bold">Session Capture</h2>
+          <h2 className="text-amber-400 font-mono font-bold">{t("capture.title")}</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white text-lg">&times;</button>
         </div>
 
@@ -84,7 +84,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
           {recording ? (
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-              <span className="text-red-400 font-mono text-sm">Recording...</span>
+              <span className="text-red-400 font-mono text-sm">{t("capture.recording")}</span>
               <button
                 onClick={stopCapture}
                 className="ml-auto px-4 py-1.5 bg-red-700 text-white rounded text-xs font-mono hover:bg-red-600"
@@ -103,11 +103,11 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
-          <h3 className="text-gray-400 text-xs uppercase mb-2 font-mono">Previous Captures</h3>
+          <h3 className="text-gray-400 text-xs uppercase mb-2 font-mono">{t("capture.previousCaptures")}</h3>
           {loading ? (
-            <div className="text-gray-600 text-center text-xs py-4">Loading...</div>
+            <div className="text-gray-600 text-center text-xs py-4">{t("capture.loading")}</div>
           ) : captures.length === 0 ? (
-            <div className="text-gray-600 text-center text-xs py-4">No captures yet</div>
+            <div className="text-gray-600 text-center text-xs py-4">{t("capture.noCaptures")}</div>
           ) : (
             <div className="space-y-1">
               {captures.map(c => (

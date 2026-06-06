@@ -92,10 +92,10 @@ export default function ResetPassword({ onBack }: Props) {
         )}
         {status === 'error' && (
           <div className="text-center">
-            <p className="text-red-400 font-mono text-lg mb-4">Reset Failed</p>
+            <p className="text-red-400 font-mono text-lg mb-4">{t("reset.failed")}</p>
             <p className="text-gray-400 font-mono text-sm mb-6">{error}</p>
             <button onClick={onBack} className="px-6 py-2 bg-[#333] hover:bg-[#444] text-gray-300 font-mono rounded">
-              Back to Menu
+              {t("main.back")}
             </button>
           </div>
         )}

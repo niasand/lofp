@@ -617,13 +617,13 @@ export default function AdminPanel() {
         >
           {sidebarOpen ? '→' : '☰'}
         </button>
-        {(['rooms', 'items', 'monsters', 'players', 'users', 'logs', 'events'] as AdminTab[]).map(t => (
+        {(['rooms', 'items', 'monsters', 'players', 'users', 'logs', 'events'] as AdminTab[]).map(tabName => (
           <button
-            key={t}
-            onClick={() => { setTab(t); setSidebarOpen(false) }}
-            className={`px-2 sm:px-3 py-1 rounded text-xs capitalize shrink-0 min-h-[32px] ${tab === t ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
+            key={tabName}
+            onClick={() => { setTab(tabName); setSidebarOpen(false) }}
+            className={`px-2 sm:px-3 py-1 rounded text-xs capitalize shrink-0 min-h-[32px] ${tab === tabName ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
           >
-            {t}
+            {tabName}
           </button>
         ))}
       </div>
@@ -654,7 +654,7 @@ export default function AdminPanel() {
                   type="text"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  placeholder="Search rooms..."
+                  placeholder={t("admin.search")}
                   className="w-full bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                 />
               </div>
@@ -792,7 +792,7 @@ export default function AdminPanel() {
                   type="text"
                   value={itemSearch}
                   onChange={e => setItemSearch(e.target.value)}
-                  placeholder="Search items..."
+                  placeholder={t("admin.search")}
                   className="w-full bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                 />
               </div>
@@ -906,7 +906,7 @@ export default function AdminPanel() {
                   type="text"
                   value={monsterSearch}
                   onChange={e => setMonsterSearch(e.target.value)}
-                  placeholder="Search monsters..."
+                  placeholder={t("admin.search")}
                   className="w-full bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                 />
               </div>
@@ -1017,7 +1017,7 @@ export default function AdminPanel() {
                   type="text"
                   value={playerSearch}
                   onChange={e => setPlayerSearch(e.target.value)}
-                  placeholder="Search characters..."
+                  placeholder={t("admin.search")}
                   className="w-full bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                 />
                 <label className="flex items-center gap-1 mt-1 text-gray-500 text-xs cursor-pointer">
@@ -1042,7 +1042,7 @@ export default function AdminPanel() {
                       </div>
                     </div>
                     <div className="flex gap-2 mt-0.5">
-                      <span className="text-gray-600 text-[10px]">{RaceNames[p.race] || 'Unknown'}</span>
+                      <span className="text-gray-600 text-[10px]">{raceName(p.race)}</span>
                       <span className="text-gray-600 text-[10px]">Lvl {p.level}</span>
                       <span className="text-gray-600 text-[10px]">Room {p.roomNumber}</span>
                       <span className="text-gray-600 text-[10px]">BP {p.bodyPoints}/{p.maxBodyPoints}</span>
@@ -1064,7 +1064,7 @@ export default function AdminPanel() {
                         {selectedPlayer.firstName} {selectedPlayer.lastName}
                       </h2>
                       <span className="text-gray-500 text-xs">
-                        {RaceNames[selectedPlayer.race]} | {selectedPlayer.gender === 0 ? 'Male' : 'Female'} | Level {selectedPlayer.level}
+                        {raceName(selectedPlayer.race)} | {selectedPlayer.gender === 0 ? 'Male' : 'Female'} | Level {selectedPlayer.level}
                       </span>
                       {selectedPlayer.accountId && (
                         <div className="mt-1">
@@ -1219,7 +1219,7 @@ export default function AdminPanel() {
                   type="text"
                   value={userSearch}
                   onChange={e => setUserSearch(e.target.value)}
-                  placeholder="Search users..."
+                  placeholder={t("admin.search")}
                   className="w-full bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                 />
               </div>
@@ -1310,7 +1310,7 @@ export default function AdminPanel() {
                               </div>
                             </div>
                             <div className="flex gap-2 mt-0.5">
-                              <span className="text-gray-600 text-[10px]">{RaceNames[c.race] || 'Unknown'}</span>
+                              <span className="text-gray-600 text-[10px]">{raceName(c.race)}</span>
                               <span className="text-gray-600 text-[10px]">Lvl {c.level}</span>
                               <span className="text-gray-600 text-[10px]">Room {c.roomNumber}</span>
                               <span className="text-gray-600 text-[10px]">BP {c.bodyPoints}/{c.maxBodyPoints}</span>
