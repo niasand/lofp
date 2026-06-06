@@ -60,7 +60,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 	// Mining skill check
 	miningSkill := player.Skills[35]
 	if miningSkill < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Mining."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Mining.")}}
 	}
 
 	// Success chance: base 30% + mining*5 + STR/10
@@ -77,7 +77,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 	if rand.Intn(100) >= chance {
 		e.SavePlayer(ctx, player)
 		return &CommandResult{
-			Messages:      []string{"You swing at the rock face but find nothing useful."},
+			Messages:      []string{i18n.T("You swing at the rock face but find nothing useful.")},
 			RoomBroadcast: []string{fmt.Sprintf("%s swings a mining tool at the rock.", player.FirstName)},
 		}
 	}
@@ -140,7 +140,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 		}
 	}
 	if oreDef == nil {
-		return &CommandResult{Messages: []string{"You chip away at the rock but find nothing."}}
+		return &CommandResult{Messages: []string{i18n.T("You chip away at the rock but find nothing.")}}
 	}
 
 	// Purity based on grade: A=50-100, B=30-70, C=10-40
@@ -173,7 +173,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 
 	displayName := e.formatItemName(oreDef, ore.Adj1, ore.Adj2, ore.Adj3)
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You chip away at the rock and extract some %s looking %s!", qualityDesc, displayName)},
+		Messages:      []string{fmt.Sprintf(i18n.T("You chip away at the rock and extract some %s looking %s!"), qualityDesc, displayName)},
 		RoomBroadcast: []string{fmt.Sprintf("%s mines some ore from the rock.", player.FirstName)},
 		PlayerState:   player,
 	}
@@ -184,12 +184,12 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 func (e *GameEngine) doSmelt(ctx context.Context, player *Player, args []string) *CommandResult {
 	room := e.rooms[player.RoomNumber]
 	if room == nil || !containsModifier(room.Modifiers, "FORGE") {
-		return &CommandResult{Messages: []string{"You need to be at a forge to smelt ore."}}
+		return &CommandResult{Messages: []string{i18n.T("You need to be at a forge to smelt ore.")}}
 	}
 
 	smithSkill := player.Skills[8]
 	if smithSkill < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Weaponsmithing."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Weaponsmithing.")}}
 	}
 
 	// Find ore in inventory
@@ -226,7 +226,7 @@ func (e *GameEngine) doSmelt(ctx context.Context, player *Player, args []string)
 		if rand.Intn(100) >= smeltChance {
 			e.SavePlayer(ctx, player)
 			return &CommandResult{
-				Messages:      []string{"You heat the ore in the forge, but it crumbles to useless slag."},
+				Messages:      []string{i18n.T("You heat the ore in the forge, but it crumbles to useless slag.")},
 				RoomBroadcast: []string{fmt.Sprintf("%s works at the forge.", player.FirstName)},
 				PlayerState:   player,
 			}
@@ -240,7 +240,7 @@ func (e *GameEngine) doSmelt(ctx context.Context, player *Player, args []string)
 		outputDef := e.items[outputArch]
 		if outputDef == nil {
 			e.SavePlayer(ctx, player)
-			return &CommandResult{Messages: []string{"The ore refines but produces nothing useful."}}
+			return &CommandResult{Messages: []string{i18n.T("The ore refines but produces nothing useful.")}}
 		}
 
 		material := InventoryItem{
@@ -253,13 +253,13 @@ func (e *GameEngine) doSmelt(ctx context.Context, player *Player, args []string)
 
 		matName := e.formatItemName(outputDef, material.Adj1, material.Adj2, material.Adj3)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You smelt the ore in the forge and produce some %s!", matName)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You smelt the ore in the forge and produce some %s!"), matName)},
 			RoomBroadcast: []string{fmt.Sprintf("%s works at the forge, smelting ore.", player.FirstName)},
 			PlayerState:   player,
 		}
 	}
 
-	return &CommandResult{Messages: []string{"You don't have any ore to smelt."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have any ore to smelt.")}}
 }
 
 // ---- CRAFTING (FORGE/CRAFT) ----
@@ -294,7 +294,7 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 			}
 		}
 		if len(recipes) == 0 {
-			return &CommandResult{Messages: []string{"No craftable recipes are known."}}
+			return &CommandResult{Messages: []string{i18n.T("No craftable recipes are known.")}}
 		}
 		sort.Strings(recipes)
 		msgs := []string{"You can craft the following items:"}
@@ -307,7 +307,7 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't craft here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't craft here.")}}
 	}
 
 	// Determine which workshop we're in
@@ -315,7 +315,7 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 	isLoom := containsModifier(room.Modifiers, "LOOM")
 	isFletcher := containsModifier(room.Modifiers, "FLETCHER")
 	if !isForge && !isLoom && !isFletcher {
-		return &CommandResult{Messages: []string{"You need to be at a workshop (forge, loom, or fletcher) to craft."}}
+		return &CommandResult{Messages: []string{i18n.T("You need to be at a workshop (forge, loom, or fletcher) to craft.")}}
 	}
 
 	target := strings.ToLower(strings.Join(args, " "))
@@ -337,7 +337,7 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 
 		if isWeapon(def.Type) || def.Type == "ARMOR" {
 			if !isForge {
-				return &CommandResult{Messages: []string{"You need a forge to craft that."}}
+				return &CommandResult{Messages: []string{i18n.T("You need a forge to craft that.")}}
 			}
 			skillID = 8
 			skillName = "Weaponsmithing"
@@ -348,14 +348,14 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 			}
 		} else if def.Substance == "WOOD" {
 			if !isFletcher {
-				return &CommandResult{Messages: []string{"You need a fletcher's workshop to craft that."}}
+				return &CommandResult{Messages: []string{i18n.T("You need a fletcher's workshop to craft that.")}}
 			}
 			skillID = 18
 			skillName = "Wood Lore"
 			skillNeeded = def.Parameter1
 		} else if def.Substance == "CLOTH" || def.Substance == "SOFTMETAL" {
 			if !isLoom && !isForge {
-				return &CommandResult{Messages: []string{"You need a loom or forge to craft that."}}
+				return &CommandResult{Messages: []string{i18n.T("You need a loom or forge to craft that.")}}
 			}
 			if def.Substance == "SOFTMETAL" {
 				skillID = 0
@@ -422,7 +422,7 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 		}
 
 		if !materialFound {
-			return &CommandResult{Messages: []string{"You don't have the right materials. You need refined material (smelt ore, or forage wood/cloth)."}}
+			return &CommandResult{Messages: []string{i18n.T("You don't have the right materials. You need refined material (smelt ore, or forage wood/cloth).")}}
 		}
 
 		// Consume material
@@ -438,42 +438,42 @@ func (e *GameEngine) doCraft(ctx context.Context, player *Player, args []string)
 
 		itemName := e.formatItemName(def, item.Adj1, item.Adj2, item.Adj3)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You carefully craft %s!", itemName)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You carefully craft %s!"), itemName)},
 			RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the workshop.", player.FirstName)},
 			PlayerState:   player,
 		}
 	}
 
-	return &CommandResult{Messages: []string{fmt.Sprintf("You don't know how to craft '%s'.", target)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't know how to craft '%s'."), target)}}
 }
 
 // ---- WORK (Forging Cycle) ----
 
 func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) *CommandResult {
 	if player.CraftingStep <= 0 {
-		return &CommandResult{Messages: []string{"You aren't crafting anything. Use CRAFT <item> first."}}
+		return &CommandResult{Messages: []string{i18n.T("You aren't crafting anything. Use CRAFT <item> first.")}}
 	}
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil || !containsModifier(room.Modifiers, "FORGE") {
-		return &CommandResult{Messages: []string{"You need to be at a forge to work metal."}}
+		return &CommandResult{Messages: []string{i18n.T("You need to be at a forge to work metal.")}}
 	}
 
 	// Check roundtime
 	if player.RoundTimeExpiry.After(time.Now()) {
 		remaining := player.RoundTimeExpiry.Sub(time.Now()).Seconds()
-		return &CommandResult{Messages: []string{fmt.Sprintf("You are still working... %.0f seconds remaining.", remaining+0.5)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You are still working... %.0f seconds remaining."), remaining+0.5)}}
 	}
 
 	switch player.CraftingStep {
 	case 1: // Planned → need WORK <metal> to heat
 		if len(args) == 0 {
-			return &CommandResult{Messages: []string{"Work with what metal? e.g., WORK IRON"}}
+			return &CommandResult{Messages: []string{i18n.T("Work with what metal? e.g., WORK IRON")}}
 		}
 		metal := strings.ToLower(strings.Join(args, " "))
 		// "work metal" by itself — prompt for specific type
 		if metal == "metal" {
-			return &CommandResult{Messages: []string{"Which metal? e.g., WORK IRON, WORK STEEL, WORK COPPER"}}
+			return &CommandResult{Messages: []string{i18n.T("Which metal? e.g., WORK IRON, WORK STEEL, WORK COPPER")}}
 		}
 
 		// Find matching material in inventory
@@ -519,7 +519,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 				}
 			}
 			if !validMetal {
-				return &CommandResult{Messages: []string{fmt.Sprintf("You don't have any %s metal to work with.", metal)}}
+				return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't have any %s metal to work with."), metal)}}
 			}
 			// Look for any material in inventory
 			for j, ii := range player.Inventory {
@@ -538,7 +538,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 				}
 			}
 			if materialIdx < 0 {
-				return &CommandResult{Messages: []string{fmt.Sprintf("You don't have any %s metal to work with.", metal)}}
+				return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't have any %s metal to work with."), metal)}}
 			}
 		}
 
@@ -553,7 +553,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 		e.SavePlayer(ctx, player)
 
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You place some %s metal into a mold in the forge and heat it until it is roughly the shape you desire.", metal)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You place some %s metal into a mold in the forge and heat it until it is roughly the shape you desire."), metal)},
 			RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 			PlayerState:   player,
 		}
@@ -565,7 +565,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 		e.SavePlayer(ctx, player)
 
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You remove the %s metal from the forge and begin to hammer it into shape on the anvil.", player.CraftingMetal)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You remove the %s metal from the forge and begin to hammer it into shape on the anvil."), player.CraftingMetal)},
 			RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 			PlayerState:   player,
 		}
@@ -588,7 +588,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 			player.CraftingStep = 2
 			e.SavePlayer(ctx, player)
 			return &CommandResult{
-				Messages:      []string{"You quench the hot metal in a pool of water. After some examination, you surmise that it will require more work."},
+				Messages:      []string{i18n.T("You quench the hot metal in a pool of water. After some examination, you surmise that it will require more work.")},
 				RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 				PlayerState:   player,
 			}
@@ -601,13 +601,13 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 		// High roll = almost done message
 		if roll <= chance/2 {
 			return &CommandResult{
-				Messages:      []string{"You quench the hot metal in a pool of water. It looks like it is almost finished!"},
+				Messages:      []string{i18n.T("You quench the hot metal in a pool of water. It looks like it is almost finished!")},
 				RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 				PlayerState:   player,
 			}
 		}
 		return &CommandResult{
-			Messages:      []string{"You quench the hot metal in a pool of water. Pleased with your progress, you surmise that it will only require a little more work."},
+			Messages:      []string{i18n.T("You quench the hot metal in a pool of water. Pleased with your progress, you surmise that it will only require a little more work.")},
 			RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 			PlayerState:   player,
 		}
@@ -619,7 +619,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 		e.SavePlayer(ctx, player)
 
 		return &CommandResult{
-			Messages:      []string{"You buff the metal, smoothing and polishing the surface. Your weapon is nearly complete!"},
+			Messages:      []string{i18n.T("You buff the metal, smoothing and polishing the surface. Your weapon is nearly complete!")},
 			RoomBroadcast: []string{fmt.Sprintf("%s works diligently at the forge.", player.FirstName)},
 			PlayerState:   player,
 		}
@@ -649,7 +649,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 			player.CraftingMetal = ""
 			player.CraftingItem = ""
 			e.SavePlayer(ctx, player)
-			return &CommandResult{Messages: []string{"Something went wrong with your crafting."}}
+			return &CommandResult{Messages: []string{i18n.T("Something went wrong with your crafting.")}}
 		}
 
 		// Find the adjective ID for the metal name
@@ -698,7 +698,7 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 		player.CraftingStep = 0
 		player.CraftingItem = ""
 		player.CraftingMetal = ""
-		return &CommandResult{Messages: []string{"Your crafting state was invalid. It has been reset."}}
+		return &CommandResult{Messages: []string{i18n.T("Your crafting state was invalid. It has been reset.")}}
 	}
 }
 
@@ -706,23 +706,23 @@ func (e *GameEngine) doWork(ctx context.Context, player *Player, args []string) 
 
 func (e *GameEngine) doRepair(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) == 0 {
-		return &CommandResult{Messages: []string{"Repair what?"}}
+		return &CommandResult{Messages: []string{i18n.T("Repair what?")}}
 	}
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil || !containsModifier(room.Modifiers, "FORGE") {
-		return &CommandResult{Messages: []string{"You need to be at a forge to repair weapons."}}
+		return &CommandResult{Messages: []string{i18n.T("You need to be at a forge to repair weapons.")}}
 	}
 
 	smithSkill := player.Skills[8]
 	if smithSkill < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Weaponsmithing."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Weaponsmithing.")}}
 	}
 
 	// Check roundtime
 	if player.RoundTimeExpiry.After(time.Now()) {
 		remaining := player.RoundTimeExpiry.Sub(time.Now()).Seconds()
-		return &CommandResult{Messages: []string{fmt.Sprintf("You are still working... %.0f seconds remaining.", remaining+0.5)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You are still working... %.0f seconds remaining."), remaining+0.5)}}
 	}
 
 	target := strings.ToLower(strings.Join(args, " "))
@@ -742,7 +742,7 @@ func (e *GameEngine) doRepair(ctx context.Context, player *Player, args []string
 		}
 
 		if ii.State != "DAMAGED" {
-			return &CommandResult{Messages: []string{"That doesn't need repair."}}
+			return &CommandResult{Messages: []string{i18n.T("That doesn't need repair.")}}
 		}
 
 		// Skill check: base 40% + smithSkill*5
@@ -760,7 +760,7 @@ func (e *GameEngine) doRepair(ctx context.Context, player *Player, args []string
 		if roll > chance {
 			e.SavePlayer(ctx, player)
 			return &CommandResult{
-				Messages:      []string{fmt.Sprintf("[Success: %d%%, Roll %d] You are unable to repair the weapon.", chance, roll)},
+				Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] You are unable to repair the weapon."), chance, roll)},
 				RoomBroadcast: []string{fmt.Sprintf("%s works at the forge, trying to repair a weapon.", player.FirstName)},
 				PlayerState:   player,
 			}
@@ -771,13 +771,13 @@ func (e *GameEngine) doRepair(ctx context.Context, player *Player, args []string
 		e.SavePlayer(ctx, player)
 
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("[Success: %d%%, Roll %d] You carefully repair your %s.", chance, roll, itemName)},
+			Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] You carefully repair your %s."), chance, roll, itemName)},
 			RoomBroadcast: []string{fmt.Sprintf("%s works at the forge, repairing a weapon.", player.FirstName)},
 			PlayerState:   player,
 		}
 	}
 
-	return &CommandResult{Messages: []string{"That doesn't need repair."}}
+	return &CommandResult{Messages: []string{i18n.T("That doesn't need repair.")}}
 }
 
 // ---- FORAGING ----
@@ -785,7 +785,7 @@ func (e *GameEngine) doRepair(ctx context.Context, player *Player, args []string
 func (e *GameEngine) doForageReal(ctx context.Context, player *Player) *CommandResult {
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't forage here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't forage here.")}}
 	}
 
 	terrain := room.Terrain
@@ -793,7 +793,7 @@ func (e *GameEngine) doForageReal(ctx context.Context, player *Player) *CommandR
 	case "FOREST", "MOUNTAIN", "PLAIN", "SWAMP", "JUNGLE":
 		// OK
 	default:
-		return &CommandResult{Messages: []string{"There is nothing to forage here."}}
+		return &CommandResult{Messages: []string{i18n.T("There is nothing to forage here.")}}
 	}
 
 	// Check for forage definitions matching this terrain
@@ -840,14 +840,14 @@ func (e *GameEngine) doForageReal(ctx context.Context, player *Player) *CommandR
 
 			itemName := e.formatItemName(itemDef, item.Adj1, 0, 0)
 			return &CommandResult{
-				Messages:      []string{fmt.Sprintf("You search the area and find some %s!", itemName)},
+				Messages:      []string{fmt.Sprintf(i18n.T("You search the area and find some %s!"), itemName)},
 				RoomBroadcast: []string{fmt.Sprintf("%s forages in the area.", player.FirstName)},
 				PlayerState:   player,
 			}
 		}
 	}
 
-	return &CommandResult{Messages: []string{"You search but find nothing useful."}}
+	return &CommandResult{Messages: []string{i18n.T("You search but find nothing useful.")}}
 }
 
 // doForageFallback provides generic foraging when no ForageDefs are loaded.
@@ -892,7 +892,7 @@ func (e *GameEngine) doForageFallback(ctx context.Context, player *Player, terra
 	// 30% chance of finding nothing
 	if rand.Intn(100) < 30 || len(items) == 0 {
 		return &CommandResult{
-			Messages:      []string{"You search the area but find nothing useful."},
+			Messages:      []string{i18n.T("You search the area but find nothing useful.")},
 			RoomBroadcast: []string{fmt.Sprintf("%s forages in the area.", player.FirstName)},
 		}
 	}
@@ -903,7 +903,7 @@ func (e *GameEngine) doForageFallback(ctx context.Context, player *Player, terra
 	e.SavePlayer(ctx, player)
 
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You search the area and find some %s!", chosen.name)},
+		Messages:      []string{fmt.Sprintf(i18n.T("You search the area and find some %s!"), chosen.name)},
 		RoomBroadcast: []string{fmt.Sprintf("%s forages in the area.", player.FirstName)},
 		PlayerState:   player,
 	}
@@ -914,19 +914,19 @@ func (e *GameEngine) doForageFallback(ctx context.Context, player *Player, terra
 func (e *GameEngine) doDye(ctx context.Context, player *Player, args []string) *CommandResult {
 	room := e.rooms[player.RoomNumber]
 	if room == nil || !containsModifier(room.Modifiers, "LOOM") {
-		return &CommandResult{Messages: []string{"You need to be at a loom to dye items."}}
+		return &CommandResult{Messages: []string{i18n.T("You need to be at a loom to dye items.")}}
 	}
 	if player.Skills[15] < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Dyeing/Weaving."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Dyeing/Weaving.")}}
 	}
 	if len(args) == 0 {
-		return &CommandResult{Messages: []string{"Dye what? Usage: DYE <item> WITH <dye>"}}
+		return &CommandResult{Messages: []string{i18n.T("Dye what? Usage: DYE <item> WITH <dye>")}}
 	}
 
 	raw := strings.ToLower(strings.Join(args, " "))
 	itemTarget, dyeTarget := parseWithClause(raw)
 	if dyeTarget == "" {
-		return &CommandResult{Messages: []string{"Dye with what? Usage: DYE <item> WITH <dye>"}}
+		return &CommandResult{Messages: []string{i18n.T("Dye with what? Usage: DYE <item> WITH <dye>")}}
 	}
 
 	// Find the item to dye in inventory (must be DYEABLE)
@@ -947,7 +947,7 @@ func (e *GameEngine) doDye(ctx context.Context, player *Player, args []string) *
 		}
 	}
 	if targetItem == nil {
-		return &CommandResult{Messages: []string{"You don't have a dyeable item matching that."}}
+		return &CommandResult{Messages: []string{i18n.T("You don't have a dyeable item matching that.")}}
 	}
 	_ = targetIdx
 
@@ -973,21 +973,21 @@ func (e *GameEngine) doDye(ctx context.Context, player *Player, args []string) *
 
 			dyedName := e.formatItemName(targetDef, targetItem.Adj1, targetItem.Adj2, targetItem.Adj3)
 			return &CommandResult{
-				Messages:      []string{fmt.Sprintf("You carefully dye the material. It is now %s.", dyedName)},
+				Messages:      []string{fmt.Sprintf(i18n.T("You carefully dye the material. It is now %s."), dyedName)},
 				RoomBroadcast: []string{fmt.Sprintf("%s works at the loom, dyeing materials.", player.FirstName)},
 				PlayerState:   player,
 			}
 		}
 	}
 
-	return &CommandResult{Messages: []string{"You don't have that dye."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that dye.")}}
 }
 
 // ---- ANALYZE (ore purity) ----
 
 func (e *GameEngine) doAnalyze(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) == 0 {
-		return &CommandResult{Messages: []string{"Analyze what?"}}
+		return &CommandResult{Messages: []string{i18n.T("Analyze what?")}}
 	}
 	target := strings.ToLower(strings.Join(args, " "))
 
@@ -1004,7 +1004,7 @@ func (e *GameEngine) doAnalyze(ctx context.Context, player *Player, args []strin
 		if def.Type == "ORE" {
 			miningSkill := player.Skills[35]
 			if miningSkill < 3 {
-				return &CommandResult{Messages: []string{"You don't have enough mining skill to analyze this ore. (Need Mining 3+)"}}
+				return &CommandResult{Messages: []string{i18n.T("You don't have enough mining skill to analyze this ore. (Need Mining 3+)")}}
 			}
 			purity := ii.Val3
 			desc := "poor"
@@ -1017,7 +1017,7 @@ func (e *GameEngine) doAnalyze(ctx context.Context, player *Player, args []strin
 			} else if purity > 20 {
 				desc = "fair"
 			}
-			return &CommandResult{Messages: []string{fmt.Sprintf("You examine the ore carefully. It appears to be of %s quality. (Purity: %d%%)", desc, purity)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You examine the ore carefully. It appears to be of %s quality. (Purity: %d%%)"), desc, purity)}}
 		}
 
 		// Reagent analysis for alchemy
@@ -1034,13 +1034,13 @@ func (e *GameEngine) doAnalyze(ctx context.Context, player *Player, args []strin
 				typeName = "unknown"
 			}
 			itemName := e.formatItemName(def, ii.Adj1, ii.Adj2, ii.Adj3)
-			return &CommandResult{Messages: []string{fmt.Sprintf("You analyze %s. Alchemical properties: %s.", itemName, typeName)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You analyze %s. Alchemical properties: %s."), itemName, typeName)}}
 		}
 
-		return &CommandResult{Messages: []string{"You can't determine anything special about that."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't determine anything special about that.")}}
 	}
 
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 // ---- BREW (Alchemy) ----
@@ -1101,7 +1101,7 @@ var catalystFromVal5 = map[int]int{1: 1, 2: 2, 3: 3}
 
 func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) *CommandResult {
 	if player.Skills[31] < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Alchemy."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Alchemy.")}}
 	}
 	if len(args) == 0 {
 		// List known recipes
@@ -1122,7 +1122,7 @@ func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) 
 	raw := strings.ToLower(strings.Join(args, " "))
 	reagentTarget, containerTarget := parseInClause(raw)
 	if containerTarget == "" {
-		return &CommandResult{Messages: []string{"Brew in what? Usage: BREW <reagent> IN <flask/vial>"}}
+		return &CommandResult{Messages: []string{i18n.T("Brew in what? Usage: BREW <reagent> IN <flask/vial>")}}
 	}
 
 	// Find the reagent
@@ -1144,7 +1144,7 @@ func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) 
 		}
 	}
 	if reagentIdx < 0 || reagentItem == nil {
-		return &CommandResult{Messages: []string{"You don't have that reagent."}}
+		return &CommandResult{Messages: []string{i18n.T("You don't have that reagent.")}}
 	}
 
 	// Find the container (flask, vial, bottle)
@@ -1163,7 +1163,7 @@ func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) 
 		}
 	}
 	if containerIdx < 0 {
-		return &CommandResult{Messages: []string{"You don't have a suitable container. You need a flask, vial, or bottle."}}
+		return &CommandResult{Messages: []string{i18n.T("You don't have a suitable container. You need a flask, vial, or bottle.")}}
 	}
 
 	// Add reagent to the brew (track via container's Val fields)
@@ -1199,7 +1199,7 @@ func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) 
 	if container.Val5 < 3 {
 		e.SavePlayer(ctx, player)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You add %s to the brew. (%d/3 ingredients)", reagentName, container.Val5)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You add %s to the brew. (%d/3 ingredients)"), reagentName, container.Val5)},
 			RoomBroadcast: []string{fmt.Sprintf("%s adds an ingredient to a bubbling brew.", player.FirstName)},
 			PlayerState:   player,
 		}
@@ -1274,7 +1274,7 @@ func (e *GameEngine) doBrew(ctx context.Context, player *Player, args []string) 
 	container.Val5 = 0
 	e.SavePlayer(ctx, player)
 	return &CommandResult{
-		Messages:      []string{"A foul odor rises from the brew. The combination produces nothing useful."},
+		Messages:      []string{i18n.T("A foul odor rises from the brew. The combination produces nothing useful.")},
 		RoomBroadcast: []string{fmt.Sprintf("%s's brew emits a foul odor.", player.FirstName)},
 		PlayerState:   player,
 	}

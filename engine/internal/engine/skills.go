@@ -6,6 +6,8 @@ import (
 	"math/rand"
 	"strings"
 	"time"
+
+	"github.com/jonradoff/lofp/i18n"
 )
 
 // SkillCost defines the build point cost for a skill.
@@ -110,7 +112,7 @@ func checkPrerequisite(player *Player, skillID int) bool {
 func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []string) *CommandResult {
 	room := e.rooms[player.RoomNumber]
 	if room == nil || len(room.TrainingSkills) == 0 {
-		return &CommandResult{Messages: []string{"There is no training available here."}}
+		return &CommandResult{Messages: []string{i18n.T("There is no training available here.")}}
 	}
 	if len(args) == 0 {
 		var msgs []string
@@ -150,7 +152,7 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 		}
 
 		if currentLvl >= effectiveMax {
-			return &CommandResult{Messages: []string{fmt.Sprintf("You have reached the maximum %s training available here (%d).", name, effectiveMax)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You have reached the maximum %s training available here (%d)."), name, effectiveMax)}}
 		}
 
 		// Check prerequisites
@@ -162,13 +164,13 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 				}
 				prereqNames += SkillNames[p]
 			}
-			return &CommandResult{Messages: []string{fmt.Sprintf("You need training in %s before you can learn %s.", prereqNames, name)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You need training in %s before you can learn %s."), prereqNames, name)}}
 		}
 
 		// Check build points
 		bpCost := skillBPCost(ts.SkillID, currentLvl)
 		if player.BuildPoints < bpCost {
-			return &CommandResult{Messages: []string{fmt.Sprintf("Not enough build points. %s costs %d BP (you have %d).", name, bpCost, player.BuildPoints)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Not enough build points. %s costs %d BP (you have %d)."), name, bpCost, player.BuildPoints)}}
 		}
 
 		// Gold cost: 5 gold per training level after level 4
@@ -177,7 +179,7 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 			goldCost = 5 * (currentLvl + 1)
 		}
 		if goldCost > 0 && player.Gold < goldCost {
-			return &CommandResult{Messages: []string{fmt.Sprintf("Training costs %d gold crowns. You only have %d.", goldCost, player.Gold)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Training costs %d gold crowns. You only have %d."), goldCost, player.Gold)}}
 		}
 
 		// Deduct costs
@@ -200,11 +202,11 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 			goldMsg = fmt.Sprintf(", %d gold", goldCost)
 		}
 		return &CommandResult{
-			Messages: []string{fmt.Sprintf("You train in %s to rank %d. (-%d BP%s, %d BP remaining)", name, currentLvl+1, bpCost, goldMsg, player.BuildPoints)},
+			Messages: []string{fmt.Sprintf(i18n.T("You train in %s to rank %d. (-%d BP%s, %d BP remaining)"), name, currentLvl+1, bpCost, goldMsg, player.BuildPoints)},
 			PlayerState: player,
 		}
 	}
-	return &CommandResult{Messages: []string{"That skill is not available for training here."}}
+	return &CommandResult{Messages: []string{i18n.T("That skill is not available for training here.")}}
 }
 
 // ---- ANOINT (apply poison to weapon) ----
@@ -212,10 +214,10 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 func (e *GameEngine) doAnoint(ctx context.Context, player *Player, args []string) *CommandResult {
 	trapSkill := player.Skills[12] // Trap & Poison Lore
 	if trapSkill < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Trap & Poison Lore."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Trap & Poison Lore.")}}
 	}
 	if player.Wielded == nil {
-		return &CommandResult{Messages: []string{"You must be wielding a weapon to anoint it."}}
+		return &CommandResult{Messages: []string{i18n.T("You must be wielding a weapon to anoint it.")}}
 	}
 	// Poison level = trap skill rank
 	poisonLevel := trapSkill
@@ -232,7 +234,7 @@ func (e *GameEngine) doAnoint(ctx context.Context, player *Player, args []string
 		wepName = e.getItemNounName(wepDef)
 	}
 	return &CommandResult{
-		Messages: []string{fmt.Sprintf("You carefully apply a level %d poison to your %s.", poisonLevel, wepName)},
+		Messages: []string{fmt.Sprintf(i18n.T("You carefully apply a level %d poison to your %s."), poisonLevel, wepName)},
 		RoomBroadcast: []string{fmt.Sprintf("%s applies something to %s weapon.", player.FirstName, player.Possessive())},
 		PlayerState: player,
 	}
@@ -243,18 +245,18 @@ func (e *GameEngine) doAnoint(ctx context.Context, player *Player, args []string
 func (e *GameEngine) doTend(ctx context.Context, player *Player, args []string) *CommandResult {
 	healSkill := player.Skills[20] // Healing
 	if healSkill < 1 {
-		return &CommandResult{Messages: []string{"You have no training in Healing."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Healing.")}}
 	}
 
 	// Can't heal during combat
 	if player.CombatTarget != nil {
-		return &CommandResult{Messages: []string{"You can't tend wounds while in combat!"}}
+		return &CommandResult{Messages: []string{i18n.T("You can't tend wounds while in combat!")}}
 	}
 
 	// Round timer check
 	if time.Now().Before(player.RoundTimeExpiry) {
 		remaining := time.Until(player.RoundTimeExpiry).Seconds()
-		return &CommandResult{Messages: []string{fmt.Sprintf("You must wait %.0f more seconds.", remaining)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You must wait %.0f more seconds."), remaining)}}
 	}
 
 	// Determine target
@@ -273,9 +275,9 @@ func (e *GameEngine) doTend(ctx context.Context, player *Player, args []string) 
 
 	if target.BodyPoints >= target.MaxBodyPoints && !target.Bleeding && !target.Poisoned {
 		if target == player {
-			return &CommandResult{Messages: []string{"You don't need healing."}}
+			return &CommandResult{Messages: []string{i18n.T("You don't need healing.")}}
 		}
-		return &CommandResult{Messages: []string{fmt.Sprintf("%s doesn't need healing.", targetName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("%s doesn't need healing."), targetName)}}
 	}
 
 	// Healing amount: 2 + healSkill*2 + random(healSkill)
@@ -306,14 +308,14 @@ func (e *GameEngine) doTend(ctx context.Context, player *Player, args []string) 
 
 	if target == player {
 		return &CommandResult{
-			Messages: []string{fmt.Sprintf("You tend to your wounds, healing %d body points. [Round: 5 sec] [BP: %d/%d]", heal, target.BodyPoints, target.MaxBodyPoints)},
+			Messages: []string{fmt.Sprintf(i18n.T("You tend to your wounds, healing %d body points. [Round: 5 sec] [BP: %d/%d]"), heal, target.BodyPoints, target.MaxBodyPoints)},
 			RoomBroadcast: []string{fmt.Sprintf("%s tends to %s wounds.", player.FirstName, player.Possessive())},
 			PlayerState: player,
 		}
 	}
 
 	return &CommandResult{
-		Messages: []string{fmt.Sprintf("You tend to %s's wounds, healing %d body points.", targetName, heal)},
+		Messages: []string{fmt.Sprintf(i18n.T("You tend to %s's wounds, healing %d body points."), targetName, heal)},
 		RoomBroadcast: []string{fmt.Sprintf("%s tends to %s's wounds.", player.FirstName, targetName)},
 		TargetName: target.FirstName,
 		TargetMsg: []string{fmt.Sprintf("%s tends to your wounds, healing %d body points. [BP: %d/%d]", player.FirstName, heal, target.BodyPoints, target.MaxBodyPoints)},

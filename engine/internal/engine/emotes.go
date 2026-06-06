@@ -3,6 +3,8 @@ package engine
 import (
 	"fmt"
 	"strings"
+
+	"github.com/jonradoff/lofp/i18n"
 )
 
 // emoteEntry defines the self/room messages for an emote.
@@ -368,7 +370,7 @@ func (e *GameEngine) processEmote(player *Player, verb string, args []string) *C
 			}
 
 			// Nothing matched
-			return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here.", targetName)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here."), targetName)}}
 		}
 	}
 
@@ -423,7 +425,7 @@ func (e *GameEngine) processKiss(player *Player, args []string) *CommandResult {
 				}
 			}
 		}
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here.", targetName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here."), targetName)}}
 	}
 
 	displayTarget := found.FirstName
@@ -511,5 +513,5 @@ func (e *GameEngine) processLick(player *Player, args []string) *CommandResult {
 			}
 		}
 	}
-	return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here.", targetName)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here."), targetName)}}
 }
