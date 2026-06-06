@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
