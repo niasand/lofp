@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../App'
+import { t } from '../i18n'
 
 interface ScriptMeta {
   filename: string

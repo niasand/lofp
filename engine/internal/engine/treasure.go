@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 )
 
@@ -38,16 +39,16 @@ func (e *GameEngine) generateTreasure(roomNum int, treasureLevel int) []string {
 		copper := coins % 10
 		var parts []string
 		if gold > 0 {
-			parts = append(parts, fmt.Sprintf("%d gold", gold))
+			parts = append(parts, fmt.Sprintf(i18n.T("%d gold"), gold))
 		}
 		if silver > 0 {
-			parts = append(parts, fmt.Sprintf("%d silver", silver))
+			parts = append(parts, fmt.Sprintf(i18n.T("%d silver"), silver))
 		}
 		if copper > 0 {
-			parts = append(parts, fmt.Sprintf("%d copper", copper))
+			parts = append(parts, fmt.Sprintf(i18n.T("%d copper"), copper))
 		}
 		if len(parts) > 0 {
-			msgs = append(msgs, fmt.Sprintf("Some coins scatter on the ground. (%s)", joinParts(parts)))
+			msgs = append(msgs, fmt.Sprintf(i18n.T("Some coins scatter on the ground. (%s)"), joinParts(parts)))
 		}
 	}
 
@@ -71,7 +72,7 @@ func (e *GameEngine) generateTreasure(roomNum int, treasureLevel int) []string {
 				def := e.items[item.Archetype]
 				if def != nil {
 					name := e.formatItemName(def, item.Adj1, item.Adj2, item.Adj3)
-					msgs = append(msgs, fmt.Sprintf("A %s lies among the remains.", name))
+					msgs = append(msgs, fmt.Sprintf(i18n.T("A %s lies among the remains."), name))
 				}
 			}
 
@@ -85,9 +86,9 @@ func (e *GameEngine) generateTreasure(roomNum int, treasureLevel int) []string {
 				if def != nil {
 					spell := FindSpellByID(item.Val3)
 					if spell != nil {
-						msgs = append(msgs, fmt.Sprintf("A scroll of %s lies among the remains.", spell.Name))
+						msgs = append(msgs, fmt.Sprintf(i18n.T("A scroll of %s lies among the remains."), spell.Name))
 					} else {
-						msgs = append(msgs, "A scroll lies among the remains.")
+						msgs = append(msgs, i18n.T("A scroll lies among the remains."))
 					}
 				}
 			}
@@ -98,7 +99,7 @@ func (e *GameEngine) generateTreasure(roomNum int, treasureLevel int) []string {
 				ref := len(room.Items)
 				item.Ref = ref
 				room.Items = append(room.Items, *item)
-				msgs = append(msgs, "A small locked chest lies among the remains.")
+				msgs = append(msgs, i18n.T("A small locked chest lies among the remains."))
 			}
 
 		case roll < 75:
@@ -110,7 +111,7 @@ func (e *GameEngine) generateTreasure(roomNum int, treasureLevel int) []string {
 				def := e.items[item.Archetype]
 				if def != nil {
 					name := e.formatItemName(def, item.Adj1, item.Adj2, item.Adj3)
-					msgs = append(msgs, fmt.Sprintf("Some %s lies among the remains.", name))
+					msgs = append(msgs, fmt.Sprintf(i18n.T("Some %s lies among the remains."), name))
 				}
 			}
 		}
@@ -308,5 +309,5 @@ func joinParts(parts []string) string {
 	if len(parts) == 1 {
 		return parts[0]
 	}
-	return fmt.Sprintf("%s and %s", parts[0], parts[len(parts)-1])
+	return fmt.Sprintf("%s"+i18n.T(" and ")+"%s", parts[0], parts[len(parts)-1])
 }

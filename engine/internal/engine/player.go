@@ -3,6 +3,7 @@ package engine
 import (
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
@@ -235,44 +236,44 @@ func (p *Player) FullName() string {
 	return p.FirstName + " " + p.LastName
 }
 
-// Pronoun returns "he" or "she".
+// Pronoun returns "he" or "she" (or localized equivalent).
 func (p *Player) Pronoun() string {
 	if p.Gender == 0 {
-		return "he"
+		return i18n.T("he")
 	}
-	return "she"
+	return i18n.T("she")
 }
 
-// PronounCap returns "He" or "She".
+// PronounCap returns "He" or "She" (or localized equivalent).
 func (p *Player) PronounCap() string {
 	if p.Gender == 0 {
-		return "He"
+		return i18n.T("He")
 	}
-	return "She"
+	return i18n.T("She")
 }
 
-// Possessive returns "his" or "her".
+// Possessive returns "his" or "her" (or localized equivalent).
 func (p *Player) Possessive() string {
 	if p.Gender == 0 {
-		return "his"
+		return i18n.T("his")
 	}
-	return "her"
+	return i18n.T("her")
 }
 
-// PossessiveCap returns "His" or "Her".
+// PossessiveCap returns "His" or "Her" (or localized equivalent).
 func (p *Player) PossessiveCap() string {
 	if p.Gender == 0 {
-		return "His"
+		return i18n.T("His")
 	}
-	return "Her"
+	return i18n.T("Her")
 }
 
-// Objective returns "him" or "her".
+// Objective returns "him" or "her" (or localized equivalent).
 func (p *Player) Objective() string {
 	if p.Gender == 0 {
-		return "him"
+		return i18n.T("him")
 	}
-	return "her"
+	return i18n.T("her")
 }
 
 // PromptIndicators returns the status code string for prompt mode.
@@ -337,9 +338,9 @@ func (p *Player) RaceName() string {
 // RaceNameByID returns the race name for a given race ID.
 func RaceNameByID(race int) string {
 	if name, ok := RaceNames[race]; ok {
-		return name
+		return i18n.T(name)
 	}
-	return "Unknown"
+	return i18n.T("Unknown")
 }
 
 // IsFlying returns true if the player is able to fly (Drakin race or magical effect).

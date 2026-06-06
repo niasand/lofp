@@ -12,6 +12,7 @@ import VerifyEmail from './components/VerifyEmail'
 import ResetPassword from './components/ResetPassword'
 import AccountModal from './components/AccountModal'
 import Manual from './components/Manual'
+import { t } from './i18n'
 
 type View = 'menu' | 'create' | 'play' | 'admin' | 'gm' | 'version' | 'capture_view' | 'api_docs' | 'verify_email' | 'reset_password'
 
@@ -225,11 +226,11 @@ function App() {
             {!backendOnline && (
               <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 text-xs font-mono text-yellow-400">
                 <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
-                <span className="hidden md:inline">Connecting...</span>
+                <span className="hidden md:inline">{t("terminal.connecting")}</span>
               </div>
             )}
             {!backendOnline && (
-              <div className="sm:hidden w-2 h-2 bg-yellow-500 rounded-full animate-pulse" title="Connecting to server..." />
+              <div className="sm:hidden w-2 h-2 bg-yellow-500 rounded-full animate-pulse" title={t("main.connectingToServer")} />
             )}
             <button
               onClick={() => setView('menu')}
@@ -284,17 +285,17 @@ function App() {
                   <img src={user.account.picture || '/default-avatar.svg'} alt="" className="w-6 h-6 rounded-full" />
                   <span className="hidden sm:inline text-gray-400 hover:text-amber-400 text-xs font-mono underline decoration-dotted">
                     {user.account.name}
-                    {user.account.emailVerified === false && <span className="text-yellow-500 ml-1" title="Email not verified">!</span>}
+                    {user.account.emailVerified === false && <span className="text-yellow-500 ml-1" title={t("main.emailNotVerified")}>!</span>}
                   </span>
                   {user.account.emailVerified === false && (
-                    <span className="sm:hidden text-yellow-500 text-xs" title="Email not verified">!</span>
+                    <span className="sm:hidden text-yellow-500 text-xs" title={t("main.emailNotVerified")}>!</span>
                   )}
                 </button>
                 <button
                   onClick={logout}
                   className="hidden sm:block text-gray-500 hover:text-gray-300 text-xs font-mono min-h-[36px] px-1"
                 >
-                  Logout
+                  {t("account.logout")}
                 </button>
               </div>
             )}

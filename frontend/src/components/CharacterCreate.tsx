@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { t, raceName } from '../i18n'
 
 const RACES = [
   {
@@ -73,7 +74,7 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
     <div className="flex items-start sm:items-center justify-center h-full pt-4 px-4 pb-4 sm:p-8 overflow-y-auto">
       <div className="max-w-3xl w-full bg-[#111] border border-[#333] rounded-lg p-4 sm:p-8">
         <h2 className="text-amber-400 text-2xl font-mono mb-1 text-center">
-          Create Your Character
+          {t("character.title")}
         </h2>
         <p className="text-gray-500 text-sm font-mono mb-6 text-center">
           Choose wisely — your race and abilities will shape your destiny in the Shattered Realms
@@ -92,7 +93,7 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-400 text-sm font-mono mb-1">First Name</label>
+              <label className="block text-gray-400 text-sm font-mono mb-1">{t("character.firstName")}</label>
               <input
                 type="text"
                 value={firstName}
@@ -104,7 +105,7 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
               />
             </div>
             <div>
-              <label className="block text-gray-400 text-sm font-mono mb-1">Last Name</label>
+              <label className="block text-gray-400 text-sm font-mono mb-1">{t("character.lastName")}</label>
               <input
                 type="text"
                 value={lastName}
@@ -113,15 +114,15 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
                 className="w-full bg-[#0a0a0a] border border-[#444] rounded px-3 py-2 text-gray-200 font-mono focus:border-amber-500 focus:outline-none"
                 placeholder="Thinvar"
               />
-              <p className="text-gray-600 text-[10px] font-mono mt-1">Hyphens and accents permitted in last name</p>
+              <p className="text-gray-600 text-[10px] font-mono mt-1">{t("character.lastNameHint")}</p>
             </div>
           </div>
 
           {/* Gender */}
           <div>
-            <label className="block text-gray-400 text-sm font-mono mb-1">Gender</label>
+            <label className="block text-gray-400 text-sm font-mono mb-1">{t("character.gender")}</label>
             <div className="flex gap-4">
-              {[{ v: 0, l: 'Male' }, { v: 1, l: 'Female' }].map(g => (
+              {[{ v: 0, l: t("character.male") }, { v: 1, l: t("character.female") }].map(g => (
                 <button
                   key={g.v}
                   type="button"
@@ -136,7 +137,7 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
 
           {/* Race selection */}
           <div>
-            <label className="block text-gray-400 text-sm font-mono mb-2">Race</label>
+            <label className="block text-gray-400 text-sm font-mono mb-2">{t("character.race")}</label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
               {RACES.map(r => (
                 <button
@@ -145,7 +146,7 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
                   onClick={() => { setRace(r.id); setSelectedRace(r) }}
                   className={`px-2 py-3 min-h-[44px] rounded font-mono text-sm transition-colors ${race === r.id ? 'bg-amber-700 text-white border border-amber-600' : 'bg-[#1a1a1a] text-gray-400 border border-[#444] hover:border-amber-600'}`}
                 >
-                  {r.name}
+                  {raceName(r.id)}
                 </button>
               ))}
             </div>
@@ -153,12 +154,12 @@ export default function CharacterCreate({ onCreated, onOpenManual }: Props) {
             {/* Race detail */}
             <div className="bg-[#0a0a0a] border border-[#333] rounded-lg p-4 space-y-3">
               <div className="flex items-center gap-3">
-                <h3 className="text-amber-400 font-mono text-lg font-bold">{selectedRace.name}</h3>
+                <h3 className="text-amber-400 font-mono text-lg font-bold">{raceName(selectedRace.id)}</h3>
               </div>
               <p className="text-gray-300 font-mono text-xs leading-relaxed">{selectedRace.desc}</p>
               <div className="bg-[#111] border border-[#2a2a2a] rounded p-2">
                 <p className="text-green-400 font-mono text-xs">
-                  <span className="text-gray-500">Ability:</span> {selectedRace.ability}
+                  <span className="text-gray-500">{t("character.ability")}</span> {selectedRace.ability}
                 </p>
               </div>
               <div className="bg-[#111] border border-[#2a2a2a] rounded p-2">

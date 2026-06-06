@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../App'
+import { t, raceName } from '../i18n'
 
 interface Stats {
   rooms: number

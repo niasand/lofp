@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../App'
+import { t } from '../i18n'
 
 interface CaptureSession {
   id: string

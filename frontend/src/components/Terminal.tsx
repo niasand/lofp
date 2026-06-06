@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useContext } from 'react'
 import { AuthContext } from '../App'
+import { t } from '../i18n'
 
 interface Character {
   firstName: string
@@ -256,7 +257,7 @@ export default function Terminal({ character, onQuit, wsRefOut, onCaptureStatus 
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="flex-1 bg-transparent text-gray-200 font-mono text-base sm:text-sm focus:outline-none min-w-0"
-          placeholder="Enter command..."
+          placeholder={t("terminal.placeholder")}
         />
         {/* Send button — visible only on touch devices */}
         <button

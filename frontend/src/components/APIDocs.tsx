@@ -1,3 +1,5 @@
+import { t } from '../i18n'
+
 export default function APIDocs({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex items-start justify-center h-full p-8 overflow-y-auto">

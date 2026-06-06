@@ -6,6 +6,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
@@ -68,15 +69,15 @@ func GameSeason() string {
 func SeasonName() string {
 	switch GameSeason() {
 	case "PSCRIPT":
-		return "Spring"
+		return i18n.T("Spring")
 	case "SSCRIPT":
-		return "Summer"
+		return i18n.T("Summer")
 	case "ASCRIPT":
-		return "Autumn"
+		return i18n.T("Autumn")
 	case "WSCRIPT":
-		return "Winter"
+		return i18n.T("Winter")
 	}
-	return "Spring"
+	return i18n.T("Spring")
 }
 
 var MonthNames = []string{
@@ -175,28 +176,28 @@ func (e *GameEngine) StartTimeCycle() {
 			e.CheckSeasonChange()
 
 			if hour != lastHour {
-				period := "day"
-				if night { period = "night" }
+				period := i18n.T("day")
+				if night { period = i18n.T("night") }
 				e.Events.Publish("time", fmt.Sprintf("Hour %d:00 — %s of %s %d, Year %d",
 					hour, period, GameMonthName(), GameDay()%28+1, GameYear()))
 				if night != wasNight {
 					if night {
-						e.Events.Publish("time", "Night falls across the Shattered Realms.")
+						e.Events.Publish("time", i18n.T("Night falls across the Shattered Realms."))
 					} else {
-						e.Events.Publish("time", "Dawn breaks across the Shattered Realms.")
+						e.Events.Publish("time", i18n.T("Dawn breaks across the Shattered Realms."))
 					}
 				}
 				// Broadcast time-of-day transitions to outdoor players
 				if e.localRoomBroadcast != nil {
 					switch hour {
 					case 5:
-						e.broadcastOutdoor("The sun begins to rise in the east.")
+						e.broadcastOutdoor(i18n.T("The sun begins to rise in the east."))
 					case 6:
-						e.broadcastOutdoor("The sun rises in the east.")
+						e.broadcastOutdoor(i18n.T("The sun rises in the east."))
 					case 18:
-						e.broadcastOutdoor("The sun begins to set in the west.")
+						e.broadcastOutdoor(i18n.T("The sun begins to set in the west."))
 					case 19:
-						e.broadcastOutdoor("The sun sets in the west.")
+						e.broadcastOutdoor(i18n.T("The sun sets in the west."))
 					}
 				}
 				lastHour = hour

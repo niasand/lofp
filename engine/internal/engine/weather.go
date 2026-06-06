@@ -3,6 +3,8 @@ package engine
 import (
 	"math/rand"
 	"time"
+
+	"github.com/jonradoff/lofp/i18n"
 )
 
 // WeatherNames maps weather state IDs to display names (from GM Manual).
@@ -81,9 +83,9 @@ func (e *GameEngine) GetWeatherDesc(region int) string {
 		state = 0
 	}
 	if name, ok := WeatherNames[state]; ok {
-		return name
+		return i18n.T(name)
 	}
-	return "Clear"
+	return i18n.T("Clear")
 }
 
 // weatherRoomDesc maps weather state IDs to immersive room description lines.
@@ -122,7 +124,7 @@ func (e *GameEngine) GetRoomWeather(roomNum int) string {
 		return ""
 	}
 	if desc, ok := weatherRoomDesc[state]; ok {
-		return desc
+		return i18n.T(desc)
 	}
 	return ""
 }
@@ -183,12 +185,14 @@ func (e *GameEngine) advanceWeather() {
 			if msg == "" {
 				// Generic fallback
 				if newState == 0 {
-					msg = "The skies clear."
+					msg = i18n.T("The skies clear.")
 				} else if desc, ok := weatherRoomDesc[newState]; ok {
-					msg = desc
+					msg = i18n.T(desc)
 				} else {
-					msg = "The weather shifts."
+					msg = i18n.T("The weather shifts.")
 				}
+			} else {
+				msg = i18n.T(msg)
 			}
 
 			// Broadcast to all outdoor rooms in this region

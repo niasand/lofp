@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 )
 
@@ -152,7 +153,7 @@ func (e *GameEngine) spawnForRoom(roomNum int) {
 				e.localRoomBroadcast(roomNum, []string{genText})
 			} else if spawned == 1 && e.localRoomBroadcast != nil {
 				article := articleFor(name, def.Unique)
-				e.localRoomBroadcast(roomNum, []string{fmt.Sprintf("%s%s appears.", capArticle(article), name)})
+				e.localRoomBroadcast(roomNum, []string{fmt.Sprintf(i18n.T("%s%s appears."), capArticle(article), name)})
 			}
 		}
 	}
@@ -283,7 +284,7 @@ func (e *GameEngine) MonsterLookLines(roomNum int) []string {
 		}
 		name := FormatMonsterName(def, e.monAdjs)
 		if !inst.Alive {
-			name += " (dead)"
+			name += " " + i18n.T("(dead)")
 		}
 		article := articleFor(name, def.Unique)
 		names = append(names, article+name)
@@ -298,7 +299,7 @@ func (e *GameEngine) MonsterLookLines(roomNum int) []string {
 	} else {
 		joined = strings.Join(names[:len(names)-1], ", ") + " and " + names[len(names)-1]
 	}
-	return []string{"You also see " + joined + "."}
+	return []string{fmt.Sprintf(i18n.T("You also see %s."), joined)}
 }
 
 // directionNames maps exit keys to direction words for monster movement text.
@@ -490,7 +491,7 @@ func (e *GameEngine) monsterTick(tick int) {
 					if p.RoomNumber == inst.RoomNumber && !p.Dead && !p.Hidden && !p.GMInvis {
 						inst.Target = p.FirstName
 						if e.sendToPlayer != nil {
-							e.sendToPlayer(p.FirstName, []string{fmt.Sprintf("A %s snarls and attacks you!", name)})
+							e.sendToPlayer(p.FirstName, []string{fmt.Sprintf(i18n.T("A %s snarls and attacks you!"), name)})
 						}
 						break
 					}
@@ -548,7 +549,7 @@ func (e *GameEngine) monsterTick(tick int) {
 				continue
 			}
 
-			dirName := directionNames[chosen.dir]
+			dirName := i18n.T(directionNames[chosen.dir])
 			if dirName == "" {
 				dirName = strings.ToLower(chosen.dir)
 			}
@@ -563,9 +564,9 @@ func (e *GameEngine) monsterTick(tick int) {
 					article = "An"
 				}
 				if def.Unique {
-					e.localRoomBroadcast(inst.RoomNumber, []string{fmt.Sprintf("%s wanders %s.", name, dirName)})
+					e.localRoomBroadcast(inst.RoomNumber, []string{fmt.Sprintf(i18n.T("%s wanders %s."), name, dirName)})
 				} else {
-					e.localRoomBroadcast(inst.RoomNumber, []string{fmt.Sprintf("%s %s wanders %s.", article, name, dirName)})
+					e.localRoomBroadcast(inst.RoomNumber, []string{fmt.Sprintf(i18n.T("%s %s wanders %s."), article, name, dirName)})
 				}
 			}
 
@@ -582,9 +583,9 @@ func (e *GameEngine) monsterTick(tick int) {
 					article = "An"
 				}
 				if def.Unique {
-					e.localRoomBroadcast(chosen.destID, []string{fmt.Sprintf("%s has arrived.", name)})
+					e.localRoomBroadcast(chosen.destID, []string{fmt.Sprintf(i18n.T("%s has arrived."), name)})
 				} else {
-					e.localRoomBroadcast(chosen.destID, []string{fmt.Sprintf("%s %s has arrived.", article, name)})
+					e.localRoomBroadcast(chosen.destID, []string{fmt.Sprintf(i18n.T("%s %s has arrived."), article, name)})
 				}
 			}
 		}

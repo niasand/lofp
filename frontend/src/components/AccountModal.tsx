@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../App'
+import { t } from '../i18n'
 
 interface Props {
   onClose: () => void
@@ -31,7 +32,7 @@ export default function AccountModal({ onClose }: Props) {
         body: JSON.stringify({ name: newName }),
       })
       if (r.ok) {
-        setMessage('Display name updated!')
+        setMessage(t("account.displayNameUpdated"))
         // Update local storage
         const stored = localStorage.getItem('lofp_auth')
         if (stored) {
@@ -41,15 +42,15 @@ export default function AccountModal({ onClose }: Props) {
         }
       } else {
         const d = await r.json().catch(() => null)
-        setError(d?.error || 'Failed to update name')
+        setError(d?.error || t("account.failedToUpdateName"))
       }
-    } catch { setError('Network error') }
+    } catch { setError(t("account.networkError")) }
     setSubmitting(false)
   }
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (password !== confirmPassword) { setError('Passwords do not match'); return }
+    if (password !== confirmPassword) { setError(t("account.passwordsDoNotMatch")); return }
     setSubmitting(true); setError(''); setMessage('')
     try {
       const r = await fetch('/api/auth/me/password', {
@@ -57,13 +58,13 @@ export default function AccountModal({ onClose }: Props) {
         body: JSON.stringify({ password }),
       })
       if (r.ok) {
-        setMessage('Password updated!')
+        setMessage(t("account.passwordUpdated"))
         setPassword(''); setConfirmPassword('')
       } else {
         const d = await r.json().catch(() => null)
-        setError(d?.error || 'Failed to update password')
+        setError(d?.error || t("account.failedToUpdatePassword"))
       }
-    } catch { setError('Network error') }
+    } catch { setError(t("account.networkError")) }
     setSubmitting(false)
   }
 
@@ -75,12 +76,12 @@ export default function AccountModal({ onClose }: Props) {
         body: JSON.stringify({ email: user?.account?.email }),
       })
       if (r.ok) {
-        setMessage('Verification email sent! Check your inbox.')
+        setMessage(t("account.verificationEmailSent"))
       } else {
         const d = await r.json().catch(() => null)
-        setError(d?.error || 'Failed to send verification email')
+        setError(d?.error || t("account.failedToSendVerification"))
       }
-    } catch { setError('Network error') }
+    } catch { setError(t("account.networkError")) }
     setSubmitting(false)
   }
 
@@ -93,7 +94,7 @@ export default function AccountModal({ onClose }: Props) {
         body: JSON.stringify({ code: verifyCode }),
       })
       if (r.ok) {
-        setMessage('Email verified!')
+        setMessage(t("account.emailVerifiedSuccess"))
         // Update local storage
         const stored = localStorage.getItem('lofp_auth')
         if (stored) {
@@ -105,9 +106,9 @@ export default function AccountModal({ onClose }: Props) {
         setTimeout(() => window.location.reload(), 1000)
       } else {
         const d = await r.json().catch(() => null)
-        setError(d?.error || 'Invalid verification code')
+        setError(d?.error || t("account.verificationFailed"))
       }
-    } catch { setError('Network error') }
+    } catch { setError(t("account.networkError")) }
     setSubmitting(false)
   }
 
@@ -117,7 +118,7 @@ export default function AccountModal({ onClose }: Props) {
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-[#1a1a1a] border border-[#444] rounded-lg p-6 max-w-md w-full mx-4" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-amber-400 font-mono font-bold text-lg">Account Settings</h2>
+          <h2 className="text-amber-400 font-mono font-bold text-lg">{t("account.title")}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-300 text-lg">&times;</button>
         </div>
 
@@ -146,25 +147,25 @@ export default function AccountModal({ onClose }: Props) {
         {/* Tab content */}
         {tab === 'info' && (
           <div className="space-y-2 font-mono text-sm">
-            <div><span className="text-gray-500">Email:</span> <span className="text-gray-300">{user?.account?.email}</span></div>
-            <div><span className="text-gray-500">Name:</span> <span className="text-gray-300">{user?.account?.name}</span></div>
+            <div><span className="text-gray-500">{t("account.email")}</span> <span className="text-gray-300">{user?.account?.email}</span></div>
+            <div><span className="text-gray-500">{t("account.name")}</span> <span className="text-gray-300">{user?.account?.name}</span></div>
             <div>
-              <span className="text-gray-500">Email verified:</span>{' '}
+              <span className="text-gray-500">{t("account.emailVerified")}</span>{' '}
               {isVerified
-                ? <span className="text-green-400">Yes</span>
-                : <span className="text-yellow-400">No — <button onClick={() => setTab('verify')} className="underline hover:text-yellow-300">verify now</button></span>
+                ? <span className="text-green-400">{t("account.yes")}</span>
+                : <span className="text-yellow-400">{t("account.no")} — <button onClick={() => setTab('verify')} className="underline hover:text-yellow-300">{t("account.verifyEmail")}</button></span>
               }
             </div>
             <div className="flex items-center gap-2 mt-2">
               <img src={user?.account?.picture || '/default-avatar.svg'} alt="" className="w-8 h-8 rounded-full" />
               {user?.account?.picture
-                ? <span className="text-gray-500 text-xs">Google linked</span>
-                : <span className="text-gray-500 text-xs">Email/password account</span>
+                ? <span className="text-gray-500 text-xs">{t("account.googleLinked")}</span>
+                : <span className="text-gray-500 text-xs">{t("account.emailPasswordAccount")}</span>
               }
             </div>
             <div className="pt-3 mt-3 border-t border-[#333]">
               <button onClick={logout} className="text-red-400 hover:text-red-300 text-xs font-mono">
-                Sign Out
+                {t("account.logout")}
               </button>
             </div>
           </div>
