@@ -25,3 +25,6 @@ email:
 feedback:
   vibectl_url: "${VIBECTL_URL:}"
   vibectl_api_key: "${VIBECTL_API_KEY:}"
+
+locale:
+  default: "${LOCALE:en}"
