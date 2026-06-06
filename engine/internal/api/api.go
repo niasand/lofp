@@ -443,7 +443,7 @@ func (s *Server) handleEventsWS(w http.ResponseWriter, r *http.Request) {
 		"data": engine.EngineEvent{
 			Time:     time.Now(),
 			Category: "system",
-			Message:  fmt.Sprintf("Event monitor connected. Game time: Hour %d, Day %d of %s, Year %d", engine.GameHour(), engine.GameDay(), engine.GameMonthName(), engine.GameYear()),
+			Message:  fmt.Sprintf(i18n.T("Event monitor connected. Game time: Hour %d, Day %d of %s, Year %d"), engine.GameHour(), engine.GameDay(), engine.GameMonthName(), engine.GameYear()),
 		},
 	})
 
@@ -542,7 +542,7 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 			case <-ticker.C:
 				if time.Since(session.lastActivity) > 30*time.Minute && session.Player != nil && !session.Player.IsGM {
 					s.sendResult(session, &engine.CommandResult{
-						Messages: []string{"You have been idle too long. Disconnecting..."},
+						Messages: []string{i18n.T("You have been idle too long. Disconnecting...")},
 					})
 					conn.Close()
 					return
@@ -668,19 +668,19 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 					player.RoomNumber, "")
 				s.sendResult(session, &engine.CommandResult{
 					Messages: []string{
-						fmt.Sprintf("Welcome to the Shattered Realms, %s the %s!", player.FullName(), player.RaceName()),
+						fmt.Sprintf(i18n.T("Welcome to the Shattered Realms, %s the %s!"), player.FullName(), player.RaceName()),
 						"",
 					},
 				})
 			} else if player.AccountID != accountID {
 				session.Conn.SendTypedMessage("error", map[string]interface{}{
-					"message": fmt.Sprintf("The name '%s %s' is already taken. Please choose a different name.", create.FirstName, create.LastName),
+					"message": fmt.Sprintf(i18n.T("The name '%s %s' is already taken. Please choose a different name."), create.FirstName, create.LastName),
 				})
 				continue
 			} else {
 				s.sendResult(session, &engine.CommandResult{
 					Messages: []string{
-						fmt.Sprintf("Welcome back, %s the %s!", player.FullName(), player.RaceName()),
+						fmt.Sprintf(i18n.T("Welcome back, %s the %s!"), player.FullName(), player.RaceName()),
 						"",
 					},
 				})
@@ -750,7 +750,7 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 		case "command":
 			if session.Player == nil {
 				s.sendResult(session, &engine.CommandResult{
-					Messages: []string{"You must create a character first."},
+					Messages: []string{i18n.T("You must create a character first.")},
 				})
 				continue
 			}
@@ -766,7 +766,7 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 			session.cmdCount++
 			if session.cmdCount > 4 {
 				s.sendResult(session, &engine.CommandResult{
-					Messages: []string{"[Slow down! Too many commands.]"},
+					Messages: []string{i18n.T("[Slow down! Too many commands.]")},
 				})
 				continue
 			}
@@ -779,7 +779,7 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 			session.cmdTimes = append(recentCmds, now)
 			if len(session.cmdTimes) > 10 {
 				s.sendResult(session, &engine.CommandResult{
-					Messages: []string{"[Slow down! Too many commands.]"},
+					Messages: []string{i18n.T("[Slow down! Too many commands.]")},
 				})
 				continue
 			}
@@ -818,7 +818,7 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 				session.chatTimes = recent
 				if len(session.chatTimes) >= 5 {
 					s.sendResult(session, &engine.CommandResult{
-						Messages: []string{"[You are sending messages too quickly. Please wait.]"},
+						Messages: []string{i18n.T("[You are sending messages too quickly. Please wait.]")},
 					})
 					continue
 				}

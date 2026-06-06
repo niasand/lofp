@@ -2978,7 +2978,7 @@ func (e *GameEngine) doGet(ctx context.Context, player *Player, args []string) *
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 
 	for i, ri := range room.Items {
@@ -3066,7 +3066,7 @@ func (e *GameEngine) doDrop(ctx context.Context, player *Player, args []string) 
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 
 	for i, ii := range player.Inventory {
@@ -3254,7 +3254,7 @@ func (e *GameEngine) doWield(ctx context.Context, player *Player, args []string)
 			RoomBroadcast: []string{fmt.Sprintf("%s wields %s.", player.FirstName, fullName)},
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 func (e *GameEngine) doUnwield(ctx context.Context, player *Player) *CommandResult {
@@ -3305,7 +3305,7 @@ func (e *GameEngine) doWear(ctx context.Context, player *Player, args []string) 
 			}
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 func (e *GameEngine) doRemove(ctx context.Context, player *Player, args []string) *CommandResult {
@@ -3347,7 +3347,7 @@ func (e *GameEngine) doOpen(player *Player, args []string) *CommandResult {
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
@@ -3481,7 +3481,7 @@ func (e *GameEngine) doClose(player *Player, args []string) *CommandResult {
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
@@ -3711,7 +3711,7 @@ func (e *GameEngine) doChant(ctx context.Context, player *Player, args []string)
 			}
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 // doFollow handles the FOLLOW command — join a group.
@@ -5192,7 +5192,7 @@ func (e *GameEngine) CreateNewPlayer(ctx context.Context, firstName, lastName st
 // LoadPlayer loads a non-deleted player from MongoDB by first+last name.
 func (e *GameEngine) LoadPlayer(ctx context.Context, firstName, lastName string) (*Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	var player Player
@@ -5238,7 +5238,7 @@ func (e *GameEngine) LoadPlayer(ctx context.Context, firstName, lastName string)
 // ListPlayers returns all saved characters, sorted by updatedAt descending.
 func (e *GameEngine) ListPlayers(ctx context.Context) ([]Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	opts := options.Find().SetSort(bson.D{{Key: "updatedAt", Value: -1}})
@@ -5256,7 +5256,7 @@ func (e *GameEngine) ListPlayers(ctx context.Context) ([]Player, error) {
 // ListPlayersByAccount returns all non-deleted characters belonging to an account.
 func (e *GameEngine) ListPlayersByAccount(ctx context.Context, accountID string) ([]Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	filter := bson.M{"accountId": accountID, "deletedAt": bson.M{"$exists": false}}
@@ -5274,7 +5274,7 @@ func (e *GameEngine) ListPlayersByAccount(ctx context.Context, accountID string)
 // SoftDeletePlayer soft-deletes a character by setting deletedAt.
 func (e *GameEngine) SoftDeletePlayer(ctx context.Context, firstName, accountID string) error {
 	if e.db == nil {
-		return fmt.Errorf("no database connection")
+		return fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	now := time.Now()
@@ -5309,7 +5309,7 @@ func (e *GameEngine) IsFirstNameTaken(ctx context.Context, firstName string) (bo
 // ListDeletedPlayers returns all soft-deleted characters.
 func (e *GameEngine) ListDeletedPlayers(ctx context.Context) ([]Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	opts := options.Find().SetSort(bson.D{{Key: "deletedAt", Value: -1}})
@@ -5327,7 +5327,7 @@ func (e *GameEngine) ListDeletedPlayers(ctx context.Context) ([]Player, error) {
 // RecoverPlayer un-deletes a character, optionally renaming if name conflicts.
 func (e *GameEngine) RecoverPlayer(ctx context.Context, firstName string, newFirstName string) (*Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 
