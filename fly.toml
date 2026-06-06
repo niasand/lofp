@@ -10,6 +10,8 @@ primary_region = "ord"
   LOFP_STATIC_DIR = "/app/static"
   MONGODB_DATABASE = "lofp"
   GOMEMLIMIT = "220MB"
+  LOCALE = "zh"
+  VITE_LOCALE = "zh"
 
 [http_service]
   internal_port = 8080
