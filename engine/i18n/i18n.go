@@ -6,10 +6,14 @@ package i18n
 import (
 	"os"
 	"strings"
+	"sync"
 )
 
 // currentLocale is the active locale. Defaults to "en".
-var currentLocale = "en"
+var (
+	currentLocale = "en"
+	localeMu      sync.RWMutex
+)
 
 func init() {
 	if loc := os.Getenv("LOCALE"); loc != "" {
@@ -19,18 +23,25 @@ func init() {
 
 // SetLocale overrides the current locale at runtime.
 func SetLocale(loc string) {
+	localeMu.Lock()
+	defer localeMu.Unlock()
 	currentLocale = strings.ToLower(loc)
 }
 
 // GetLocale returns the current locale.
 func GetLocale() string {
+	localeMu.RLock()
+	defer localeMu.RUnlock()
 	return currentLocale
 }
 
 // T translates a key into the current locale. If no translation is found,
 // the key itself is returned (assumed to be the English fallback).
 func T(key string) string {
-	if currentLocale == "zh" {
+	localeMu.RLock()
+	loc := currentLocale
+	localeMu.RUnlock()
+	if loc == "zh" {
 		if msg, ok := zhMessages[key]; ok {
 			return msg
 		}

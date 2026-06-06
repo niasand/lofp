@@ -1043,15 +1043,15 @@ export default function AdminPanel() {
                     </div>
                     <div className="flex gap-2 mt-0.5">
                       <span className="text-gray-600 text-[10px]">{raceName(p.race)}</span>
-                      <span className="text-gray-600 text-[10px]">Lvl {p.level}</span>
-                      <span className="text-gray-600 text-[10px]">Room {p.roomNumber}</span>
-                      <span className="text-gray-600 text-[10px]">BP {p.bodyPoints}/{p.maxBodyPoints}</span>
+                      <span className="text-gray-600 text-[10px]">{t('admin.lvl')} {p.level}</span>
+                      <span className="text-gray-600 text-[10px]">{t('admin.room')} {p.roomNumber}</span>
+                      <span className="text-gray-600 text-[10px]">{t('admin.bp')} {p.bodyPoints}/{p.maxBodyPoints}</span>
                       {p.updatedAt && <span className="text-gray-600 text-[10px] ml-auto">{relativeTime(p.updatedAt)}</span>}
                     </div>
                   </div>
                 ))}
                 {filteredPlayers.length === 0 && (
-                  <div className="p-4 text-gray-600 text-center text-xs">No characters found</div>
+                  <div className="p-4 text-gray-600 text-center text-xs">{t('admin.noCharacters')}</div>
                 )}
               </div>
             </div>
@@ -1064,11 +1064,11 @@ export default function AdminPanel() {
                         {selectedPlayer.firstName} {selectedPlayer.lastName}
                       </h2>
                       <span className="text-gray-500 text-xs">
-                        {raceName(selectedPlayer.race)} | {selectedPlayer.gender === 0 ? 'Male' : 'Female'} | Level {selectedPlayer.level}
+                        {raceName(selectedPlayer.race)} | {selectedPlayer.gender === 0 ? t('admin.male') : t('admin.female')} | {t('admin.level')} {selectedPlayer.level}
                       </span>
                       {selectedPlayer.accountId && (
                         <div className="mt-1">
-                          <span className="text-gray-600 text-xs">Owner: </span>
+                          <span className="text-gray-600 text-xs">{t('admin.owner')} </span>
                           <button
                             onClick={() => navigateToOwner(selectedPlayer.accountId!)}
                             className="text-blue-400 text-xs hover:underline"
