@@ -3918,7 +3918,7 @@ func (e *GameEngine) doGive(ctx context.Context, player *Player, args []string) 
 			TargetMsg:     []string{fmt.Sprintf("%s gives you %s.", player.FirstName, fullName)},
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 // parseMoneyAmount checks if a string like "5 gold" or "10 kragenmark" is a money amount.

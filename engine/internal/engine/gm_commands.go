@@ -1644,7 +1644,7 @@ func (e *GameEngine) ResolvePlayerByName(ctx context.Context, name string) (*Pla
 // resolvePlayerByName looks up a player by first name.
 func (e *GameEngine) resolvePlayerByName(ctx context.Context, name string) (*Player, error) {
 	if e.db == nil {
-		return nil, fmt.Errorf("no database connection")
+		return nil, fmt.Errorf(i18n.T("no database connection"))
 	}
 	coll := e.db.Collection("players")
 	var player Player
