@@ -178,21 +178,21 @@ func (e *GameEngine) processGMCommand(ctx context.Context, player *Player, verb 
 	case "@LOOK":
 		return e.gmLookContainer(player, args)
 	case "@QUEUE":
-		return &CommandResult{Messages: []string{"Monster queue updated."}}
+		return &CommandResult{Messages: []string{i18n.T("Monster queue updated.")}}
 	case "@UNQUEUE":
-		return &CommandResult{Messages: []string{"Item removed from monster queue."}}
+		return &CommandResult{Messages: []string{i18n.T("Item removed from monster queue.")}}
 	case "@TRACE":
 		player.GMTrace = !player.GMTrace
 		if player.GMTrace {
-			return &CommandResult{Messages: []string{"Script tracing ON. You will see debug output for script execution."}}
+			return &CommandResult{Messages: []string{i18n.T("Script tracing ON. You will see debug output for script execution.")}}
 		}
-		return &CommandResult{Messages: []string{"Script tracing OFF."}}
+		return &CommandResult{Messages: []string{i18n.T("Script tracing OFF.")}}
 	case "@TITLE":
 		return e.gmTitle(ctx, player, args, rawInput)
 	case "@VERB", "@VERBS":
 		return e.gmVerbs()
 	default:
-		return &CommandResult{Messages: []string{fmt.Sprintf("Unknown GM command: %s", strings.ToLower(verb))}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Unknown GM command: %s"), strings.ToLower(verb))}}
 	}
 }
 
@@ -269,21 +269,21 @@ func (e *GameEngine) gmHelp() *CommandResult {
 
 func (e *GameEngine) gmGo(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) < 1 {
-		return &CommandResult{Messages: []string{"Usage: @go <room#>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @go <room#>")}}
 	}
 	num, err := strconv.Atoi(args[0])
 	if err != nil {
-		return &CommandResult{Messages: []string{"Invalid room number."}}
+		return &CommandResult{Messages: []string{i18n.T("Invalid room number.")}}
 	}
 	room := e.rooms[num]
 	if room == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Room %d does not exist.", num)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Room %d does not exist."), num)}}
 	}
 	oldRoom := player.RoomNumber
 	player.RoomNumber = num
 	e.SavePlayer(ctx, player)
 	result := e.doLook(player)
-	result.Messages = append([]string{fmt.Sprintf("Teleported to room %d.", num)}, result.Messages...)
+	result.Messages = append([]string{fmt.Sprintf(i18n.T("Teleported to room %d."), num)}, result.Messages...)
 	// Broadcast exit/entry echoes (invisible GMs are completely silent)
 	if !player.GMInvis {
 		if player.ExitEcho != "" {
@@ -303,34 +303,34 @@ func (e *GameEngine) gmGo(ctx context.Context, player *Player, args []string) *C
 
 func (e *GameEngine) gmAddItem(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) < 1 {
-		return &CommandResult{Messages: []string{"Usage: @additem <archetype#>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @additem <archetype#>")}}
 	}
 	arch, err := strconv.Atoi(args[0])
 	if err != nil {
-		return &CommandResult{Messages: []string{"Invalid item number."}}
+		return &CommandResult{Messages: []string{i18n.T("Invalid item number.")}}
 	}
 	itemDef := e.items[arch]
 	if itemDef == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Item archetype %d does not exist.", arch)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Item archetype %d does not exist."), arch)}}
 	}
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You are nowhere."}}
+		return &CommandResult{Messages: []string{i18n.T("You are nowhere.")}}
 	}
 	ri := gameworld.RoomItem{Archetype: arch, Ref: len(room.Items)}
 	room.Items = append(room.Items, ri)
 	name := e.getItemNounName(itemDef)
-	return &CommandResult{Messages: []string{fmt.Sprintf("Added %s (archetype %d) to the room.", name, arch)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Added %s (archetype %d) to the room."), name, arch)}}
 }
 
 func (e *GameEngine) gmDelete(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) < 1 {
-		return &CommandResult{Messages: []string{"Usage: @delete <item name>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @delete <item name>")}}
 	}
 	target := strings.ToLower(strings.Join(args, " "))
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You are nowhere."}}
+		return &CommandResult{Messages: []string{i18n.T("You are nowhere.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
@@ -340,10 +340,10 @@ func (e *GameEngine) gmDelete(ctx context.Context, player *Player, args []string
 		name := strings.ToLower(e.getItemNounName(itemDef))
 		if strings.Contains(name, target) {
 			room.Items = append(room.Items[:i], room.Items[i+1:]...)
-			return &CommandResult{Messages: []string{fmt.Sprintf("Deleted %s from the room.", name)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Deleted %s from the room."), name)}}
 		}
 	}
-	return &CommandResult{Messages: []string{"Item not found in this room."}}
+	return &CommandResult{Messages: []string{i18n.T("Item not found in this room.")}}
 }
 
 func (e *GameEngine) gmRData(player *Player, args []string) *CommandResult {
@@ -356,7 +356,7 @@ func (e *GameEngine) gmRData(player *Player, args []string) *CommandResult {
 	}
 	room := e.rooms[num]
 	if room == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Room %d does not exist.", num)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Room %d does not exist."), num)}}
 	}
 	msgs := []string{
 		fmt.Sprintf("=== Room Data: %d ===", room.Number),
@@ -411,7 +411,7 @@ func (e *GameEngine) gmHeal(ctx context.Context, player *Player, args []string) 
 	target.Unconscious = false
 	target.Dead = false
 	e.SavePlayer(ctx, target)
-	return &CommandResult{Messages: []string{fmt.Sprintf("Healed %s to full.", target.FullName())}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Healed %s to full."), target.FullName())}}
 }
 
 func (e *GameEngine) gmKill(ctx context.Context, player *Player, args []string) *CommandResult {
@@ -422,12 +422,12 @@ func (e *GameEngine) gmKill(ctx context.Context, player *Player, args []string) 
 	target.BodyPoints = 0
 	target.Dead = true
 	e.SavePlayer(ctx, target)
-	return &CommandResult{Messages: []string{fmt.Sprintf("%s has been slain.", target.FullName())}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("%s has been slain."), target.FullName())}}
 }
 
 func (e *GameEngine) gmExp(ctx context.Context, player *Player, args []string) *CommandResult {
 	if len(args) < 2 {
-		return &CommandResult{Messages: []string{"Usage: @exp <name> <points>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @exp <name> <points>")}}
 	}
 	target, err := e.resolvePlayerArg(ctx, args)
 	if err != nil {
@@ -435,12 +435,12 @@ func (e *GameEngine) gmExp(ctx context.Context, player *Player, args []string) *
 	}
 	pts, err := strconv.Atoi(args[len(args)-1])
 	if err != nil {
-		return &CommandResult{Messages: []string{"Invalid point amount."}}
+		return &CommandResult{Messages: []string{i18n.T("Invalid point amount.")}}
 	}
 	target.Experience += pts
 	recalcBuildPoints(target)
 	e.SavePlayer(ctx, target)
-	return &CommandResult{Messages: []string{fmt.Sprintf("Granted %d experience to %s. Total: %d", pts, target.FullName(), target.Experience)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Granted %d experience to %s. Total: %d"), pts, target.FullName(), target.Experience)}}
 }
 
 func (e *GameEngine) gmWho(ctx context.Context) *CommandResult {
@@ -552,34 +552,34 @@ func (e *GameEngine) formatInventoryItemName(item *InventoryItem) string {
 
 func (e *GameEngine) gmGenMon(player *Player, args []string) *CommandResult {
 	if len(args) < 1 {
-		return &CommandResult{Messages: []string{"Usage: @genmon <monster#>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @genmon <monster#>")}}
 	}
 	num, err := strconv.Atoi(args[0])
 	if err != nil {
-		return &CommandResult{Messages: []string{"Invalid monster number."}}
+		return &CommandResult{Messages: []string{i18n.T("Invalid monster number.")}}
 	}
 	mon := e.monsters[num]
 	if mon == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Monster %d does not exist.", num)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Monster %d does not exist."), num)}}
 	}
 	name := FormatMonsterName(mon, e.monAdjs)
 	e.monsterMgr.SpawnOne(num, player.RoomNumber, mon.Body)
 	e.monsterMgr.SetSedated(e.monsterMgr.lastSpawnedID(), true)
 	e.Events.Publish("monster", fmt.Sprintf("GM %s generated %s (sedated) in room %d", player.FirstName, name, player.RoomNumber))
-	return &CommandResult{Messages: []string{fmt.Sprintf("Generated %s (sedated) in room %d.", name, player.RoomNumber)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Generated %s (sedated) in room %d."), name, player.RoomNumber)}}
 }
 
 func (e *GameEngine) gmSpawn(player *Player, args []string) *CommandResult {
 	if len(args) < 1 {
-		return &CommandResult{Messages: []string{"Usage: @spawn <monster#>"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @spawn <monster#>")}}
 	}
 	num, err := strconv.Atoi(args[0])
 	if err != nil {
-		return &CommandResult{Messages: []string{"Invalid monster number."}}
+		return &CommandResult{Messages: []string{i18n.T("Invalid monster number.")}}
 	}
 	mon := e.monsters[num]
 	if mon == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Monster %d does not exist.", num)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Monster %d does not exist."), num)}}
 	}
 	name := FormatMonsterName(mon, e.monAdjs)
 	e.monsterMgr.SpawnOne(num, player.RoomNumber, mon.Body)
@@ -590,14 +590,14 @@ func (e *GameEngine) gmSpawn(player *Player, args []string) *CommandResult {
 		genText = fmt.Sprintf("A %s appears!", name)
 	}
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("Spawned %s (active) in room %d.", name, player.RoomNumber)},
+		Messages:      []string{fmt.Sprintf(i18n.T("Spawned %s (active) in room %d."), name, player.RoomNumber)},
 		RoomBroadcast: []string{genText},
 	}
 }
 
 func (e *GameEngine) gmSpeech(ctx context.Context, player *Player, args []string, rawInput string) *CommandResult {
 	if len(args) < 2 {
-		return &CommandResult{Messages: []string{"Usage: @speech <player> <verb phrase>  (e.g., @speech Taliesin says grimly, @speech Scratch squawks)"}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @speech <player> <verb phrase>  (e.g., @speech Taliesin says grimly, @speech Scratch squawks)")}}
 	}
 	targetName := args[0]
 	speechVerb := extractRawArgs(rawInput, 2) // everything after @speech <player>
@@ -618,23 +618,23 @@ func (e *GameEngine) gmSpeech(ctx context.Context, player *Player, args []string
 		}
 	}
 	if target == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Player '%s' not found.", targetName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Player '%s' not found."), targetName)}}
 	}
 
 	if strings.ToLower(speechVerb) == "clear" || speechVerb == "" {
 		target.SpeechAdverb = ""
 		e.SavePlayer(ctx, target)
-		return &CommandResult{Messages: []string{fmt.Sprintf("Speech pattern cleared for %s.", target.FirstName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Speech pattern cleared for %s."), target.FirstName)}}
 	}
 
 	target.SpeechAdverb = speechVerb
 	e.SavePlayer(ctx, target)
-	return &CommandResult{Messages: []string{fmt.Sprintf("Speech pattern for %s set to: %s %ss", target.FirstName, target.FirstName, speechVerb)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Speech pattern for %s set to: %s %ss"), target.FirstName, target.FirstName, speechVerb)}}
 }
 
 func (e *GameEngine) gmTitle(ctx context.Context, player *Player, args []string, rawInput string) *CommandResult {
 	if len(args) < 2 {
-		return &CommandResult{Messages: []string{"Usage: @title <player> <title>  (e.g., @title Moryan the Baroness)  Use 'clear' to remove."}}
+		return &CommandResult{Messages: []string{i18n.T("Usage: @title <player> <title>  (e.g., @title Moryan the Baroness)  Use 'clear' to remove.")}}
 	}
 	targetName := args[0]
 
@@ -654,19 +654,19 @@ func (e *GameEngine) gmTitle(ctx context.Context, player *Player, args []string,
 		}
 	}
 	if target == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Player '%s' not found.", targetName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Player '%s' not found."), targetName)}}
 	}
 
 	title := extractRawArgs(rawInput, 2) // everything after @title <player>
 	if strings.ToLower(title) == "clear" || title == "" {
 		target.Title = ""
 		e.SavePlayer(ctx, target)
-		return &CommandResult{Messages: []string{fmt.Sprintf("Title cleared for %s.", target.FirstName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Title cleared for %s."), target.FirstName)}}
 	}
 
 	target.Title = title
 	e.SavePlayer(ctx, target)
-	return &CommandResult{Messages: []string{fmt.Sprintf("Title for %s set to: %s", target.FirstName, title)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Title for %s set to: %s"), target.FirstName, title)}}
 }
 
 func (e *GameEngine) gmSetLine(ctx context.Context, player *Player, args []string, rawInput string, lineNum int) *CommandResult {
@@ -712,7 +712,7 @@ func (e *GameEngine) gmSetLine(ctx context.Context, player *Player, args []strin
 		target.DescLine2 = ""
 		target.DescLine3 = ""
 		e.SavePlayer(ctx, target)
-		return &CommandResult{Messages: []string{fmt.Sprintf("All description lines cleared for %s.", target.FirstName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("All description lines cleared for %s."), target.FirstName)}}
 	}
 
 	switch lineNum {
@@ -726,9 +726,9 @@ func (e *GameEngine) gmSetLine(ctx context.Context, player *Player, args []strin
 	e.SavePlayer(ctx, target)
 
 	if text == "" {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Description line %d cleared for %s.", lineNum, target.FirstName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Description line %d cleared for %s."), lineNum, target.FirstName)}}
 	}
-	return &CommandResult{Messages: []string{fmt.Sprintf("Description line %d set for %s: %s", lineNum, target.FirstName, text)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Description line %d set for %s: %s"), lineNum, target.FirstName, text)}}
 }
 
 func (e *GameEngine) gmSetEntryExit(ctx context.Context, player *Player, args []string, rawInput string, which string) *CommandResult {
@@ -1334,7 +1334,7 @@ func (e *GameEngine) gmOpenCloseLock(player *Player, args []string, state string
 	target := strings.ToLower(strings.Join(args, " "))
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You are nowhere."}}
+		return &CommandResult{Messages: []string{i18n.T("You are nowhere.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]

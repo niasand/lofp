@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jonradoff/lofp/i18n"
 )
 
 // PsiDiscipline defines a psionic discipline.
@@ -103,12 +105,12 @@ func FindPsiByID(id int) *PsiDiscipline {
 // With a number or name: activates the discipline. For maintained powers, toggles on/off.
 func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult {
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't use psionics while dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't use psionics while dead.")}}
 	}
 
 	// Check base psionic skill
 	if player.Skills[26] == 0 && !player.IsGM {
-		return &CommandResult{Messages: []string{"You have no training in Psionics."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Psionics.")}}
 	}
 
 	// Initialize ActivePsi map if nil
@@ -132,7 +134,7 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 		disc = FindPsiByName(input)
 	}
 	if disc == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't know a discipline called '%s'.", input)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't know a discipline called '%s'."), input)}}
 	}
 
 	// Check if this is a maintained power that's already active — toggle off
@@ -156,13 +158,13 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 			player.Hidden = false
 		}
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You release your concentration on %s.", disc.Name)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You release your concentration on %s."), disc.Name)},
 			RoomBroadcast: []string{fmt.Sprintf("%s relaxes %s concentration.", player.FirstName, player.Possessive())},
 		}
 	}
 
 	if player.Psi < disc.PsiCost {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Not enough psi points. (%s costs %d, you have %d)", disc.Name, disc.PsiCost, player.Psi)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Not enough psi points. (%s costs %d, you have %d)"), disc.Name, disc.PsiCost, player.Psi)}}
 	}
 
 	// Instantaneous powers that don't need a target activate immediately
@@ -221,7 +223,7 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 	}
 
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You focus your mind on %s... (type PROJECT to release, or PROJECT <target>)", disc.Name)},
+		Messages:      []string{fmt.Sprintf(i18n.T("You focus your mind on %s... (type PROJECT to release, or PROJECT <target>)"), disc.Name)},
 		RoomBroadcast: []string{fmt.Sprintf("%s closes %s eyes in concentration.", player.FirstName, player.Possessive())},
 	}
 }
@@ -238,7 +240,7 @@ func (e *GameEngine) listPsiDisciplines(player *Player) *CommandResult {
 	psiLevel := player.Skills[26] // base Psionics
 
 	if psiLevel == 0 && !player.IsGM {
-		return &CommandResult{Messages: []string{"You have no training in Psionics."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no training in Psionics.")}}
 	}
 
 	msgs = append(msgs, fmt.Sprintf("%-4s %-25s %-6s %-6s %s", "#", "Discipline", "Cost", "School", "Status"))
@@ -278,21 +280,21 @@ func (e *GameEngine) listPsiDisciplines(player *Player) *CommandResult {
 // doProjectPsi handles PROJECT [target].
 func (e *GameEngine) doProjectPsi(ctx context.Context, player *Player, args []string) *CommandResult {
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't use psionics while dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't use psionics while dead.")}}
 	}
 	if player.PreparedPsi == 0 {
-		return &CommandResult{Messages: []string{"You have no discipline prepared. Use PSI <discipline> first."}}
+		return &CommandResult{Messages: []string{i18n.T("You have no discipline prepared. Use PSI <discipline> first.")}}
 	}
 
 	disc := FindPsiByID(player.PreparedPsi)
 	if disc == nil {
 		player.PreparedPsi = 0
-		return &CommandResult{Messages: []string{"Your focus dissipates."}}
+		return &CommandResult{Messages: []string{i18n.T("Your focus dissipates.")}}
 	}
 
 	if player.Psi < disc.PsiCost {
 		player.PreparedPsi = 0
-		return &CommandResult{Messages: []string{fmt.Sprintf("Not enough psi points! (%s requires %d, you have %d)", disc.Name, disc.PsiCost, player.Psi)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Not enough psi points! (%s requires %d, you have %d)"), disc.Name, disc.PsiCost, player.Psi)}}
 	}
 
 	// Check roundtime

@@ -1374,7 +1374,7 @@ func (e *GameEngine) doFlee(ctx context.Context, player *Player) *CommandResult 
 	}
 	if rand.Intn(100) >= fleeChance {
 		return &CommandResult{
-			Messages:      []string{"You try to flee but can't get away!"},
+			Messages:      []string{i18n.T("You try to flee but can't get away!")},
 			RoomBroadcast: []string{fmt.Sprintf("%s tries to flee but fails!", player.FirstName)},
 		}
 	}
@@ -1423,7 +1423,7 @@ func (e *GameEngine) disengageCombat(player *Player) {
 func (e *GameEngine) doStance(player *Player, stance int) *CommandResult {
 	player.Stance = stance
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You adopt a %s combat stance.", stanceNames[stance])},
+		Messages:      []string{fmt.Sprintf(i18n.T("You adopt a %s combat stance."), stanceNames[stance])},
 		RoomBroadcast: []string{fmt.Sprintf("%s adopts a %s combat stance.", player.FirstName, stanceNames[stance])},
 	}
 }
@@ -1463,7 +1463,7 @@ func (e *GameEngine) doSearchMonster(ctx context.Context, player *Player, args [
 		idx := e.monsterMgr.indexOfID(inst.ID)
 		if idx >= 0 && e.monsterMgr.instances[idx].Searched {
 			e.monsterMgr.mu.Unlock()
-			return &CommandResult{Messages: []string{fmt.Sprintf("You have already searched the %s.", def.Name)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You have already searched the %s."), def.Name)}}
 		}
 		if idx >= 0 {
 			e.monsterMgr.instances[idx].Searched = true

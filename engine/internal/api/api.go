@@ -15,6 +15,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/auth"
 	"github.com/jonradoff/lofp/internal/capture"
 	"github.com/jonradoff/lofp/internal/email"

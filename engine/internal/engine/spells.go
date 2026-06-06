@@ -6,6 +6,8 @@ import (
 	"math/rand"
 	"strings"
 	"time"
+
+	"github.com/jonradoff/lofp/i18n"
 )
 
 // SpellDef defines a spell in the game.
@@ -195,29 +197,29 @@ func spellSchoolSkill(school string) int {
 // doPrepareSpell handles PREPARE/INVOKE <spell>.
 func (e *GameEngine) doPrepareSpell(player *Player, args []string) *CommandResult {
 	if len(args) == 0 {
-		return &CommandResult{Messages: []string{"Prepare what spell?"}}
+		return &CommandResult{Messages: []string{i18n.T("Prepare what spell?")}}
 	}
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't cast spells while dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't cast spells while dead.")}}
 	}
 
 	spellName := strings.Join(args, " ")
 	spell := FindSpellByName(spellName)
 	if spell == nil {
-		return &CommandResult{Messages: []string{"You don't know that spell."}}
+		return &CommandResult{Messages: []string{i18n.T("You don't know that spell.")}}
 	}
 	if !player.KnownSpells[spell.ID] && !player.IsGM {
-		return &CommandResult{Messages: []string{fmt.Sprintf("You haven't learned %s.", spell.Name)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You haven't learned %s."), spell.Name)}}
 	}
 	if player.Mana < spell.ManaCost {
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't have enough mana. (%s costs %d, you have %d)", spell.Name, spell.ManaCost, player.Mana)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't have enough mana. (%s costs %d, you have %d)"), spell.Name, spell.ManaCost, player.Mana)}}
 	}
 
 	player.PreparedSpell = spell.ID
 	player.RoundTimeExpiry = time.Now().Add(time.Duration(spell.CastTime) * time.Second)
 
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You begin preparing %s... (type CAST to release, or CAST <target>)", spell.Name)},
+		Messages:      []string{fmt.Sprintf(i18n.T("You begin preparing %s... (type CAST to release, or CAST <target>)"), spell.Name)},
 		RoomBroadcast: []string{fmt.Sprintf("%s begins preparing a spell.", player.FirstName)},
 	}
 }
@@ -225,22 +227,22 @@ func (e *GameEngine) doPrepareSpell(player *Player, args []string) *CommandResul
 // doCastSpell handles CAST [target].
 func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []string) *CommandResult {
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't cast spells while dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't cast spells while dead.")}}
 	}
 
 	// If no spell prepared, try to prepare+cast in one step
 	if player.PreparedSpell == 0 {
 		if len(args) == 0 {
-			return &CommandResult{Messages: []string{"You have no spell prepared. Use PREPARE <spell> first."}}
+			return &CommandResult{Messages: []string{i18n.T("You have no spell prepared. Use PREPARE <spell> first.")}}
 		}
 		// Try direct cast: "cast flame bolt <target>"
 		spellName := strings.Join(args, " ")
 		spell := FindSpellByName(spellName)
 		if spell == nil {
-			return &CommandResult{Messages: []string{fmt.Sprintf("You don't know a spell called '%s'.", spellName)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't know a spell called '%s'."), spellName)}}
 		}
 		if !player.KnownSpells[spell.ID] && !player.IsGM {
-			return &CommandResult{Messages: []string{fmt.Sprintf("You haven't learned %s.", spell.Name)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You haven't learned %s."), spell.Name)}}
 		}
 		player.PreparedSpell = spell.ID
 	}
@@ -248,7 +250,7 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 	spell := FindSpellByID(player.PreparedSpell)
 	if spell == nil {
 		player.PreparedSpell = 0
-		return &CommandResult{Messages: []string{"Your spell fizzles."}}
+		return &CommandResult{Messages: []string{i18n.T("Your spell fizzles.")}}
 	}
 
 	// Mana cost = spell level (from LEGENDS.DOC)
@@ -258,13 +260,13 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 	}
 	if player.Mana < manaCost {
 		player.PreparedSpell = 0
-		return &CommandResult{Messages: []string{fmt.Sprintf("Not enough mana! (%s requires %d, you have %d)", spell.Name, manaCost, player.Mana)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Not enough mana! (%s requires %d, you have %d)"), spell.Name, manaCost, player.Mana)}}
 	}
 
 	// Check roundtime
 	if player.RoundTimeExpiry.After(time.Now()) {
 		remaining := player.RoundTimeExpiry.Sub(time.Now()).Seconds()
-		return &CommandResult{Messages: []string{fmt.Sprintf("You are still preparing... %.0f seconds remaining.", remaining+0.5)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You are still preparing... %.0f seconds remaining."), remaining+0.5)}}
 	}
 
 	// Deduct mana (cost = spell level)
@@ -288,7 +290,7 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 		// Extreme failure!
 		player.RoundTimeExpiry = time.Now().Add(3 * time.Second)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("[Success: %d%%, Roll %d] Extreme failure! The spell backfires!", castChance, castRoll)},
+			Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Extreme failure! The spell backfires!"), castChance, castRoll)},
 			RoomBroadcast: []string{fmt.Sprintf("Magic begins to form around %s but then fizzles.", player.FirstName)},
 		}
 	}
@@ -298,7 +300,7 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 	if castRoll > castChance && !player.IsGM {
 		player.RoundTimeExpiry = time.Now().Add(2 * time.Second)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("[Success: %d%%, Roll %d] Failure.", castChance, castRoll)},
+			Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Failure."), castChance, castRoll)},
 			RoomBroadcast: []string{fmt.Sprintf("Magic begins to form around %s but then fizzles.", player.FirstName)},
 		}
 	}
@@ -356,12 +358,12 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 	}
 
 	if targetName == "" {
-		return &CommandResult{Messages: []string{"Cast at what? Specify a target."}}
+		return &CommandResult{Messages: []string{i18n.T("Cast at what? Specify a target.")}}
 	}
 
 	inst, def := e.findMonsterInRoom(player, targetName)
 	if inst == nil {
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here.", targetName)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here."), targetName)}}
 	}
 
 	name := FormatMonsterName(def, e.monAdjs)
@@ -372,7 +374,7 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 		resistRoll := rand.Intn(100)
 		if resistRoll < def.MagicResist {
 			return &CommandResult{
-				Messages:      []string{fmt.Sprintf("You gesture and cast %s at a %s, but it resists the spell!", spell.Name, name)},
+				Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s at a %s, but it resists the spell!"), spell.Name, name)},
 				RoomBroadcast: []string{fmt.Sprintf("%s casts %s at a %s, but it resists!", player.FirstName, spell.Name, name)},
 			}
 		}
@@ -388,7 +390,7 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 
 	if dmg <= 0 {
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You cast %s at a %s, but it seems unaffected!", spell.Name, name)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You cast %s at a %s, but it seems unaffected!"), spell.Name, name)},
 			RoomBroadcast: []string{fmt.Sprintf("%s casts %s at a %s!", player.FirstName, spell.Name, name)},
 		}
 	}
@@ -468,13 +470,13 @@ func (e *GameEngine) castHealSpell(ctx context.Context, player *Player, spell *S
 
 	if target == player {
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You gesture and cast %s on yourself, healing %d body points. [BP: %d/%d]", spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s on yourself, healing %d body points. [BP: %d/%d]"), spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
 			RoomBroadcast: []string{fmt.Sprintf("%s gestures and casts %s.", player.FirstName, spell.Name)},
 		}
 	}
 
 	return &CommandResult{
-		Messages:      []string{fmt.Sprintf("You gesture and cast %s on %s, healing %d body points.", spell.Name, targetName, heal)},
+		Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s on %s, healing %d body points."), spell.Name, targetName, heal)},
 		RoomBroadcast: []string{fmt.Sprintf("%s gestures and casts %s on %s.", player.FirstName, spell.Name, targetName)},
 		TargetName:    target.FirstName,
 		TargetMsg:     []string{fmt.Sprintf("%s casts %s on you, healing %d body points. [BP: %d/%d]", player.FirstName, spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
@@ -486,7 +488,7 @@ func (e *GameEngine) castBuffSpell(player *Player, spell *SpellDef, args []strin
 	switch spell.ID {
 	case 202: // Enchantment I — enchant a weapon in inventory
 		if len(args) == 0 {
-			return &CommandResult{Messages: []string{"Enchant what? Specify a weapon in your inventory."}}
+			return &CommandResult{Messages: []string{i18n.T("Enchant what? Specify a weapon in your inventory.")}}
 		}
 		target := strings.ToLower(strings.Join(args, " "))
 		for i, ii := range player.Inventory {
@@ -500,17 +502,17 @@ func (e *GameEngine) castBuffSpell(player *Player, spell *SpellDef, args []strin
 			}
 			// Check if already enchanted (Val1 > 0 means has magical edge bonus)
 			if ii.Val1 > 0 {
-				return &CommandResult{Messages: []string{"That weapon already has magical properties."}}
+				return &CommandResult{Messages: []string{i18n.T("That weapon already has magical properties.")}}
 			}
 			// Apply enchantment: +10 to hit via Val1
 			player.Inventory[i].Val1 = 10
 			itemName := e.formatItemName(def, ii.Adj1, ii.Adj2, ii.Adj3)
 			return &CommandResult{
-				Messages:      []string{fmt.Sprintf("A soft glow surrounds %s and then sinks into it.", itemName)},
+				Messages:      []string{fmt.Sprintf(i18n.T("A soft glow surrounds %s and then sinks into it."), itemName)},
 				RoomBroadcast: []string{fmt.Sprintf("A soft glow surrounds an item %s is holding.", player.FirstName)},
 			}
 		}
-		return &CommandResult{Messages: []string{"You don't have a weapon matching that."}}
+		return &CommandResult{Messages: []string{i18n.T("You don't have a weapon matching that.")}}
 	case 207: // Strength I
 		player.Strength += 10
 		msg = fmt.Sprintf("You gesture and cast %s. You feel stronger! (+10 STR)", spell.Name)

@@ -2812,7 +2812,7 @@ func (e *GameEngine) doClimb(ctx context.Context, player *Player, args []string)
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 
 	for i, ri := range room.Items {
@@ -2872,7 +2872,7 @@ func (e *GameEngine) doItemInteraction(ctx context.Context, player *Player, verb
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 
 	for i, ri := range room.Items {
@@ -4109,7 +4109,7 @@ func (e *GameEngine) doEat(ctx context.Context, player *Player, args []string) *
 			}
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 func (e *GameEngine) doSpeech(ctx context.Context, player *Player, args []string, rawInput string) *CommandResult {
@@ -4279,7 +4279,7 @@ func (e *GameEngine) doSell(ctx context.Context, player *Player, args []string) 
 		}
 	}
 
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 func (e *GameEngine) doAppraise(player *Player, args []string) *CommandResult {
@@ -4288,7 +4288,7 @@ func (e *GameEngine) doAppraise(player *Player, args []string) *CommandResult {
 	}
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 	canBuy := false
 	for _, mod := range room.Modifiers {
@@ -4324,7 +4324,7 @@ func (e *GameEngine) doAppraise(player *Player, args []string) *CommandResult {
 			}}
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 // formatPrice formats a copper amount as a readable price string.
@@ -4429,7 +4429,7 @@ func (e *GameEngine) doDrink(ctx context.Context, player *Player, args []string)
 			PlayerState:   player,
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't have that."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't have that.")}}
 }
 
 func (e *GameEngine) doLight(ctx context.Context, player *Player, args []string, lightOn bool) *CommandResult {
@@ -4466,7 +4466,7 @@ func (e *GameEngine) doFlip(ctx context.Context, player *Player, args []string) 
 	target, ordSkip := parseOrdinal(target)
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
-	if room == nil { return &CommandResult{Messages: []string{"You can't do that here."}} }
+	if room == nil { return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}} }
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
 		if itemDef == nil { continue }
@@ -4501,7 +4501,7 @@ func (e *GameEngine) doLatch(player *Player, args []string, latch bool) *Command
 	target, ordSkip := parseOrdinal(target)
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
-	if room == nil { return &CommandResult{Messages: []string{"You can't do that here."}} }
+	if room == nil { return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}} }
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
 		if itemDef == nil { continue }
@@ -4532,7 +4532,7 @@ func (e *GameEngine) doLock(ctx context.Context, player *Player, args []string) 
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
@@ -4576,7 +4576,7 @@ func (e *GameEngine) doUnlock(ctx context.Context, player *Player, args []string
 	skip := ordSkip
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 	for i, ri := range room.Items {
 		itemDef := e.items[ri.Archetype]
@@ -6264,7 +6264,7 @@ func (e *GameEngine) doDisarm(ctx context.Context, player *Player, args []string
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't do that here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that here.")}}
 	}
 
 	for i, ri := range room.Items {
@@ -6289,7 +6289,7 @@ func (e *GameEngine) doDisarm(ctx context.Context, player *Player, args []string
 		// Requires Trap & Poison Lore (skill #12)
 		trapSkill := player.Skills[12]
 		if trapSkill < 1 {
-			return &CommandResult{Messages: []string{"You have no training in Trap & Poison Lore."}}
+			return &CommandResult{Messages: []string{i18n.T("You have no training in Trap & Poison Lore.")}}
 		}
 
 		// Skill check: base 20% + skill_level * 5%, capped at 95%
