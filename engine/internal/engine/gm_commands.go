@@ -36,38 +36,38 @@ func (e *GameEngine) processGMCommand(ctx context.Context, player *Player, verb 
 	case "@GM":
 		player.GMHat = true
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You don your Host Hat. You are now visible as a GM."}}
+		return &CommandResult{Messages: []string{i18n.T("You don your Host Hat. You are now visible as a GM.")}}
 	case "@RFLAG":
 		player.GMHat = false
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You remove your Host Hat."}}
+		return &CommandResult{Messages: []string{i18n.T("You remove your Host Hat.")}}
 	case "@HIDE":
 		player.GMHidden = true
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You are now hidden from the WHO list."}}
+		return &CommandResult{Messages: []string{i18n.T("You are now hidden from the WHO list.")}}
 	case "@UNHIDE":
 		player.GMHidden = false
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You are now visible on the WHO list."}}
+		return &CommandResult{Messages: []string{i18n.T("You are now visible on the WHO list.")}}
 	case "@INVIS":
 		if player.GMInvis {
-			return &CommandResult{Messages: []string{"You are already invisible."}}
+			return &CommandResult{Messages: []string{i18n.T("You are already invisible.")}}
 		}
 		player.GMInvis = true
 		player.Hidden = true
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You fade from sight."}}
+		return &CommandResult{Messages: []string{i18n.T("You fade from sight.")}}
 	case "@VIS":
 		if !player.GMInvis {
-			return &CommandResult{Messages: []string{"You are already visible."}}
+			return &CommandResult{Messages: []string{i18n.T("You are already visible.")}}
 		}
 		player.GMInvis = false
 		player.Hidden = false
 		e.SavePlayer(ctx, player)
-		return &CommandResult{Messages: []string{"You become visible again."}}
+		return &CommandResult{Messages: []string{i18n.T("You become visible again.")}}
 	case "@SND":
 		if len(args) == 0 {
-			return &CommandResult{Messages: []string{"Usage: @snd <text>"}}
+			return &CommandResult{Messages: []string{i18n.T("Usage: @snd <text>")}}
 		}
 		text := extractRawArgs(rawInput, 1)
 		return &CommandResult{Messages: []string{text}}
@@ -90,9 +90,9 @@ func (e *GameEngine) processGMCommand(ctx context.Context, player *Player, verb 
 	case "@SPAWN":
 		return e.gmSpawn(player, args)
 	case "@ACTIVATE":
-		return &CommandResult{Messages: []string{"Monster activated."}}
+		return &CommandResult{Messages: []string{i18n.T("Monster activated.")}}
 	case "@SEDATE":
-		return &CommandResult{Messages: []string{"Monster sedated."}}
+		return &CommandResult{Messages: []string{i18n.T("Monster sedated.")}}
 	case "@ZAP":
 		return e.gmZap(player, args)
 	case "@MLIST":
@@ -156,23 +156,23 @@ func (e *GameEngine) processGMCommand(ctx context.Context, player *Player, verb 
 	case "@EXIT":
 		return e.gmSetEntryExit(ctx, player, args, rawInput, "exit")
 	case "@SUGGEST":
-		return &CommandResult{Messages: []string{"Suggestion recorded. Thank you!"}}
+		return &CommandResult{Messages: []string{i18n.T("Suggestion recorded. Thank you!")}}
 	case "@MSG":
-		return &CommandResult{Messages: []string{"Host message viewing toggled."}}
+		return &CommandResult{Messages: []string{i18n.T("Host message viewing toggled.")}}
 	case "@SAVE":
-		return &CommandResult{Messages: []string{"NPC slot saved."}}
+		return &CommandResult{Messages: []string{i18n.T("NPC slot saved.")}}
 	case "@RESTORE":
-		return &CommandResult{Messages: []string{"NPC slot restored."}}
+		return &CommandResult{Messages: []string{i18n.T("NPC slot restored.")}}
 	case "@REGISTER":
-		return &CommandResult{Messages: []string{"Player registered."}}
+		return &CommandResult{Messages: []string{i18n.T("Player registered.")}}
 	case "@ASSIST?":
-		return &CommandResult{Messages: []string{"No pending assist requests."}}
+		return &CommandResult{Messages: []string{i18n.T("No pending assist requests.")}}
 	case "@OLDCOMP":
-		return &CommandResult{Messages: []string{"Script compilation is not available in this version."}}
+		return &CommandResult{Messages: []string{i18n.T("Script compilation is not available in this version.")}}
 	case "@EDITEM":
-		return &CommandResult{Messages: []string{"Item editor not yet implemented."}}
+		return &CommandResult{Messages: []string{i18n.T("Item editor not yet implemented.")}}
 	case "@EDN":
-		return &CommandResult{Messages: []string{"Item editor not yet implemented."}}
+		return &CommandResult{Messages: []string{i18n.T("Item editor not yet implemented.")}}
 	case "@GET":
 		return e.gmGet(ctx, player, args)
 	case "@LOOK":

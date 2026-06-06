@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 )
 
@@ -631,21 +632,21 @@ func (e *GameEngine) isArenaRoom(roomNum int) bool {
 
 func (e *GameEngine) doAttackMonster(ctx context.Context, player *Player, target string) *CommandResult {
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't do that. You are dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't do that. You are dead.")}}
 	}
 	if player.Stunned {
-		return &CommandResult{Messages: []string{"You are stunned and cannot attack!"}}
+		return &CommandResult{Messages: []string{i18n.T("You are stunned and cannot attack!")}}
 	}
 	if player.Immobilized {
-		return &CommandResult{Messages: []string{"You are rooted to the spot!"}}
+		return &CommandResult{Messages: []string{i18n.T("You are rooted to the spot!")}}
 	}
 	if player.Position == 2 {
-		return &CommandResult{Messages: []string{"You can't attack while laying down! Stand up first."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't attack while laying down! Stand up first.")}}
 	}
 
 	if player.RoundTimeExpiry.After(time.Now()) {
 		remaining := int(player.RoundTimeExpiry.Sub(time.Now()).Seconds()) + 1
-		return &CommandResult{Messages: []string{fmt.Sprintf("[Wait %d seconds...]", remaining)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("[Wait %d seconds...]"), remaining)}}
 	}
 
 	inst, def := e.findMonsterInRoom(player, target)
@@ -655,13 +656,13 @@ func (e *GameEngine) doAttackMonster(ctx context.Context, player *Player, target
 			for _, p := range e.sessions.OnlinePlayers() {
 				if p.RoomNumber == player.RoomNumber && strings.HasPrefix(strings.ToUpper(p.FirstName), strings.ToUpper(target)) {
 					if player.IsGM {
-						return &CommandResult{Messages: []string{fmt.Sprintf("[GM combat with players is not yet implemented. %s is here.]", p.FirstName)}}
+						return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("[GM combat with players is not yet implemented. %s is here.]"), p.FirstName)}}
 					}
-					return &CommandResult{Messages: []string{"Player combat is not allowed here."}}
+					return &CommandResult{Messages: []string{i18n.T("Player combat is not allowed here.")}}
 				}
 			}
 		}
-		return &CommandResult{Messages: []string{fmt.Sprintf("You don't see '%s' here to attack.", target)}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You don't see '%s' here to attack."), target)}}
 	}
 
 	// Check if a guard monster intervenes
@@ -688,7 +689,7 @@ func (e *GameEngine) doAttackMonster(ctx context.Context, player *Player, target
 	// Check ranged weapon is loaded
 	isRangedWeapon := weaponDef != nil && (weaponDef.Type == "BOW_WEAPON" || weaponDef.Type == "HANDGUN" || weaponDef.Type == "RIFLE")
 	if isRangedWeapon && (player.Wielded == nil || player.Wielded.Val3 <= 0) {
-		return &CommandResult{Messages: []string{fmt.Sprintf("Your %s is not loaded! Use NOCK or LOAD first.", strings.ToLower(e.nouns[weaponDef.NameID]))}}
+		return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("Your %s is not loaded! Use NOCK or LOAD first."), strings.ToLower(e.nouns[weaponDef.NameID]))}}
 	}
 
 	// Check MAGICWEAPON requirement
@@ -734,7 +735,7 @@ func (e *GameEngine) doAttackMonster(ctx context.Context, player *Player, target
 			player.Fatigue = 0
 		}
 		if player.Fatigue <= 0 {
-			return &CommandResult{Messages: []string{"You are too fatigued to attack!"}}
+			return &CommandResult{Messages: []string{i18n.T("You are too fatigued to attack!")}}
 		}
 	}
 
@@ -957,7 +958,7 @@ func (e *GameEngine) doBackstab(ctx context.Context, player *Player, target stri
 		weaponDef = e.items[player.Wielded.Archetype]
 	}
 	if weaponDef == nil || (weaponDef.Type != "PUNCTURE_WEAPON" && weaponDef.Type != "STABTHROWN") {
-		return &CommandResult{Messages: []string{"You can only backstab with a puncture weapon such as a dagger or rapier."}}
+		return &CommandResult{Messages: []string{i18n.T("You can only backstab with a puncture weapon such as a dagger or rapier.")}}
 	}
 
 	// Backstab: attack from hidden with damage multiplier
@@ -1187,7 +1188,7 @@ func (e *GameEngine) handlePlayerDeath(player *Player, killerName string) []stri
 
 func (e *GameEngine) doDepart(player *Player) *CommandResult {
 	if !player.Dead {
-		return &CommandResult{Messages: []string{"You are not dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You are not dead.")}}
 	}
 
 	player.Dead = false
@@ -1339,18 +1340,18 @@ func (e *GameEngine) handleMonsterDeath(killer *Player, inst *MonsterInstance, d
 
 func (e *GameEngine) doFlee(ctx context.Context, player *Player) *CommandResult {
 	if player.CombatTarget == nil && !player.Joined {
-		return &CommandResult{Messages: []string{"You are not in combat."}}
+		return &CommandResult{Messages: []string{i18n.T("You are not in combat.")}}
 	}
 	if player.Dead {
-		return &CommandResult{Messages: []string{"You can't flee. You are dead."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't flee. You are dead.")}}
 	}
 	if player.Immobilized {
-		return &CommandResult{Messages: []string{"You are rooted to the spot!"}}
+		return &CommandResult{Messages: []string{i18n.T("You are rooted to the spot!")}}
 	}
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You have nowhere to flee!"}}
+		return &CommandResult{Messages: []string{i18n.T("You have nowhere to flee!")}}
 	}
 
 	type exitInfo struct {
@@ -1364,7 +1365,7 @@ func (e *GameEngine) doFlee(ctx context.Context, player *Player) *CommandResult 
 		}
 	}
 	if len(exits) == 0 {
-		return &CommandResult{Messages: []string{"There is nowhere to flee!"}}
+		return &CommandResult{Messages: []string{i18n.T("There is nowhere to flee!")}}
 	}
 
 	fleeChance := 50 + player.Quickness/5 + player.Agility/10

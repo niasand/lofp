@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 )
 
@@ -16,7 +17,7 @@ import (
 func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandResult {
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You can't mine here."}}
+		return &CommandResult{Messages: []string{i18n.T("You can't mine here.")}}
 	}
 
 	// Determine mine grade
@@ -29,7 +30,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 		grade = "C"
 	}
 	if grade == "" {
-		return &CommandResult{Messages: []string{"There is nothing to mine here."}}
+		return &CommandResult{Messages: []string{i18n.T("There is nothing to mine here.")}}
 	}
 
 	// Check for mining tool (wielded or in inventory)
@@ -53,7 +54,7 @@ func (e *GameEngine) doMineReal(ctx context.Context, player *Player) *CommandRes
 		}
 	}
 	if !hasTool {
-		return &CommandResult{Messages: []string{"You need a mining tool (pickaxe, hammer, or shovel) to mine."}}
+		return &CommandResult{Messages: []string{i18n.T("You need a mining tool (pickaxe, hammer, or shovel) to mine.")}}
 	}
 
 	// Mining skill check
