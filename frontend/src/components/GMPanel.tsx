@@ -89,11 +89,11 @@ export default function GMPanel({ characterName }: Props) {
   const saveScript = () => {
     const filename = editorFilename.trim()
     if (!filename) {
-      setStatus({ type: 'error', message: 'Filename is required' })
+      setStatus({ type: 'error', message: t('gm.scripts.filenameRequired') })
       return
     }
     if (!editorContent.trim()) {
-      setStatus({ type: 'error', message: 'Script content is required' })
+      setStatus({ type: 'error', message: t('gm.scripts.contentRequired') })
       return
     }
     setSaving(true)
@@ -110,13 +110,13 @@ export default function GMPanel({ characterName }: Props) {
       .then(async r => {
         const data = await r.json()
         if (!r.ok) {
-          setStatus({ type: 'error', message: data.error || 'Save failed' })
+          setStatus({ type: 'error', message: data.error || t('gm.scripts.saveFailed') })
           return
         }
         const stats = data.stats
         setStatus({
           type: 'success',
-          message: `Saved & applied: ${stats.rooms} rooms, ${stats.items} items, ${stats.monsters} monsters`,
+          message: t('gm.scripts.savedApplied').replace('{rooms}', stats.rooms).replace('{items}', stats.items).replace('{monsters}', stats.monsters),
         })
         setIsNew(false)
         loadScripts()
@@ -129,7 +129,7 @@ export default function GMPanel({ characterName }: Props) {
 
   const deleteScript = () => {
     if (!selected) return
-    if (!confirm(`Delete script "${selected.filename}"? This cannot be undone.`)) return
+    if (!confirm(t('gm.scripts.deleteConfirm').replace('{filename}', selected.filename))) return
     fetch(`/api/gm/scripts/${encodeURIComponent(selected.filename)}`, {
       method: 'DELETE',
       headers: authHeaders(),
@@ -144,7 +144,7 @@ export default function GMPanel({ characterName }: Props) {
 
   const restoreVersion = (index: number) => {
     if (!selected) return
-    if (!confirm(`Restore version from ${new Date(selected.history[index].uploadedAt).toLocaleString()}?`)) return
+    if (!confirm(t('gm.scripts.restoreConfirm').replace('{date}', new Date(selected.history[index].uploadedAt).toLocaleString()))) return
     setSaving(true)
     fetch(`/api/gm/scripts/${encodeURIComponent(selected.filename)}/restore/${index}`, {
       method: 'POST',
@@ -153,10 +153,10 @@ export default function GMPanel({ characterName }: Props) {
       .then(async r => {
         const data = await r.json()
         if (!r.ok) {
-          setStatus({ type: 'error', message: data.error || 'Restore failed' })
+          setStatus({ type: 'error', message: data.error || t('gm.scripts.restoreFailed') })
           return
         }
-        setStatus({ type: 'success', message: 'Version restored and applied' })
+        setStatus({ type: 'success', message: t('gm.scripts.restored') })
         loadScripts()
         selectScript(selected.filename)
       })
@@ -194,8 +194,8 @@ export default function GMPanel({ characterName }: Props) {
         >
           ☰
         </button>
-        <span className="text-amber-400 font-bold">GM Scripts</span>
-        <span className="text-gray-600 text-xs ml-auto">Character: {characterName}</span>
+        <span className="text-amber-400 font-bold">{t('gm.scripts.title')}</span>
+        <span className="text-gray-600 text-xs ml-auto">{t('gm.scripts.character')} {characterName}</span>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -206,11 +206,11 @@ export default function GMPanel({ characterName }: Props) {
               onClick={newScript}
               className="w-full px-3 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded text-sm"
             >
-              + New Script
+              {t('gm.scripts.newScript')}
             </button>
           </div>
           {scripts.length === 0 && (
-            <div className="p-4 text-gray-600 text-center">No scripts uploaded yet</div>
+            <div className="p-4 text-gray-600 text-center">{t('gm.scripts.noScripts')}</div>
           )}
           {scripts.map(s => (
             <button
@@ -239,14 +239,14 @@ export default function GMPanel({ characterName }: Props) {
         <div className={`${sidebarOpen ? 'hidden sm:flex' : 'flex'} flex-col flex-1 overflow-hidden`}>
           {!editing ? (
             <div className="flex items-center justify-center h-full text-gray-600">
-              Select a script or create a new one
+              {t('gm.scripts.selectHint')}
             </div>
           ) : (
             <>
               {/* Metadata bar */}
               <div className="flex flex-wrap gap-2 items-end p-3 bg-[#111] border-b border-[#333]">
                 <div className="flex flex-col gap-1">
-                  <label className="text-gray-500 text-xs">Filename</label>
+                  <label className="text-gray-500 text-xs">{t('gm.scripts.filename')}</label>
                   <input
                     value={editorFilename}
                     onChange={e => setEditorFilename(e.target.value)}
@@ -256,7 +256,7 @@ export default function GMPanel({ characterName }: Props) {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-gray-500 text-xs">Name</label>
+                  <label className="text-gray-500 text-xs">{t('gm.scripts.name')}</label>
                   <input
                     value={editorName}
                     onChange={e => setEditorName(e.target.value)}
@@ -265,7 +265,7 @@ export default function GMPanel({ characterName }: Props) {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-gray-500 text-xs">Priority</label>
+                  <label className="text-gray-500 text-xs">{t('gm.scripts.priority')}</label>
                   <input
                     type="number"
                     value={editorPriority}
@@ -285,21 +285,21 @@ export default function GMPanel({ characterName }: Props) {
                     onClick={() => fileInputRef.current?.click()}
                     className="px-3 py-1.5 bg-[#333] hover:bg-[#444] text-gray-300 rounded text-sm"
                   >
-                    Upload .scr
+                    {t('gm.scripts.upload')}
                   </button>
                   <button
                     onClick={saveScript}
                     disabled={saving}
                     className="px-3 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded text-sm disabled:opacity-50"
                   >
-                    {saving ? 'Saving...' : 'Save & Apply'}
+                    {saving ? t('gm.scripts.saving') : t('gm.scripts.saveApply')}
                   </button>
                   {!isNew && (
                     <button
                       onClick={deleteScript}
                       className="px-3 py-1.5 bg-red-800 hover:bg-red-700 text-white rounded text-sm"
                     >
-                      Delete
+                      {t('gm.scripts.delete')}
                     </button>
                   )}
                 </div>
@@ -332,7 +332,7 @@ A vast hall stretches before you.
               {selected && selected.history && selected.history.length > 0 && (
                 <div className="border-t border-[#333] bg-[#111] max-h-40 overflow-y-auto">
                   <div className="px-3 py-1.5 text-gray-500 text-xs font-bold border-b border-[#222]">
-                    Version History ({selected.history.length})
+                    {t('gm.scripts.versionHistory')} ({selected.history.length})
                   </div>
                   {selected.history.map((v, i) => (
                     <div key={i} className="flex items-center justify-between px-3 py-1.5 border-b border-[#222] text-xs">
@@ -343,7 +343,7 @@ A vast hall stretches before you.
                         onClick={() => restoreVersion(i)}
                         className="text-amber-500 hover:text-amber-400"
                       >
-                        Restore
+                        {t('gm.scripts.restore')}
                       </button>
                     </div>
                   ))}
