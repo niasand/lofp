@@ -159,7 +159,7 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 		}
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You release your concentration on %s."), disc.Name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s relaxes %s concentration.", player.FirstName, player.Possessive())},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s relaxes %s concentration."), player.FirstName, player.Possessive())},
 		}
 	}
 
@@ -177,41 +177,41 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 		var msg string
 		switch disc.ID {
 		case 2: // Levitate
-			msg = "You feel yourself becoming lighter."
+			msg = i18n.T("You feel yourself becoming lighter.")
 		case 7: // Strengthen Steel
-			msg = "You focus your will into your weapon."
+			msg = i18n.T("You focus your will into your weapon.")
 		case 10: // Flight
-			msg = "You rise into the air."
+			msg = i18n.T("You rise into the air.")
 			player.Position = 4 // flying
 			player.CanFly = true
 		case 9: // Wall of Force
-			msg = "A shimmering wall of force surrounds you."
+			msg = i18n.T("A shimmering wall of force surrounds you.")
 		case 13: // Force Field
-			msg = "A powerful force field envelops you."
+			msg = i18n.T("A powerful force field envelops you.")
 		case 15: // Ethereal Projection
-			msg = "Your body becomes translucent as you shift into the ethereal plane."
+			msg = i18n.T("Your body becomes translucent as you shift into the ethereal plane.")
 			player.Hidden = true
 			player.EtherealActive = true
 		case 54: // Psychic Screen
-			msg = "A psychic screen forms around your mind."
+			msg = i18n.T("A psychic screen forms around your mind.")
 		case 57: // Psychic Shield
-			msg = "A psychic shield protects your mind."
+			msg = i18n.T("A psychic shield protects your mind.")
 		case 58: // Psychic Barrier
-			msg = "A psychic barrier reinforces your defenses."
+			msg = i18n.T("A psychic barrier reinforces your defenses.")
 		case 60: // Focus Skill
-			msg = "You sharpen your mental focus."
+			msg = i18n.T("You sharpen your mental focus.")
 		case 63: // Psychic Fortress
-			msg = "An impenetrable psychic fortress surrounds your mind."
+			msg = i18n.T("An impenetrable psychic fortress surrounds your mind.")
 		default:
-			msg = fmt.Sprintf("You activate %s.", disc.Name)
+			msg = fmt.Sprintf(i18n.T("You activate %s."), disc.Name)
 		}
 		result := &CommandResult{
 			Messages:      []string{msg},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates intently.", player.FirstName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates intently."), player.FirstName)},
 		}
 		if disc.RoundSec > 0 {
 			player.RoundTimeExpiry = time.Now().Add(time.Duration(disc.RoundSec) * time.Second)
-			result.Messages = append(result.Messages, fmt.Sprintf(" [Round: %d sec]", disc.RoundSec))
+			result.Messages = append(result.Messages, fmt.Sprintf(i18n.T(" [Round: %d sec]"), disc.RoundSec))
 		}
 		return result
 	}
@@ -224,14 +224,14 @@ func (e *GameEngine) doPreparePsi(player *Player, args []string) *CommandResult 
 
 	return &CommandResult{
 		Messages:      []string{fmt.Sprintf(i18n.T("You focus your mind on %s... (type PROJECT to release, or PROJECT <target>)"), disc.Name)},
-		RoomBroadcast: []string{fmt.Sprintf("%s closes %s eyes in concentration.", player.FirstName, player.Possessive())},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s closes %s eyes in concentration."), player.FirstName, player.Possessive())},
 	}
 }
 
 // listPsiDisciplines shows all known disciplines and their active status.
 func (e *GameEngine) listPsiDisciplines(player *Player) *CommandResult {
 	var msgs []string
-	msgs = append(msgs, "Your psionic disciplines:")
+	msgs = append(msgs, i18n.T("Your psionic disciplines:"))
 	msgs = append(msgs, "")
 
 	// Determine which disciplines the player knows based on skill levels
@@ -243,7 +243,7 @@ func (e *GameEngine) listPsiDisciplines(player *Player) *CommandResult {
 		return &CommandResult{Messages: []string{i18n.T("You have no training in Psionics.")}}
 	}
 
-	msgs = append(msgs, fmt.Sprintf("%-4s %-25s %-6s %-6s %s", "#", "Discipline", "Cost", "School", "Status"))
+	msgs = append(msgs, fmt.Sprintf("%-4s %-25s %-6s %-6s %s", "#", i18n.T("Discipline"), i18n.T("Cost"), i18n.T("School"), i18n.T("Status")))
 	msgs = append(msgs, fmt.Sprintf("%-4s %-25s %-6s %-6s %s", "--", "----------", "----", "------", "------"))
 
 	for _, disc := range psiRegistry {
@@ -260,15 +260,15 @@ func (e *GameEngine) listPsiDisciplines(player *Player) *CommandResult {
 
 		status := ""
 		if player.ActivePsi != nil && player.ActivePsi[disc.ID] {
-			status = "[ACTIVE]"
+			status = i18n.T("[ACTIVE]")
 		}
 		if player.PreparedPsi == disc.ID {
-			status = "[PREPARED]"
+			status = i18n.T("[PREPARED]")
 		}
 
-		schoolAbbr := "MoMat"
+		schoolAbbr := i18n.T("MoMat")
 		if disc.School == "Mind over Mind" {
-			schoolAbbr = "MoMnd"
+			schoolAbbr = i18n.T("MoMnd")
 		}
 
 		msgs = append(msgs, fmt.Sprintf("%-4d %-25s %-6d %-6s %s", disc.ID, disc.Name, disc.PsiCost, schoolAbbr, status))
@@ -324,7 +324,7 @@ func (e *GameEngine) doProjectPsi(ctx context.Context, player *Player, args []st
 	if rand.Intn(100) >= castChance {
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project %s but fail to focus the energy!"), disc.Name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates intensely but nothing happens.", player.FirstName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates intensely but nothing happens."), player.FirstName)},
 		}
 	}
 
@@ -335,8 +335,8 @@ func (e *GameEngine) doProjectPsi(ctx context.Context, player *Player, args []st
 		result = e.projectDamage(player, disc, args)
 	case "defense":
 		player.DefenseBonus += disc.DefBonus
-		result.Messages = []string{fmt.Sprintf("You project %s! (+%d defense)", disc.Name, disc.DefBonus)}
-		result.RoomBroadcast = []string{fmt.Sprintf("%s concentrates and a shimmering barrier appears.", player.FirstName)}
+		result.Messages = []string{fmt.Sprintf(i18n.T("You project %s! (+%d defense)"), disc.Name, disc.DefBonus)}
+		result.RoomBroadcast = []string{fmt.Sprintf(i18n.T("%s concentrates and a shimmering barrier appears."), player.FirstName)}
 	case "buff":
 		result = e.projectBuff(player, disc)
 	case "utility":
@@ -347,12 +347,12 @@ func (e *GameEngine) doProjectPsi(ctx context.Context, player *Player, args []st
 		} else if disc.ID == 8 { // Manipulate Lock
 			result = e.projectManipulateLock(player, args)
 		} else {
-			result.Messages = []string{fmt.Sprintf("You project %s.", disc.Name)}
-			result.RoomBroadcast = []string{fmt.Sprintf("%s concentrates intensely.", player.FirstName)}
+			result.Messages = []string{fmt.Sprintf(i18n.T("You project %s."), disc.Name)}
+			result.RoomBroadcast = []string{fmt.Sprintf(i18n.T("%s concentrates intensely."), player.FirstName)}
 		}
 	default:
-		result.Messages = []string{fmt.Sprintf("You project %s.", disc.Name)}
-		result.RoomBroadcast = []string{fmt.Sprintf("%s concentrates intensely.", player.FirstName)}
+		result.Messages = []string{fmt.Sprintf(i18n.T("You project %s."), disc.Name)}
+		result.RoomBroadcast = []string{fmt.Sprintf(i18n.T("%s concentrates intensely."), player.FirstName)}
 	}
 
 	if disc.RoundSec > 0 {
@@ -376,7 +376,7 @@ func (e *GameEngine) projectImmobilize(player *Player, args []string) *CommandRe
 		name := FormatMonsterName(def, e.monAdjs)
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project Immobilize at %s! Invisible force bands wrap around it, freezing it in place."), name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates and %s freezes in place.", player.FirstName, name)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates and %s freezes in place."), player.FirstName, name)},
 		}
 	}
 
@@ -386,9 +386,9 @@ func (e *GameEngine) projectImmobilize(player *Player, args []string) *CommandRe
 		found.Immobilized = true
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project Immobilize at %s! Invisible force bands wrap around them."), found.FirstName)},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates and %s freezes in place.", player.FirstName, found.FirstName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates and %s freezes in place."), player.FirstName, found.FirstName)},
 			TargetName:    found.FirstName,
-			TargetMsg:     []string{"Invisible force bands wrap around you, making it impossible to move!"},
+			TargetMsg:     []string{i18n.T("Invisible force bands wrap around you, making it impossible to move!")},
 		}
 	}
 
@@ -436,7 +436,7 @@ func (e *GameEngine) projectDamage(player *Player, disc *PsiDiscipline, args []s
 	if resist > 0 && rand.Intn(100) < resist {
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project %s at a %s, but it resists!"), disc.Name, name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates at a %s, but it resists!", player.FirstName, name)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates at a %s, but it resists!"), player.FirstName, name)},
 		}
 	}
 
@@ -451,52 +451,52 @@ func (e *GameEngine) projectDamage(player *Player, disc *PsiDiscipline, args []s
 	if dmg <= 0 {
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project %s at a %s, but it seems unaffected!"), disc.Name, name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s concentrates at a %s!", player.FirstName, name)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates at a %s!"), player.FirstName, name)},
 		}
 	}
 
 	killed := e.damageMonster(inst.ID, dmg)
 	if killed {
 		deathText := def.TextOverrides["TEXD"]
-		deathMsg := fmt.Sprintf("A %s collapses, dead!", name)
+		deathMsg := fmt.Sprintf(i18n.T("A %s collapses, dead!"), name)
 		if deathText != "" {
-			deathMsg = fmt.Sprintf("A %s %s", name, deathText)
+			deathMsg = fmt.Sprintf(i18n.T("A %s %s"), name, deathText)
 		}
 		e.handleMonsterDeath(player, inst, def)
 		player.CombatTarget = nil
 		player.Joined = false
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You project %s at a %s for %d damage!"), disc.Name, name, dmg), deathMsg},
-			RoomBroadcast: []string{fmt.Sprintf("%s focuses psychic energy at a %s!", player.FirstName, name), deathMsg},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s focuses psychic energy at a %s!"), player.FirstName, name), deathMsg},
 		}
 	}
 	return &CommandResult{
 		Messages:      []string{fmt.Sprintf(i18n.T("You project %s at a %s for %d damage!"), disc.Name, name, dmg)},
-		RoomBroadcast: []string{fmt.Sprintf("%s focuses psychic energy at a %s!", player.FirstName, name)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s focuses psychic energy at a %s!"), player.FirstName, name)},
 	}
 }
 
 func (e *GameEngine) projectBuff(player *Player, disc *PsiDiscipline) *CommandResult {
-	msg := fmt.Sprintf("You project %s.", disc.Name)
+	msg := fmt.Sprintf(i18n.T("You project %s."), disc.Name)
 	switch disc.ID {
 	case 2: // Levitate
 		player.CanFly = true
-		msg = "You project Levitate. You feel lighter and begin to float."
+		msg = i18n.T("You project Levitate. You feel lighter and begin to float.")
 	case 7: // Strengthen Steel
-		msg = "You project Strengthen Steel. Your weapon gleams with psychic energy. (+15 weapon bonus)"
+		msg = i18n.T("You project Strengthen Steel. Your weapon gleams with psychic energy. (+15 weapon bonus)")
 	case 10: // Flight
 		player.CanFly = true
-		msg = "You project Flight. You rise into the air!"
+		msg = i18n.T("You project Flight. You rise into the air!")
 	case 15: // Ethereal Projection
 		player.Hidden = true
 		player.EtherealActive = true
-		msg = "You project Ethereal Projection. Your body becomes translucent."
+		msg = i18n.T("You project Ethereal Projection. Your body becomes translucent.")
 	case 60: // Focus Skill
-		msg = "You project Focus Skill. Your mind sharpens. (+25 to next skill roll)"
+		msg = i18n.T("You project Focus Skill. Your mind sharpens. (+25 to next skill roll)")
 	}
 	return &CommandResult{
 		Messages:      []string{msg},
-		RoomBroadcast: []string{fmt.Sprintf("%s concentrates intensely.", player.FirstName)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s concentrates intensely."), player.FirstName)},
 	}
 }
 
@@ -525,14 +525,14 @@ func (e *GameEngine) projectTeleport(ctx context.Context, player *Player, args [
 	lookResult := e.doLook(player)
 	result := &CommandResult{
 		Messages:      append([]string{i18n.T("You project Teleportation! The world blurs around you...")}, lookResult.Messages...),
-		RoomBroadcast: []string{fmt.Sprintf("%s appears in a flash of psionic energy.", player.FirstName)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s appears in a flash of psionic energy."), player.FirstName)},
 		RoomName:      lookResult.RoomName,
 		RoomDesc:      lookResult.RoomDesc,
 		Exits:         lookResult.Exits,
 		Items:         lookResult.Items,
 	}
 	result.OldRoom = oldRoom
-	result.OldRoomMsg = []string{fmt.Sprintf("%s vanishes in a flash of psionic energy!", player.FirstName)}
+	result.OldRoomMsg = []string{fmt.Sprintf(i18n.T("%s vanishes in a flash of psionic energy!"), player.FirstName)}
 	return result
 }
 
@@ -568,13 +568,13 @@ func (e *GameEngine) projectManipulateLock(player *Player, args []string) *Comma
 			e.notifyRoomChange(RoomChange{RoomNumber: player.RoomNumber, Type: "item_state", ItemRef: ri.Ref, NewState: "CLOSED"})
 			return &CommandResult{
 				Messages:      []string{fmt.Sprintf(i18n.T("You concentrate on %s... The lock clicks open!"), displayName)},
-				RoomBroadcast: []string{fmt.Sprintf("%s stares intently at %s.", player.FirstName, displayName)},
+				RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s stares intently at %s."), player.FirstName, displayName)},
 			}
 		}
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You concentrate on %s but the lock resists your mental force."), displayName)},
-			RoomBroadcast: []string{fmt.Sprintf("%s stares intently at %s.", player.FirstName, displayName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s stares intently at %s."), player.FirstName, displayName)},
 		}
 	}
-	return &CommandResult{Messages: []string{"You don't see anything locked here."}}
+	return &CommandResult{Messages: []string{i18n.T("You don't see anything locked here.")}}
 }

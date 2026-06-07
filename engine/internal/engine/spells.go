@@ -220,7 +220,7 @@ func (e *GameEngine) doPrepareSpell(player *Player, args []string) *CommandResul
 
 	return &CommandResult{
 		Messages:      []string{fmt.Sprintf(i18n.T("You begin preparing %s... (type CAST to release, or CAST <target>)"), spell.Name)},
-		RoomBroadcast: []string{fmt.Sprintf("%s begins preparing a spell.", player.FirstName)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s begins preparing a spell."), player.FirstName)},
 	}
 }
 
@@ -291,7 +291,7 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 		player.RoundTimeExpiry = time.Now().Add(3 * time.Second)
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Extreme failure! The spell backfires!"), castChance, castRoll)},
-			RoomBroadcast: []string{fmt.Sprintf("Magic begins to form around %s but then fizzles.", player.FirstName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("Magic begins to form around %s but then fizzles."), player.FirstName)},
 		}
 	}
 
@@ -301,14 +301,14 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 		player.RoundTimeExpiry = time.Now().Add(2 * time.Second)
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Failure."), castChance, castRoll)},
-			RoomBroadcast: []string{fmt.Sprintf("Magic begins to form around %s but then fizzles.", player.FirstName)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("Magic begins to form around %s but then fizzles."), player.FirstName)},
 		}
 	}
 
 	// Show success roll to caster
-	successMsg := fmt.Sprintf("[Success: %d%%, Roll %d] Success!", castChance, castRoll)
+	successMsg := fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Success!"), castChance, castRoll)
 	if spectacularSuccess {
-		successMsg = fmt.Sprintf("[Success: %d%%, Roll %d] Spectacular success!", castChance, castRoll)
+		successMsg = fmt.Sprintf(i18n.T("[Success: %d%%, Roll %d] Spectacular success!"), castChance, castRoll)
 	}
 
 	result := &CommandResult{}
@@ -320,13 +320,13 @@ func (e *GameEngine) doCastSpell(ctx context.Context, player *Player, args []str
 		result = e.castHealSpell(ctx, player, spell, args)
 	case "defense":
 		player.DefenseBonus += spell.DefBonus
-		result.Messages = []string{fmt.Sprintf("You gesture and %s takes effect! (+%d defense)", spell.Name, spell.DefBonus)}
-		result.RoomBroadcast = []string{fmt.Sprintf("%s gestures and casts %s.", player.FirstName, spell.Name)}
+		result.Messages = []string{fmt.Sprintf(i18n.T("You gesture and %s takes effect! (+%d defense)"), spell.Name, spell.DefBonus)}
+		result.RoomBroadcast = []string{fmt.Sprintf(i18n.T("%s gestures and casts %s."), player.FirstName, spell.Name)}
 	case "buff":
 		result = e.castBuffSpell(player, spell, args)
 	default:
-		result.Messages = []string{fmt.Sprintf("You gesture and cast %s.", spell.Name)}
-		result.RoomBroadcast = []string{fmt.Sprintf("%s gestures and casts %s.", player.FirstName, spell.Name)}
+		result.Messages = []string{fmt.Sprintf(i18n.T("You gesture and cast %s."), spell.Name)}
+		result.RoomBroadcast = []string{fmt.Sprintf(i18n.T("%s gestures and casts %s."), player.FirstName, spell.Name)}
 	}
 
 	// Prepend success roll message
@@ -375,7 +375,7 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 		if resistRoll < def.MagicResist {
 			return &CommandResult{
 				Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s at a %s, but it resists the spell!"), spell.Name, name)},
-				RoomBroadcast: []string{fmt.Sprintf("%s casts %s at a %s, but it resists!", player.FirstName, spell.Name, name)},
+				RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s casts %s at a %s, but it resists!"), player.FirstName, spell.Name, name)},
 			}
 		}
 	}
@@ -391,7 +391,7 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 	if dmg <= 0 {
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You cast %s at a %s, but it seems unaffected!"), spell.Name, name)},
-			RoomBroadcast: []string{fmt.Sprintf("%s casts %s at a %s!", player.FirstName, spell.Name, name)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s casts %s at a %s!"), player.FirstName, spell.Name, name)},
 		}
 	}
 
@@ -403,28 +403,28 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 	article := "a "
 
 	// Spell flavor text based on damage type
-	flavorSelf := fmt.Sprintf("%s forms a bolt of energy and hurls it at %s%s!", player.FirstName, article, name)
-	flavorDmg := fmt.Sprintf("%s %s to %s. [%d Damage]", damageSeverity(dmg), spellDmgNoun(spell.DmgType), randomBodyPart(def.BodyType), dmg)
+	flavorSelf := fmt.Sprintf(i18n.T("%s forms a bolt of energy and hurls it at %s%s!"), player.FirstName, article, name)
+	flavorDmg := fmt.Sprintf(i18n.T("%s %s to %s. [%d Damage]"), damageSeverity(dmg), spellDmgNoun(spell.DmgType), randomBodyPart(def.BodyType), dmg)
 	switch spell.DmgType {
 	case "heat":
-		flavorSelf = fmt.Sprintf("%s forms a ball of flame and hurls it at %s%s!", player.FirstName, article, name)
-		flavorDmg = fmt.Sprintf("%s burn to %s. [%d Damage]", damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
+		flavorSelf = fmt.Sprintf(i18n.T("%s forms a ball of flame and hurls it at %s%s!"), player.FirstName, article, name)
+		flavorDmg = fmt.Sprintf(i18n.T("%s burn to %s. [%d Damage]"), damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
 	case "cold":
-		flavorSelf = fmt.Sprintf("%s forms a freezing sphere from the air and hurls it at %s%s!", player.FirstName, article, name)
-		flavorDmg = fmt.Sprintf("%s blast to %s. [%d Damage]", damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
+		flavorSelf = fmt.Sprintf(i18n.T("%s forms a freezing sphere from the air and hurls it at %s%s!"), player.FirstName, article, name)
+		flavorDmg = fmt.Sprintf(i18n.T("%s blast to %s. [%d Damage]"), damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
 	case "electric":
-		flavorSelf = fmt.Sprintf("%s releases a bolt of lightning at %s%s!", player.FirstName, article, name)
-		flavorDmg = fmt.Sprintf("%s shock to %s. [%d Damage]", damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
+		flavorSelf = fmt.Sprintf(i18n.T("%s releases a bolt of lightning at %s%s!"), player.FirstName, article, name)
+		flavorDmg = fmt.Sprintf(i18n.T("%s shock to %s. [%d Damage]"), damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
 	case "crushing":
-		flavorSelf = fmt.Sprintf("%s hurls a force blast at %s%s!", player.FirstName, article, name)
-		flavorDmg = fmt.Sprintf("%s strike to %s. [%d Damage]", damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
+		flavorSelf = fmt.Sprintf(i18n.T("%s hurls a force blast at %s%s!"), player.FirstName, article, name)
+		flavorDmg = fmt.Sprintf(i18n.T("%s strike to %s. [%d Damage]"), damageSeverity(dmg), randomBodyPart(def.BodyType), dmg)
 	}
 
 	killed := e.damageMonster(inst.ID, dmg)
 
 	var msgs, roomMsgs []string
-	msgs = append(msgs, fmt.Sprintf("You gesture at %s%s.", article, name))
-	roomMsgs = append(roomMsgs, fmt.Sprintf("%s gestures at %s%s.", player.FirstName, article, name))
+	msgs = append(msgs, fmt.Sprintf(i18n.T("You gesture at %s%s."), article, name))
+	roomMsgs = append(roomMsgs, fmt.Sprintf(i18n.T("%s gestures at %s%s."), player.FirstName, article, name))
 	msgs = append(msgs, flavorSelf)
 	roomMsgs = append(roomMsgs, flavorSelf)
 	msgs = append(msgs, flavorDmg)
@@ -432,11 +432,11 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 	if killed {
 		deathText := def.TextOverrides["TEXD"]
 		if deathText != "" {
-			msgs = append(msgs, fmt.Sprintf("A %s %s", name, deathText))
-			roomMsgs = append(roomMsgs, fmt.Sprintf("A %s %s", name, deathText))
+			msgs = append(msgs, fmt.Sprintf(i18n.T("A %s %s"), name, deathText))
+			roomMsgs = append(roomMsgs, fmt.Sprintf(i18n.T("A %s %s"), name, deathText))
 		} else {
-			msgs = append(msgs, "He collapses, dead.")
-			roomMsgs = append(roomMsgs, fmt.Sprintf("A %s collapses, dead!", name))
+			msgs = append(msgs, i18n.T("He collapses, dead."))
+			roomMsgs = append(roomMsgs, fmt.Sprintf(i18n.T("A %s collapses, dead!"), name))
 		}
 		e.handleMonsterDeath(player, inst, def)
 		player.CombatTarget = nil
@@ -449,7 +449,7 @@ func (e *GameEngine) castDamageSpell(player *Player, spell *SpellDef, args []str
 func (e *GameEngine) castHealSpell(ctx context.Context, player *Player, spell *SpellDef, args []string) *CommandResult {
 	// Heal self by default, or target if specified
 	target := player
-	targetName := "yourself"
+	targetName := i18n.T("yourself")
 
 	if len(args) > 0 {
 		t := strings.ToLower(strings.Join(args, " "))
@@ -471,20 +471,20 @@ func (e *GameEngine) castHealSpell(ctx context.Context, player *Player, spell *S
 	if target == player {
 		return &CommandResult{
 			Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s on yourself, healing %d body points. [BP: %d/%d]"), spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
-			RoomBroadcast: []string{fmt.Sprintf("%s gestures and casts %s.", player.FirstName, spell.Name)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s gestures and casts %s."), player.FirstName, spell.Name)},
 		}
 	}
 
 	return &CommandResult{
 		Messages:      []string{fmt.Sprintf(i18n.T("You gesture and cast %s on %s, healing %d body points."), spell.Name, targetName, heal)},
-		RoomBroadcast: []string{fmt.Sprintf("%s gestures and casts %s on %s.", player.FirstName, spell.Name, targetName)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s gestures and casts %s on %s."), player.FirstName, spell.Name, targetName)},
 		TargetName:    target.FirstName,
-		TargetMsg:     []string{fmt.Sprintf("%s casts %s on you, healing %d body points. [BP: %d/%d]", player.FirstName, spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
+		TargetMsg:     []string{fmt.Sprintf(i18n.T("%s casts %s on you, healing %d body points. [BP: %d/%d]"), player.FirstName, spell.Name, heal, target.BodyPoints, target.MaxBodyPoints)},
 	}
 }
 
 func (e *GameEngine) castBuffSpell(player *Player, spell *SpellDef, args []string) *CommandResult {
-	msg := fmt.Sprintf("You gesture and cast %s.", spell.Name)
+	msg := fmt.Sprintf(i18n.T("You gesture and cast %s."), spell.Name)
 	switch spell.ID {
 	case 202: // Enchantment I — enchant a weapon in inventory
 		if len(args) == 0 {
@@ -509,40 +509,40 @@ func (e *GameEngine) castBuffSpell(player *Player, spell *SpellDef, args []strin
 			itemName := e.formatItemName(def, ii.Adj1, ii.Adj2, ii.Adj3)
 			return &CommandResult{
 				Messages:      []string{fmt.Sprintf(i18n.T("A soft glow surrounds %s and then sinks into it."), itemName)},
-				RoomBroadcast: []string{fmt.Sprintf("A soft glow surrounds an item %s is holding.", player.FirstName)},
+				RoomBroadcast: []string{fmt.Sprintf(i18n.T("A soft glow surrounds an item %s is holding."), player.FirstName)},
 			}
 		}
 		return &CommandResult{Messages: []string{i18n.T("You don't have a weapon matching that.")}}
 	case 207: // Strength I
 		player.Strength += 10
-		msg = fmt.Sprintf("You gesture and cast %s. You feel stronger! (+10 STR)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You feel stronger! (+10 STR)"), spell.Name)
 	case 208: // Strength II
 		player.Strength += 20
-		msg = fmt.Sprintf("You gesture and cast %s. You feel much stronger! (+20 STR)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You feel much stronger! (+20 STR)"), spell.Name)
 	case 209: // Strength III
 		player.Strength += 30
-		msg = fmt.Sprintf("You gesture and cast %s. Immense strength surges through you! (+30 STR)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. Immense strength surges through you! (+30 STR)"), spell.Name)
 	case 210: // Haste
-		msg = fmt.Sprintf("You gesture and cast %s. The world seems to slow down around you.", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. The world seems to slow down around you."), spell.Name)
 	case 224: // Fly
 		player.CanFly = true
-		msg = fmt.Sprintf("You gesture and cast %s. You rise into the air!", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You rise into the air!"), spell.Name)
 	case 225: // Invisibility
 		player.Invisible = true
-		msg = fmt.Sprintf("You gesture and cast %s. You fade from sight.", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You fade from sight."), spell.Name)
 	case 513: // Agility I
 		player.Agility += 10
-		msg = fmt.Sprintf("You gesture and cast %s. You feel more agile! (+10 AGI)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You feel more agile! (+10 AGI)"), spell.Name)
 	case 514: // Agility II
 		player.Agility += 20
-		msg = fmt.Sprintf("You gesture and cast %s. You feel much more agile! (+20 AGI)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. You feel much more agile! (+20 AGI)"), spell.Name)
 	case 515: // Agility III
 		player.Agility += 30
-		msg = fmt.Sprintf("You gesture and cast %s. Incredible agility flows through you! (+30 AGI)", spell.Name)
+		msg = fmt.Sprintf(i18n.T("You gesture and cast %s. Incredible agility flows through you! (+30 AGI)"), spell.Name)
 	}
 	return &CommandResult{
 		Messages:      []string{msg},
-		RoomBroadcast: []string{fmt.Sprintf("%s gestures and casts %s.", player.FirstName, spell.Name)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s gestures and casts %s."), player.FirstName, spell.Name)},
 	}
 }
 
@@ -565,14 +565,14 @@ func elementalImmunityType(dmgType string) int {
 func spellDmgNoun(dmgType string) string {
 	switch dmgType {
 	case "heat":
-		return "burn"
+		return i18n.T("burn")
 	case "cold":
-		return "blast"
+		return i18n.T("blast")
 	case "electric":
-		return "shock"
+		return i18n.T("shock")
 	case "crushing":
-		return "strike"
+		return i18n.T("strike")
 	default:
-		return "blast"
+		return i18n.T("blast")
 	}
 }

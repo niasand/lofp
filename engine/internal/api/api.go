@@ -619,8 +619,8 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 				"bot login via API key", player.RoomNumber, "")
 			if !player.GMInvis && !player.GMHidden && !player.IsBot {
 				s.broadcastGlobal(player.FirstName,
-					[]string{fmt.Sprintf("** %s has just entered the Realms.", player.FirstName)})
-				s.broadcastToRoom(player.RoomNumber, player.FirstName, []string{fmt.Sprintf("%s arrives.", player.FirstName)})
+					[]string{fmt.Sprintf("** %s", player.FirstName) + " " + i18n.T("has just entered the Realms.")})
+				s.broadcastToRoom(player.RoomNumber, player.FirstName, []string{fmt.Sprintf(i18n.T("%s arrives."), player.FirstName)})
 			}
 			result := s.engine.EnterRoom(ctx, player)
 			result.PlayerState = player
@@ -852,10 +852,10 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 			if !session.Player.GMInvis && !session.Player.GMHidden {
 				if !session.quitSent {
 					s.broadcastGlobal(session.Player.FirstName,
-						[]string{fmt.Sprintf("** %s has just left the Realms.", session.Player.FirstName)})
+						[]string{fmt.Sprintf("** %s", session.Player.FirstName) + " " + i18n.T("has just left the Realms.")})
 				}
 				s.broadcastToRoom(session.Player.RoomNumber, session.Player.FirstName,
-					[]string{fmt.Sprintf("%s fades from the Realms.", session.Player.FirstName)})
+					[]string{fmt.Sprintf(i18n.T("%s fades from the Realms."), session.Player.FirstName)})
 			}
 			s.hub.UnregisterPlayer(session.Player.FirstName)
 		}

@@ -116,17 +116,17 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 	}
 	if len(args) == 0 {
 		var msgs []string
-		msgs = append(msgs, "Training available here:")
+		msgs = append(msgs, i18n.T("Training available here:"))
 		for _, ts := range room.TrainingSkills {
 			name := SkillNames[ts.SkillID]
 			if name == "" {
-				name = fmt.Sprintf("Skill #%d", ts.SkillID)
+				name = fmt.Sprintf(i18n.T("Skill #%d"), ts.SkillID)
 			}
 			currentLvl := player.Skills[ts.SkillID]
 			bpCost := skillBPCost(ts.SkillID, currentLvl)
-			msgs = append(msgs, fmt.Sprintf("  %s (rank %d/%d, next: %d BP)", name, currentLvl, ts.MaxLevel, bpCost))
+			msgs = append(msgs, fmt.Sprintf(i18n.T("  %s (rank %d/%d, next: %d BP)"), name, currentLvl, ts.MaxLevel, bpCost))
 		}
-		msgs = append(msgs, fmt.Sprintf("Your build points: %d", player.BuildPoints))
+		msgs = append(msgs, fmt.Sprintf(i18n.T("Your build points: %d"), player.BuildPoints))
 		return &CommandResult{Messages: msgs}
 	}
 
@@ -199,7 +199,7 @@ func (e *GameEngine) doTrainWithBP(ctx context.Context, player *Player, args []s
 
 		goldMsg := ""
 		if goldCost > 0 {
-			goldMsg = fmt.Sprintf(", %d gold", goldCost)
+			goldMsg = fmt.Sprintf(i18n.T(", %d gold"), goldCost)
 		}
 		return &CommandResult{
 			Messages: []string{fmt.Sprintf(i18n.T("You train in %s to rank %d. (-%d BP%s, %d BP remaining)"), name, currentLvl+1, bpCost, goldMsg, player.BuildPoints)},
@@ -235,7 +235,7 @@ func (e *GameEngine) doAnoint(ctx context.Context, player *Player, args []string
 	}
 	return &CommandResult{
 		Messages: []string{fmt.Sprintf(i18n.T("You carefully apply a level %d poison to your %s."), poisonLevel, wepName)},
-		RoomBroadcast: []string{fmt.Sprintf("%s applies something to %s weapon.", player.FirstName, player.Possessive())},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s applies something to %s weapon."), player.FirstName, player.Possessive())},
 		PlayerState: player,
 	}
 }
@@ -309,15 +309,15 @@ func (e *GameEngine) doTend(ctx context.Context, player *Player, args []string) 
 	if target == player {
 		return &CommandResult{
 			Messages: []string{fmt.Sprintf(i18n.T("You tend to your wounds, healing %d body points. [Round: 5 sec] [BP: %d/%d]"), heal, target.BodyPoints, target.MaxBodyPoints)},
-			RoomBroadcast: []string{fmt.Sprintf("%s tends to %s wounds.", player.FirstName, player.Possessive())},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s tends to %s wounds."), player.FirstName, player.Possessive())},
 			PlayerState: player,
 		}
 	}
 
 	return &CommandResult{
 		Messages: []string{fmt.Sprintf(i18n.T("You tend to %s's wounds, healing %d body points."), targetName, heal)},
-		RoomBroadcast: []string{fmt.Sprintf("%s tends to %s's wounds.", player.FirstName, targetName)},
+		RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s tends to %s's wounds."), player.FirstName, targetName)},
 		TargetName: target.FirstName,
-		TargetMsg: []string{fmt.Sprintf("%s tends to your wounds, healing %d body points. [BP: %d/%d]", player.FirstName, heal, target.BodyPoints, target.MaxBodyPoints)},
+		TargetMsg: []string{fmt.Sprintf(i18n.T("%s tends to your wounds, healing %d body points. [BP: %d/%d]"), player.FirstName, heal, target.BodyPoints, target.MaxBodyPoints)},
 	}
 }

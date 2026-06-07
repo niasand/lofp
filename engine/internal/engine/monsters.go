@@ -297,16 +297,16 @@ func (e *GameEngine) MonsterLookLines(roomNum int) []string {
 	if len(names) == 1 {
 		joined = names[0]
 	} else {
-		joined = strings.Join(names[:len(names)-1], ", ") + " and " + names[len(names)-1]
+		joined = strings.Join(names[:len(names)-1], ", ") + " " + i18n.T("and") + " " + names[len(names)-1]
 	}
 	return []string{fmt.Sprintf(i18n.T("You also see %s."), joined)}
 }
 
 // directionNames maps exit keys to direction words for monster movement text.
 var directionNames = map[string]string{
-	"N": "north", "S": "south", "E": "east", "W": "west",
-	"NE": "northeast", "NW": "northwest", "SE": "southeast", "SW": "southwest",
-	"U": "up", "D": "down", "O": "out",
+	"N": i18n.T("north"), "S": i18n.T("south"), "E": i18n.T("east"), "W": i18n.T("west"),
+	"NE": i18n.T("northeast"), "NW": i18n.T("northwest"), "SE": i18n.T("southeast"), "SW": i18n.T("southwest"),
+	"U": i18n.T("up"), "D": i18n.T("down"), "O": i18n.T("out"),
 }
 
 // StartMonsterLoop starts the background goroutine for monster behavior.

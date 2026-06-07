@@ -691,8 +691,8 @@ func (s *Server) sshCreateCharacter(sc *sshConn, ctx context.Context, accountID 
 
 	sc.writeLine("")
 	sc.writeLine(i18n.T("Races:"))
-	sc.writeLine("  1) Human      2) Aelfen     3) Highlander  4) Wolfling")
-	sc.writeLine("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral")
+	sc.writeLine(i18n.T("  1) Human      2) Aelfen     3) Highlander  4) Wolfling"))
+	sc.writeLine(i18n.T("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral"))
 	sc.writePrompt(i18n.T("Race (1-8): "))
 	raceStr, err := sc.readLine(time.Minute, true)
 	if err != nil {

@@ -1368,8 +1368,8 @@ func (s *Server) telnetCreateCharacter(tc *telnetConn, ctx context.Context, acco
 
 	tc.writeLine("")
 	tc.writeLine(i18n.T("Races:"))
-	tc.writeLine("  1) Human      2) Aelfen     3) Highlander  4) Wolfling")
-	tc.writeLine("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral")
+	tc.writeLine(i18n.T("  1) Human      2) Aelfen     3) Highlander  4) Wolfling"))
+	tc.writeLine(i18n.T("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral"))
 	tc.writePrompt(i18n.T("Race (1-8): "))
 	raceStr, err := tc.readLine(time.Minute)
 	if err != nil {

@@ -16,7 +16,11 @@ var (
 )
 
 func init() {
-	if loc := os.Getenv("LOCALE"); loc != "" {
+	loc := os.Getenv("LOCALE")
+	if loc == "" {
+		loc = os.Getenv("VITE_LOCALE") // fallback: frontend may set this in .env
+	}
+	if loc != "" {
 		currentLocale = strings.ToLower(loc)
 	}
 }
