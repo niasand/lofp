@@ -43,3 +43,5 @@
 **教训**：多个入口路径（WS/telnet/command）处理同一逻辑时，容易遗漏字段赋值。应考虑提取公共的 `enterAndSendResult(session, player)` 函数消除重复。
 [AI-REVIEW] Large commit detected: 662 lines added. Consider reviewing for AI Psychosis.
 [AI-REVIEW] Large commit detected: 1184 lines added. Consider reviewing for AI Psychosis.
+[AI-REVIEW] Large commit detected: 1201 lines added. Consider reviewing for AI Psychosis.
+[AI-REVIEW] Large commit detected: 1017 lines added. Consider reviewing for AI Psychosis.
