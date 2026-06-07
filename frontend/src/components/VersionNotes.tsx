@@ -1,10 +1,12 @@
+import { t } from '../i18n'
+
 export default function VersionNotes({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex items-start justify-center h-full p-8 overflow-y-auto">
       <div className="max-w-3xl w-full font-mono">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-amber-500 text-2xl font-bold">Version Notes</h1>
-          <button onClick={onBack} className="text-gray-400 hover:text-white text-sm">&larr; Back</button>
+          <h1 className="text-amber-500 text-2xl font-bold">{t('version.title')}</h1>
+          <button onClick={onBack} className="text-gray-400 hover:text-white text-sm">{t('version.back')}</button>
         </div>
 
         <div className="space-y-6 text-sm">
@@ -1252,7 +1254,7 @@ export default function VersionNotes({ onBack }: { onBack: () => void }) {
         </div>
 
         <div className="mt-8 pt-4 border-t border-[#333] text-gray-600 text-xs text-center">
-          Legends of Future Past &mdash; Originally created in the 1990s, resurrected from original script files.
+          {t('version.footer')}
         </div>
       </div>
     </div>

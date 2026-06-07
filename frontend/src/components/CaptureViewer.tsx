@@ -47,15 +47,15 @@ export default function CaptureViewer({ captureId, onBack }: { captureId: string
   return (
     <div className="flex flex-col h-full font-mono text-sm">
       <div className="flex items-center gap-3 px-4 py-2 bg-[#111] border-b border-[#333]">
-        <button onClick={onBack} className="text-gray-400 hover:text-white text-sm">&larr; Back</button>
+        <button onClick={onBack} className="text-gray-400 hover:text-white text-sm">&larr; {t("capture.back")}</button>
         <h2 className="text-amber-400 font-bold">{t("capture.viewerTitle").replace("{player}", data.player)}</h2>
         <span className="text-gray-600 text-xs">{new Date(data.startedAt).toLocaleDateString()}</span>
-        <span className="text-gray-600 text-xs">{data.lines?.length || 0} lines</span>
+        <span className="text-gray-600 text-xs">{data.lines?.length || 0} {t("capture.lines")}</span>
         <button
           onClick={download}
           className="ml-auto px-3 py-1 bg-[#222] border border-[#444] rounded text-xs text-gray-300 hover:border-amber-500"
         >
-          Download .txt
+          {t("capture.downloadTxt")}
         </button>
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-[#0a0a0a]">

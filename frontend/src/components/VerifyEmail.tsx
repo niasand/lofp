@@ -14,7 +14,7 @@ export default function VerifyEmail({ onBack }: Props) {
     const token = params.get('token')
     if (!token) {
       setStatus('error')
-      setError('Missing verification token.')
+      setError(t("verify.missingToken"))
       return
     }
     fetch('/api/auth/verify-email', {
@@ -27,11 +27,11 @@ export default function VerifyEmail({ onBack }: Props) {
       } else {
         const data = await r.json().catch(() => null)
         setStatus('error')
-        setError(data?.error || 'Verification failed.')
+        setError(data?.error || t("verify.verificationFailed"))
       }
     }).catch(() => {
       setStatus('error')
-      setError('Network error.')
+      setError(t("verify.networkError"))
     })
   }, [])
 
@@ -46,7 +46,7 @@ export default function VerifyEmail({ onBack }: Props) {
             <p className="text-green-400 font-mono text-lg mb-4">{t("verify.success")}</p>
             <p className="text-gray-400 font-mono text-sm mb-6">{t("verify.successDesc")}</p>
             <button onClick={onBack} className="px-6 py-2 bg-amber-700 hover:bg-amber-600 text-white font-mono rounded">
-              Continue to Login
+              {t("verify.continueToLogin")}
             </button>
           </div>
         )}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { t } from '../i18n'
 
 interface Section {
   id: string
@@ -7,37 +8,37 @@ interface Section {
 }
 
 const sections: Section[] = [
-  { id: 'introduction', title: 'Introduction', level: 2 },
-  { id: 'city-of-fayd', title: 'The City-State of Fayd', level: 2 },
-  { id: 'history', title: 'History', level: 3 },
-  { id: 'money', title: 'Money', level: 3 },
-  { id: 'extraordinary-substances', title: 'Extraordinary Andoran Substances', level: 3 },
-  { id: 'your-character', title: 'Your Character', level: 2 },
-  { id: 'people-of-the-realms', title: 'People of the Realms', level: 2 },
-  { id: 'statistics', title: 'Statistics', level: 2 },
-  { id: 'advancement', title: 'Advancement', level: 2 },
-  { id: 'organizations', title: 'Organizations', level: 2 },
-  { id: 'religious-organizations', title: 'Religious Organizations', level: 3 },
-  { id: 'skills', title: 'Skills', level: 2 },
-  { id: 'player-interaction', title: 'Player Interaction', level: 2 },
-  { id: 'settings', title: 'Settings', level: 3 },
-  { id: 'movement', title: 'Movement', level: 3 },
-  { id: 'command-glossary', title: 'Command Glossary', level: 2 },
-  { id: 'other-verbs', title: 'Other Verbs', level: 3 },
-  { id: 'combat', title: 'Combat', level: 2 },
-  { id: 'armor', title: 'Armor', level: 3 },
-  { id: 'missile-thrown-weapons', title: 'Missile and Thrown Weapons', level: 3 },
-  { id: 'backstab', title: 'Backstab', level: 3 },
-  { id: 'death', title: 'Death', level: 3 },
-  { id: 'psionics', title: 'Psionics', level: 2 },
-  { id: 'spellcasting', title: 'Spellcasting', level: 2 },
-  { id: 'conjuration-spells', title: 'Conjuration Spells', level: 3 },
-  { id: 'enchantment-spells', title: 'Enchantment Spells', level: 3 },
-  { id: 'necromancy', title: 'Necromancy', level: 3 },
-  { id: 'general-magic', title: 'General Magic', level: 3 },
-  { id: 'druidic-spells', title: 'Druidic Spells', level: 3 },
-  { id: 'art-of-roleplaying', title: 'The Art of Roleplaying', level: 2 },
-  { id: 'game-policies', title: 'Game Policies', level: 2 },
+  { id: 'introduction', title: t('manual.section.introduction'), level: 2 },
+  { id: 'city-of-fayd', title: t('manual.section.fayd'), level: 2 },
+  { id: 'history', title: t('manual.section.history'), level: 3 },
+  { id: 'money', title: t('manual.section.money'), level: 3 },
+  { id: 'extraordinary-substances', title: t('manual.section.extraordinarySubstances'), level: 3 },
+  { id: 'your-character', title: t('manual.section.yourCharacter'), level: 2 },
+  { id: 'people-of-the-realms', title: t('manual.section.peopleOfTheRealms'), level: 2 },
+  { id: 'statistics', title: t('manual.section.statistics'), level: 2 },
+  { id: 'advancement', title: t('manual.section.advancement'), level: 2 },
+  { id: 'organizations', title: t('manual.section.organizations'), level: 2 },
+  { id: 'religious-organizations', title: t('manual.section.religiousOrganizations'), level: 3 },
+  { id: 'skills', title: t('manual.section.skills'), level: 2 },
+  { id: 'player-interaction', title: t('manual.section.playerInteraction'), level: 2 },
+  { id: 'settings', title: t('manual.section.settings'), level: 3 },
+  { id: 'movement', title: t('manual.section.movement'), level: 3 },
+  { id: 'command-glossary', title: t('manual.section.commandGlossary'), level: 2 },
+  { id: 'other-verbs', title: t('manual.section.otherVerbs'), level: 3 },
+  { id: 'combat', title: t('manual.section.combat'), level: 2 },
+  { id: 'armor', title: t('manual.section.armor'), level: 3 },
+  { id: 'missile-thrown-weapons', title: t('manual.section.missileThrownWeapons'), level: 3 },
+  { id: 'backstab', title: t('manual.section.backstab'), level: 3 },
+  { id: 'death', title: t('manual.section.death'), level: 3 },
+  { id: 'psionics', title: t('manual.section.psionics'), level: 2 },
+  { id: 'spellcasting', title: t('manual.section.spellcasting'), level: 2 },
+  { id: 'conjuration-spells', title: t('manual.section.conjurationSpells'), level: 3 },
+  { id: 'enchantment-spells', title: t('manual.section.enchantmentSpells'), level: 3 },
+  { id: 'necromancy', title: t('manual.section.necromancy'), level: 3 },
+  { id: 'general-magic', title: t('manual.section.generalMagic'), level: 3 },
+  { id: 'druidic-spells', title: t('manual.section.druidicSpells'), level: 3 },
+  { id: 'art-of-roleplaying', title: t('manual.section.artOfRoleplaying'), level: 2 },
+  { id: 'game-policies', title: t('manual.section.gamePolicies'), level: 2 },
 ]
 
 export default function Manual({ onBack }: { onBack: () => void }) {
@@ -77,15 +78,15 @@ export default function Manual({ onBack }: { onBack: () => void }) {
     <div className="h-full flex flex-col bg-[#0a0a0a]">
       {/* Mobile TOC toggle */}
       <div className="lg:hidden flex items-center justify-between px-4 py-2 border-b border-[#333] bg-[#111]">
-        <span className="text-amber-500 font-mono font-bold text-sm">Player Manual</span>
+        <span className="text-amber-500 font-mono font-bold text-sm">{t('manual.playerManual')}</span>
         <button onClick={onBack} className="px-3 py-1 bg-[#333] hover:bg-[#444] text-gray-300 font-mono text-sm rounded border border-[#555]">
-          &times; Close
+          &times; {t('manual.close')}
         </button>
         <button
           onClick={() => setTocOpen(!tocOpen)}
           className="text-gray-400 hover:text-amber-400 font-mono text-sm"
         >
-          {tocOpen ? 'Close' : 'Contents'}
+          {tocOpen ? t('manual.close') : t('manual.contents')}
         </button>
       </div>
 
@@ -117,12 +118,12 @@ export default function Manual({ onBack }: { onBack: () => void }) {
         <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-[#333] bg-[#111] overflow-y-auto">
           <div className="sticky top-0 bg-[#111] border-b border-[#222] px-4 py-3">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-amber-500 font-mono font-bold text-sm">Player Manual v3.1</h2>
+              <h2 className="text-amber-500 font-mono font-bold text-sm">{t('manual.playerManualV31')}</h2>
               <button
                 onClick={onBack}
                 className="px-3 py-1 bg-[#333] hover:bg-[#444] text-gray-300 font-mono text-xs rounded border border-[#555]"
               >
-                &times; Close
+                &times; {t('manual.close')}
               </button>
             </div>
           </div>
@@ -151,10 +152,10 @@ export default function Manual({ onBack }: { onBack: () => void }) {
             {/* Header */}
             <div className="text-center mb-10">
               <h1 className="text-amber-500 text-2xl font-bold mb-2">
-                Legends of Future Past
+                {t('manual.title')}
               </h1>
               <p className="text-gray-500 text-xs">
-                Player Manual V3.1 &mdash; &copy;1994 Inner Circle Technologies
+                {t('manual.playerManualV31')} &mdash; &copy;1994 Inner Circle Technologies
               </p>
             </div>
 
@@ -1946,7 +1947,7 @@ gaze  glare  scowl  furrow (brow)  sing  recite  pace  comfort`}</pre>
                 onClick={onBack}
                 className="mt-4 px-4 py-2 bg-[#333] hover:bg-[#444] text-gray-300 font-mono text-sm rounded border border-[#555]"
               >
-                &times; Close Manual
+                &times; {t('manual.closeManual')}
               </button>
             </div>
           </div>

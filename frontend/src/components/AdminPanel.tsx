@@ -199,36 +199,36 @@ interface MonsterDetail {
 }
 
 const RaceNames: Record<number, string> = {
-  1: 'Human', 2: 'Aelfen', 3: 'Highlander', 4: 'Wolfling',
-  5: 'Murg', 6: 'Drakin', 7: 'Mechanoid', 8: 'Ephemeral',
+  1: t('admin.raceNames.human'), 2: t('admin.raceNames.aelfen'), 3: t('admin.raceNames.highlander'), 4: t('admin.raceNames.wolfling'),
+  5: t('admin.raceNames.murg'), 6: t('admin.raceNames.drakin'), 7: t('admin.raceNames.mechanoid'), 8: t('admin.raceNames.ephemeral'),
 }
 
 const ItemTypeNames: Record<string, string> = {
-  AMMO: 'Ammunition', ARMOR: 'Armor', BITE_WEAPON: 'Bite Weapon',
-  BOW_WEAPON: 'Bow Weapon', CLAW_WEAPON: 'Claw Weapon', CRUSH_WEAPON: 'Crush Weapon',
-  DRAKIN_CRUSH: 'Drakin Crush', DRAKIN_POLE: 'Drakin Pole',
-  DRAKIN_SLASH: 'Drakin Slash', DRAKIN_THROWN: 'Drakin Thrown',
-  FOOD: 'Food', HANDGUN: 'Handgun', KEY: 'Key',
-  LIQCONTAINER: 'Liquid Container', LIQUID: 'Liquid', LOCKPICK: 'Lockpick',
-  MINETOOL: 'Mining Tool', MISC: 'Miscellaneous', MONEY: 'Money',
-  POLE_WEAPON: 'Pole Weapon', POLETHROWN: 'Pole/Thrown',
-  PORTAL_THROUGH: 'Portal (Through)', PORTAL_CLIMB: 'Portal (Climb)',
-  PORTAL_UP: 'Portal (Up)', PORTAL_DOWN: 'Portal (Down)', PORTAL: 'Portal',
-  PUNCTURE_WEAPON: 'Puncture Weapon', RIFLE: 'Rifle', SCROLL: 'Scroll',
-  SHIELD: 'Shield', SLASH_WEAPON: 'Slash Weapon', STABTHROWN: 'Stab/Thrown',
-  THROWN_WEAPON: 'Thrown Weapon', TRAP: 'Trap', TWOHAND_WEAPON: 'Two-Handed Weapon',
-  ORE: 'Ore',
+  AMMO: t('admin.itemTypes.ammo'), ARMOR: t('admin.itemTypes.armor'), BITE_WEAPON: t('admin.itemTypes.biteWeapon'),
+  BOW_WEAPON: t('admin.itemTypes.bowWeapon'), CLAW_WEAPON: t('admin.itemTypes.clawWeapon'), CRUSH_WEAPON: t('admin.itemTypes.crushWeapon'),
+  DRAKIN_CRUSH: t('admin.itemTypes.drakinCrush'), DRAKIN_POLE: t('admin.itemTypes.drakinPole'),
+  DRAKIN_SLASH: t('admin.itemTypes.drakinSlash'), DRAKIN_THROWN: t('admin.itemTypes.drakinThrown'),
+  FOOD: t('admin.itemTypes.food'), HANDGUN: t('admin.itemTypes.handgun'), KEY: t('admin.itemTypes.key'),
+  LIQCONTAINER: t('admin.itemTypes.liqContainer'), LIQUID: t('admin.itemTypes.liquid'), LOCKPICK: t('admin.itemTypes.lockpick'),
+  MINETOOL: t('admin.itemTypes.mineTool'), MISC: t('admin.itemTypes.misc'), MONEY: t('admin.itemTypes.money'),
+  POLE_WEAPON: t('admin.itemTypes.poleWeapon'), POLETHROWN: t('admin.itemTypes.poleThrown'),
+  PORTAL_THROUGH: t('admin.itemTypes.portalThrough'), PORTAL_CLIMB: t('admin.itemTypes.portalClimb'),
+  PORTAL_UP: t('admin.itemTypes.portalUp'), PORTAL_DOWN: t('admin.itemTypes.portalDown'), PORTAL: t('admin.itemTypes.portal'),
+  PUNCTURE_WEAPON: t('admin.itemTypes.punctureWeapon'), RIFLE: t('admin.itemTypes.rifle'), SCROLL: t('admin.itemTypes.scroll'),
+  SHIELD: t('admin.itemTypes.shield'), SLASH_WEAPON: t('admin.itemTypes.slashWeapon'), STABTHROWN: t('admin.itemTypes.stabThrown'),
+  THROWN_WEAPON: t('admin.itemTypes.thrownWeapon'), TRAP: t('admin.itemTypes.trap'), TWOHAND_WEAPON: t('admin.itemTypes.twoHandWeapon'),
+  ORE: t('admin.itemTypes.ore'),
 }
 
 const WornSlotNames: Record<string, string> = {
-  WORN_AROUND: 'Around', WORN_BACK: 'Back', WORN_BODY: 'Body', WORN_DON: 'Don',
-  WORN_EAR: 'Ear', WORN_FEET1: 'Feet (1)', WORN_FEET2: 'Feet (2)', WORN_HAIR: 'Hair',
-  WORN_HANDS: 'Hands', WORN_HEAD: 'Head', WORN_NECK: 'Neck', WORN_RING: 'Ring',
-  WORN_TORSO1: 'Torso (1)', WORN_TORSO2: 'Torso (2)', WORN_TORSO3: 'Torso (3)',
-  WORN_TRUNK1: 'Trunk (1)', WORN_TRUNK2: 'Trunk (2)', WORN_WRIST: 'Wrist', WORN_ARMOR: 'Armor',
+  WORN_AROUND: t('admin.wornSlots.around'), WORN_BACK: t('admin.wornSlots.back'), WORN_BODY: t('admin.wornSlots.body'), WORN_DON: t('admin.wornSlots.don'),
+  WORN_EAR: t('admin.wornSlots.ear'), WORN_FEET1: t('admin.wornSlots.feet1'), WORN_FEET2: t('admin.wornSlots.feet2'), WORN_HAIR: t('admin.wornSlots.hair'),
+  WORN_HANDS: t('admin.wornSlots.hands'), WORN_HEAD: t('admin.wornSlots.head'), WORN_NECK: t('admin.wornSlots.neck'), WORN_RING: t('admin.wornSlots.ring'),
+  WORN_TORSO1: t('admin.wornSlots.torso1'), WORN_TORSO2: t('admin.wornSlots.torso2'), WORN_TORSO3: t('admin.wornSlots.torso3'),
+  WORN_TRUNK1: t('admin.wornSlots.trunk1'), WORN_TRUNK2: t('admin.wornSlots.trunk2'), WORN_WRIST: t('admin.wornSlots.wrist'), WORN_ARMOR: t('admin.wornSlots.armor'),
 }
 
-const GenderNames: Record<number, string> = { 0: 'Male', 1: 'Female' }
+const GenderNames: Record<number, string> = { 0: t('admin.genderNames.male'), 1: t('admin.genderNames.female') }
 
 const formatEnum = (value: string | number, map: Record<string | number, string>): string => {
   const label = map[value]
@@ -247,15 +247,15 @@ interface LogEntry {
 }
 
 const EventLabels: Record<string, string> = {
-  login: 'User Login',
-  logout: 'User Logout',
-  game_enter: 'Game Enter',
-  game_exit: 'Game Exit',
-  character_create: 'New Character',
-  level_up: 'Level Up',
-  gm_grant: 'GM Granted',
-  gm_revoke: 'GM Revoked',
-  report: 'Player Report',
+  login: t('admin.eventLabels.login'),
+  logout: t('admin.eventLabels.logout'),
+  game_enter: t('admin.eventLabels.gameEnter'),
+  game_exit: t('admin.eventLabels.gameExit'),
+  character_create: t('admin.eventLabels.characterCreate'),
+  level_up: t('admin.eventLabels.levelUp'),
+  gm_grant: t('admin.eventLabels.gmGrant'),
+  gm_revoke: t('admin.eventLabels.gmRevoke'),
+  report: t('admin.eventLabels.report'),
 }
 
 const EventColors: Record<string, string> = {
@@ -393,7 +393,7 @@ export default function AdminPanel() {
     }
     ws.onclose = () => {
       setEventConnected(false)
-      setEvents(prev => [...prev, { time: new Date().toISOString(), category: 'system', message: 'Event monitor disconnected.' }])
+      setEvents(prev => [...prev, { time: new Date().toISOString(), category: 'system', message: t('admin.eventMonitorDisconnected') }])
     }
     return () => { ws.close() }
   }, [tab, user?.token])
@@ -534,7 +534,7 @@ export default function AdminPanel() {
   }
 
   const recoverCharacter = (firstName: string) => {
-    const newName = prompt(`Recover "${firstName}"? Enter a new first name (or leave blank to keep current):`)
+    const newName = prompt(t('admin.recoverPrompt').replace('{name}', firstName))
     if (newName === null) return // cancelled
     fetch(`/api/admin/characters/${firstName}/recover`, {
       method: 'PUT',
@@ -542,8 +542,8 @@ export default function AdminPanel() {
       body: JSON.stringify({ newFirstName: newName || '' }),
     })
       .then(async r => {
-        if (!r.ok) { alert((await r.json()).error || 'Recovery failed'); return }
-        alert('Character recovered!')
+        if (!r.ok) { alert((await r.json()).error || t('admin.recoveryFailed')); return }
+        alert(t('admin.characterRecovered'))
         setShowDeleted(false) // switch back to active view
       })
   }
@@ -561,7 +561,7 @@ export default function AdminPanel() {
   }
 
   const formatDate = (dateStr: string) => {
-    if (!dateStr) return 'Unknown'
+    if (!dateStr) return t('admin.unknown')
     const d = new Date(dateStr)
     return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }
@@ -571,15 +571,15 @@ export default function AdminPanel() {
     const now = Date.now()
     const then = new Date(dateStr).getTime()
     const diffSec = Math.floor((now - then) / 1000)
-    if (diffSec < 60) return 'just now'
+    if (diffSec < 60) return t('admin.time.justNow')
     const diffMin = Math.floor(diffSec / 60)
-    if (diffMin < 60) return `${diffMin}m ago`
+    if (diffMin < 60) return t('admin.time.minutesAgo').replace('{n}', String(diffMin))
     const diffHr = Math.floor(diffMin / 60)
-    if (diffHr < 24) return `${diffHr}h ago`
+    if (diffHr < 24) return t('admin.time.hoursAgo').replace('{n}', String(diffHr))
     const diffDay = Math.floor(diffHr / 24)
-    if (diffDay < 30) return `${diffDay}d ago`
+    if (diffDay < 30) return t('admin.time.daysAgo').replace('{n}', String(diffDay))
     const diffMo = Math.floor(diffDay / 30)
-    return `${diffMo}mo ago`
+    return t('admin.time.monthsAgo').replace('{n}', String(diffMo))
   }
 
   const formatTimestamp = (dateStr: string) => {
@@ -613,7 +613,7 @@ export default function AdminPanel() {
         <button
           className="sm:hidden shrink-0 px-2 py-1 rounded text-xs text-gray-400 hover:text-white border border-[#444] mr-1"
           onClick={() => setSidebarOpen(o => !o)}
-          title={sidebarOpen ? 'Show detail' : 'Show list'}
+          title={sidebarOpen ? t('admin.showDetail') : t('admin.showList')}
         >
           {sidebarOpen ? '→' : '☰'}
         </button>
@@ -623,7 +623,7 @@ export default function AdminPanel() {
             onClick={() => { setTab(tabName); setSidebarOpen(false) }}
             className={`px-2 sm:px-3 py-1 rounded text-xs capitalize shrink-0 min-h-[32px] ${tab === tabName ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
           >
-            {tabName}
+            {t(`admin.tabs.${tabName}`)}
           </button>
         ))}
       </div>
@@ -637,15 +637,15 @@ export default function AdminPanel() {
                 <div className="p-3 border-b border-[#333] grid grid-cols-3 gap-2">
                   <div className="text-center">
                     <div className="text-amber-400 text-lg font-bold">{stats.rooms}</div>
-                    <div className="text-gray-500 text-xs">Rooms</div>
+                    <div className="text-gray-500 text-xs">{t('admin.stats.rooms')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-green-400 text-lg font-bold">{stats.items}</div>
-                    <div className="text-gray-500 text-xs">Items</div>
+                    <div className="text-gray-500 text-xs">{t('admin.stats.items')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-red-400 text-lg font-bold">{stats.monsters}</div>
-                    <div className="text-gray-500 text-xs">Monsters</div>
+                    <div className="text-gray-500 text-xs">{t('admin.stats.monsters')}</div>
                   </div>
                 </div>
               )}
@@ -671,7 +671,7 @@ export default function AdminPanel() {
                     </div>
                     <div className="flex gap-2 mt-0.5">
                       <span className="text-gray-600 text-[10px]">{r.terrain}</span>
-                      <span className="text-gray-600 text-[10px]">{r.exits} exits</span>
+                      <span className="text-gray-600 text-[10px]">{t('admin.exitsCount').replace('{count}', String(r.exits))}</span>
                       <span className="text-gray-600 text-[10px]">{r.file}</span>
                     </div>
                   </div>
@@ -683,15 +683,15 @@ export default function AdminPanel() {
                 <div className="space-y-4">
                   <div>
                     <h2 className="text-amber-400 text-xl font-bold">[{selectedRoom.name}]</h2>
-                    <span className="text-gray-500 text-xs">Room #{selectedRoom.number} | {selectedRoom.terrain} | {selectedRoom.lighting}</span>
+                    <span className="text-gray-500 text-xs">{t('admin.roomNumber').replace('{number}', String(selectedRoom.number))} | {selectedRoom.terrain} | {selectedRoom.lighting}</span>
                   </div>
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Description</h3>
-                    <p className="text-gray-300 leading-relaxed">{selectedRoom.description || '(no description)'}</p>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.description')}</h3>
+                    <p className="text-gray-300 leading-relaxed">{selectedRoom.description || t('admin.noDescription')}</p>
                   </div>
                   {Object.keys(selectedRoom.exits).length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Exits ({Object.keys(selectedRoom.exits).length})</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.exits').replace('{count}', String(Object.keys(selectedRoom.exits).length))}</h3>
                       <div className="space-y-1">
                         {Object.entries(selectedRoom.exits).map(([dir, exit]) => (
                           <div
@@ -701,7 +701,7 @@ export default function AdminPanel() {
                           >
                             <span className="text-amber-400 font-bold w-12 shrink-0">{dir}</span>
                             <span className="text-gray-500">-&gt;</span>
-                            <span className="text-blue-400 group-hover:underline">{exit.roomName || 'Unknown'}</span>
+                            <span className="text-blue-400 group-hover:underline">{exit.roomName || t('admin.unknown')}</span>
                             <span className="text-gray-600">#{exit.room}</span>
                           </div>
                         ))}
@@ -710,29 +710,29 @@ export default function AdminPanel() {
                   )}
                   {selectedRoom.items && selectedRoom.items.length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Items ({selectedRoom.items.length})</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.itemsCount').replace('{count}', String(selectedRoom.items.length))}</h3>
                       <div className="space-y-2">
                         {selectedRoom.items.map((item, i) => {
                           const def = item.itemDef
                           const displayName = [
                             item.adj1Name,
                             def?.name,
-                          ].filter(Boolean).join(' ') || `unknown #${item.archetype}`
+                          ].filter(Boolean).join(' ') || `${t('admin.unknown')} #${item.archetype}`
                           return (
                             <div key={i} className="text-xs bg-[#0a0a0a] border border-[#222] rounded p-2">
                               <div className="flex items-center gap-2 flex-wrap">
                                 <span className="text-green-400 font-bold">{displayName}</span>
-                                <span className="text-gray-600">Ref {item.ref} | Archetype #{item.archetype}</span>
+                                <span className="text-gray-600">{t('admin.refArchetype').replace('{ref}', String(item.ref)).replace('{archetype}', String(item.archetype))}</span>
                               </div>
                               {def && (
                                 <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1 text-gray-400">
                                   <span>{formatEnum(def.type, ItemTypeNames)}</span>
-                                  <span>wt: {def.weight}</span>
-                                  <span>vol: {def.volume}</span>
+                                  <span>{t('admin.wt')} {def.weight}</span>
+                                  <span>{t('admin.vol')} {def.volume}</span>
                                   {def.substance && <span>{def.substance}</span>}
-                                  {def.article && <span>article: {def.article}</span>}
-                                  {def.wornSlot && <span>worn: {formatEnum(def.wornSlot, WornSlotNames)}</span>}
-                                  {def.container && <span>container: {def.container}</span>}
+                                  {def.article && <span>{t('admin.article')} {def.article}</span>}
+                                  {def.wornSlot && <span>{t('admin.worn')} {formatEnum(def.wornSlot, WornSlotNames)}</span>}
+                                  {def.container && <span>{t('admin.container')} {def.container}</span>}
                                   <span className="text-gray-600">{def.sourceFile}</span>
                                 </div>
                               )}
@@ -744,15 +744,15 @@ export default function AdminPanel() {
                                 </div>
                               )}
                               <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1">
-                                {item.adj2 ? <span className="text-purple-400">adj2: {item.adj2Name || item.adj2} ({item.adj2})</span> : null}
-                                {item.adj3 ? <span className="text-purple-400">adj3: {item.adj3Name || item.adj3} ({item.adj3})</span> : null}
+                                {item.adj2 ? <span className="text-purple-400">{t('admin.adj2')} {item.adj2Name || item.adj2} ({item.adj2})</span> : null}
+                                {item.adj3 ? <span className="text-purple-400">{t('admin.adj3')} {item.adj3Name || item.adj3} ({item.adj3})</span> : null}
                                 {item.val1 ? <span className="text-blue-400">val1={item.val1}</span> : null}
                                 {item.val2 ? <span className="text-blue-400">val2={item.val2}</span> : null}
                                 {item.val3 ? <span className="text-blue-400">val3={item.val3}</span> : null}
                                 {item.val4 ? <span className="text-blue-400">val4={item.val4}</span> : null}
                                 {item.val5 ? <span className="text-blue-400">val5={item.val5}</span> : null}
-                                {item.state ? <span className="text-yellow-400">state: {item.state}</span> : null}
-                                {item.isPut ? <span className="text-cyan-400">inside ref {item.putIn}</span> : null}
+                                {item.state ? <span className="text-yellow-400">{t('admin.state')} {item.state}</span> : null}
+                                {item.isPut ? <span className="text-cyan-400">{t('admin.insideRef').replace('{ref}', String(item.putIn))}</span> : null}
                                 {item.extend ? <span className="text-gray-500">"{item.extend}"</span> : null}
                               </div>
                             </div>
@@ -763,7 +763,7 @@ export default function AdminPanel() {
                   )}
                   {selectedRoom.scripts && selectedRoom.scripts.length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Scripts ({selectedRoom.scripts.length} blocks)</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.scripts').replace('{count}', String(selectedRoom.scripts.length))}</h3>
                       <pre className="text-gray-500 text-[10px] overflow-x-auto max-h-60 overflow-y-auto">
                         {JSON.stringify(selectedRoom.scripts, null, 2)}
                       </pre>
@@ -772,7 +772,7 @@ export default function AdminPanel() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-600">
-                  Select a room to inspect
+                  {t('admin.selectRoom')}
                 </div>
               )}
             </div>
@@ -785,7 +785,7 @@ export default function AdminPanel() {
             <div className={`${sidebarOpen ? 'flex' : 'hidden'} sm:flex w-full sm:w-80 border-r border-[#333] flex-col bg-[#111]`}>
               <div className="p-3 border-b border-[#333] text-center">
                 <div className="text-green-400 text-lg font-bold">{items.length}</div>
-                <div className="text-gray-500 text-xs">Items</div>
+                <div className="text-gray-500 text-xs">{t('admin.itemsLabel')}</div>
               </div>
               <div className="p-2 border-b border-[#333]">
                 <input
@@ -809,14 +809,14 @@ export default function AdminPanel() {
                     </div>
                     <div className="flex gap-2 mt-0.5">
                       <span className="text-gray-600 text-[10px]">{i.type}</span>
-                      <span className="text-gray-600 text-[10px]">wt:{i.weight}</span>
+                      <span className="text-gray-600 text-[10px]">{t('admin.wt')}{i.weight}</span>
                       {i.substance && <span className="text-gray-600 text-[10px]">{i.substance}</span>}
                       <span className="text-gray-600 text-[10px]">{i.sourceFile}</span>
                     </div>
                   </div>
                 ))}
                 {filteredItems.length === 0 && (
-                  <div className="p-4 text-gray-600 text-center text-xs">No items found</div>
+                  <div className="p-4 text-gray-600 text-center text-xs">{t('admin.noItemsFound')}</div>
                 )}
               </div>
             </div>
@@ -828,45 +828,45 @@ export default function AdminPanel() {
                       {selectedItem.resolvedName}
                     </h2>
                     <span className="text-gray-500 text-xs">
-                      Item #{selectedItem.number} | {formatEnum(selectedItem.type, ItemTypeNames)} | {selectedItem.sourceFile}
+                      {t('admin.itemNumber').replace('{number}', String(selectedItem.number))} | {formatEnum(selectedItem.type, ItemTypeNames)} | {selectedItem.sourceFile}
                     </span>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Properties</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.properties')}</h3>
                     <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div><span className="text-gray-500">Name:</span> <span className="text-gray-200">{selectedItem.resolvedName} ({selectedItem.nameId})</span></div>
-                      <div><span className="text-gray-500">Type:</span> <span className="text-gray-200">{formatEnum(selectedItem.type, ItemTypeNames)}</span></div>
-                      <div><span className="text-gray-500">Article:</span> <span className="text-gray-200">{selectedItem.article || 'none'}</span></div>
-                      <div><span className="text-gray-500">Weight:</span> <span className="text-gray-200">{selectedItem.weight}</span></div>
-                      <div><span className="text-gray-500">Volume:</span> <span className="text-gray-200">{selectedItem.volume}</span></div>
-                      <div><span className="text-gray-500">Substance:</span> <span className="text-gray-200">{selectedItem.substance || 'none'}</span></div>
+                      <div><span className="text-gray-500">{t('admin.name')}</span> <span className="text-gray-200">{selectedItem.resolvedName} ({selectedItem.nameId})</span></div>
+                      <div><span className="text-gray-500">{t('admin.type')}</span> <span className="text-gray-200">{formatEnum(selectedItem.type, ItemTypeNames)}</span></div>
+                      <div><span className="text-gray-500">{t('admin.articleLabel')}</span> <span className="text-gray-200">{selectedItem.article || t('admin.none')}</span></div>
+                      <div><span className="text-gray-500">{t('admin.weight')}</span> <span className="text-gray-200">{selectedItem.weight}</span></div>
+                      <div><span className="text-gray-500">{t('admin.volume')}</span> <span className="text-gray-200">{selectedItem.volume}</span></div>
+                      <div><span className="text-gray-500">{t('admin.substance')}</span> <span className="text-gray-200">{selectedItem.substance || t('admin.none')}</span></div>
                     </div>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Parameters</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.parameters')}</h3>
                     <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div><span className="text-gray-500">Param 1:</span> <span className="text-gray-200">{selectedItem.parameter1}</span></div>
-                      <div><span className="text-gray-500">Param 2:</span> <span className="text-gray-200">{selectedItem.parameter2}</span></div>
-                      <div><span className="text-gray-500">Param 3:</span> <span className="text-gray-200">{selectedItem.parameter3}</span></div>
+                      <div><span className="text-gray-500">{t('admin.param1')}</span> <span className="text-gray-200">{selectedItem.parameter1}</span></div>
+                      <div><span className="text-gray-500">{t('admin.param2')}</span> <span className="text-gray-200">{selectedItem.parameter2}</span></div>
+                      <div><span className="text-gray-500">{t('admin.param3')}</span> <span className="text-gray-200">{selectedItem.parameter3}</span></div>
                     </div>
                   </div>
 
                   {(selectedItem.container || selectedItem.wornSlot) && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Container / Worn</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.containerWorn')}</h3>
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        {selectedItem.container && <div><span className="text-gray-500">Container:</span> <span className="text-gray-200">{selectedItem.container}</span></div>}
-                        {selectedItem.interior !== undefined && selectedItem.interior > 0 && <div><span className="text-gray-500">Interior:</span> <span className="text-gray-200">{selectedItem.interior}</span></div>}
-                        {selectedItem.wornSlot && <div><span className="text-gray-500">Worn Slot:</span> <span className="text-gray-200">{formatEnum(selectedItem.wornSlot, WornSlotNames)}</span></div>}
+                        {selectedItem.container && <div><span className="text-gray-500">{t('admin.containerLabel')}</span> <span className="text-gray-200">{selectedItem.container}</span></div>}
+                        {selectedItem.interior !== undefined && selectedItem.interior > 0 && <div><span className="text-gray-500">{t('admin.interior')}</span> <span className="text-gray-200">{selectedItem.interior}</span></div>}
+                        {selectedItem.wornSlot && <div><span className="text-gray-500">{t('admin.wornSlot')}</span> <span className="text-gray-200">{formatEnum(selectedItem.wornSlot, WornSlotNames)}</span></div>}
                       </div>
                     </div>
                   )}
 
                   {selectedItem.flags && selectedItem.flags.length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Flags</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.flags')}</h3>
                       <div className="flex flex-wrap gap-1">
                         {selectedItem.flags.map(f => (
                           <span key={f} className="text-green-400 text-[10px] bg-green-900/30 px-1.5 py-0.5 rounded">{f}</span>
@@ -877,7 +877,7 @@ export default function AdminPanel() {
 
                   {selectedItem.scripts && selectedItem.scripts.length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Scripts ({selectedItem.scripts.length} blocks)</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.scripts').replace('{count}', String(selectedItem.scripts.length))}</h3>
                       <pre className="text-gray-500 text-[10px] overflow-x-auto max-h-60 overflow-y-auto">
                         {JSON.stringify(selectedItem.scripts, null, 2)}
                       </pre>
@@ -886,7 +886,7 @@ export default function AdminPanel() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-600">
-                  Select an item to inspect
+                  {t('admin.selectItem')}
                 </div>
               )}
             </div>
@@ -899,7 +899,7 @@ export default function AdminPanel() {
             <div className={`${sidebarOpen ? 'flex' : 'hidden'} sm:flex w-full sm:w-80 border-r border-[#333] flex-col bg-[#111]`}>
               <div className="p-3 border-b border-[#333] text-center">
                 <div className="text-red-400 text-lg font-bold">{monsters.length}</div>
-                <div className="text-gray-500 text-xs">Monsters</div>
+                <div className="text-gray-500 text-xs">{t('admin.monstersLabel')}</div>
               </div>
               <div className="p-2 border-b border-[#333]">
                 <input
@@ -920,7 +920,7 @@ export default function AdminPanel() {
                     <div className="flex justify-between items-center">
                       <span className="text-gray-300 text-xs truncate">{m.name}</span>
                       <div className="flex gap-1 items-center">
-                        {m.unique && <span className="text-purple-400 text-[10px] bg-purple-900/30 px-1 rounded">UNIQUE</span>}
+                        {m.unique && <span className="text-purple-400 text-[10px] bg-purple-900/30 px-1 rounded">{t('admin.badgeUnique')}</span>}
                         <span className="text-gray-600 text-xs">#{m.number}</span>
                       </div>
                     </div>
@@ -934,7 +934,7 @@ export default function AdminPanel() {
                   </div>
                 ))}
                 {filteredMonsters.length === 0 && (
-                  <div className="p-4 text-gray-600 text-center text-xs">No monsters found</div>
+                  <div className="p-4 text-gray-600 text-center text-xs">{t('admin.noMonstersFound')}</div>
                 )}
               </div>
             </div>
@@ -946,49 +946,49 @@ export default function AdminPanel() {
                       {selectedMonster.adjName ? `${selectedMonster.adjName} ` : ''}{selectedMonster.name}
                     </h2>
                     <span className="text-gray-500 text-xs">
-                      Monster #{selectedMonster.number} | {selectedMonster.bodyType} | {selectedMonster.sourceFile}
+                      {t('admin.monsterNumber').replace('{number}', String(selectedMonster.number))} | {selectedMonster.bodyType} | {selectedMonster.sourceFile}
                     </span>
                   </div>
 
                   {selectedMonster.description && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Description</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.description')}</h3>
                       <p className="text-gray-300 leading-relaxed">{selectedMonster.description}</p>
                     </div>
                   )}
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Combat Stats</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.combatStats')}</h3>
                     <div className="grid grid-cols-4 gap-2 text-xs">
-                      <div><span className="text-gray-500">HP:</span> <span className="text-red-400">{selectedMonster.body}</span></div>
-                      <div><span className="text-gray-500">Attack 1:</span> <span className="text-gray-200">{selectedMonster.attack1}</span></div>
-                      <div><span className="text-gray-500">Attack 2:</span> <span className="text-gray-200">{selectedMonster.attack2}</span></div>
-                      <div><span className="text-gray-500">Defense:</span> <span className="text-gray-200">{selectedMonster.defense}</span></div>
-                      <div><span className="text-gray-500">Armor:</span> <span className="text-gray-200">{selectedMonster.armor}</span></div>
-                      <div><span className="text-gray-500">Speed:</span> <span className="text-gray-200">{selectedMonster.speed}</span></div>
-                      <div><span className="text-gray-500">Strategy:</span> <span className="text-gray-200">{selectedMonster.strategy}</span></div>
-                      <div><span className="text-gray-500">Treasure:</span> <span className="text-gray-200">{selectedMonster.treasure}</span></div>
+                      <div><span className="text-gray-500">{t('admin.hp')}</span> <span className="text-red-400">{selectedMonster.body}</span></div>
+                      <div><span className="text-gray-500">{t('admin.attack1')}</span> <span className="text-gray-200">{selectedMonster.attack1}</span></div>
+                      <div><span className="text-gray-500">{t('admin.attack2')}</span> <span className="text-gray-200">{selectedMonster.attack2}</span></div>
+                      <div><span className="text-gray-500">{t('admin.defense')}</span> <span className="text-gray-200">{selectedMonster.defense}</span></div>
+                      <div><span className="text-gray-500">{t('admin.armorLabel')}</span> <span className="text-gray-200">{selectedMonster.armor}</span></div>
+                      <div><span className="text-gray-500">{t('admin.speed')}</span> <span className="text-gray-200">{selectedMonster.speed}</span></div>
+                      <div><span className="text-gray-500">{t('admin.strategy')}</span> <span className="text-gray-200">{selectedMonster.strategy}</span></div>
+                      <div><span className="text-gray-500">{t('admin.treasure')}</span> <span className="text-gray-200">{selectedMonster.treasure}</span></div>
                     </div>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Properties</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.properties')}</h3>
                     <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div><span className="text-gray-500">Body Type:</span> <span className="text-gray-200">{selectedMonster.bodyType}</span></div>
-                      <div><span className="text-gray-500">Race:</span> <span className="text-gray-200">{formatEnum(selectedMonster.race, RaceNames)}</span></div>
-                      <div><span className="text-gray-500">Gender:</span> <span className="text-gray-200">{formatEnum(selectedMonster.gender, GenderNames)}</span></div>
+                      <div><span className="text-gray-500">{t('admin.bodyType')}</span> <span className="text-gray-200">{selectedMonster.bodyType}</span></div>
+                      <div><span className="text-gray-500">{t('admin.race')}</span> <span className="text-gray-200">{formatEnum(selectedMonster.race, RaceNames)}</span></div>
+                      <div><span className="text-gray-500">{t('admin.gender')}</span> <span className="text-gray-200">{formatEnum(selectedMonster.gender, GenderNames)}</span></div>
                       {selectedMonster.adjName && (
-                        <div><span className="text-gray-500">Adjective:</span> <span className="text-gray-200">{selectedMonster.adjName} ({selectedMonster.adjective})</span></div>
+                        <div><span className="text-gray-500">{t('admin.adjective')}</span> <span className="text-gray-200">{selectedMonster.adjName} ({selectedMonster.adjective})</span></div>
                       )}
                     </div>
                     <div className="flex gap-2 mt-2">
-                      {selectedMonster.unique && <span className="text-purple-400 text-[10px] bg-purple-900/30 px-1.5 py-0.5 rounded">UNIQUE</span>}
+                      {selectedMonster.unique && <span className="text-purple-400 text-[10px] bg-purple-900/30 px-1.5 py-0.5 rounded">{t('admin.badgeUnique')}</span>}
                     </div>
                   </div>
 
                   {selectedMonster.scripts && selectedMonster.scripts.length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Scripts ({selectedMonster.scripts.length} blocks)</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.scripts').replace('{count}', String(selectedMonster.scripts.length))}</h3>
                       <pre className="text-gray-500 text-[10px] overflow-x-auto max-h-60 overflow-y-auto">
                         {JSON.stringify(selectedMonster.scripts, null, 2)}
                       </pre>
@@ -997,7 +997,7 @@ export default function AdminPanel() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-600">
-                  Select a monster to inspect
+                  {t('admin.selectMonster')}
                 </div>
               )}
             </div>
@@ -1010,7 +1010,7 @@ export default function AdminPanel() {
             <div className={`${sidebarOpen ? 'flex' : 'hidden'} sm:flex w-full sm:w-80 border-r border-[#333] flex-col bg-[#111]`}>
               <div className="p-3 border-b border-[#333] text-center">
                 <div className="text-amber-400 text-lg font-bold">{players.length}</div>
-                <div className="text-gray-500 text-xs">Characters</div>
+                <div className="text-gray-500 text-xs">{t('admin.characters')}</div>
               </div>
               <div className="p-2 border-b border-[#333]">
                 <input
@@ -1022,7 +1022,7 @@ export default function AdminPanel() {
                 />
                 <label className="flex items-center gap-1 mt-1 text-gray-500 text-xs cursor-pointer">
                   <input type="checkbox" checked={showDeleted} onChange={e => setShowDeleted(e.target.checked)} className="accent-amber-500" />
-                  Show deleted characters
+                  {t('admin.showDeleted')}
                 </label>
               </div>
               <div className="flex-1 overflow-y-auto">
@@ -1038,7 +1038,7 @@ export default function AdminPanel() {
                       </span>
                       <div className="flex gap-1">
                         {p.isGM && <span className="text-amber-400 text-[10px] bg-amber-900/30 px-1 rounded">GM</span>}
-                        {p.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">DEAD</span>}
+                        {p.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">{t('admin.statusDead')}</span>}
                       </div>
                     </div>
                     <div className="flex gap-2 mt-0.5">
@@ -1086,7 +1086,7 @@ export default function AdminPanel() {
                           : 'bg-[#222] text-gray-400 border border-[#444] hover:border-amber-500'
                       }`}
                     >
-                      {selectedPlayer.isGM ? 'Revoke GM' : 'Grant GM'}
+                      {selectedPlayer.isGM ? t('admin.revokeGM') : t('admin.grantGM')}
                     </button>
                   </div>
 
@@ -1095,19 +1095,19 @@ export default function AdminPanel() {
                       onClick={() => recoverCharacter(selectedPlayer.firstName)}
                       className="px-3 py-1.5 rounded text-xs font-bold bg-green-800 text-white hover:bg-green-700 mb-3"
                     >
-                      Recover Character
+                      {t('admin.recoverCharacter')}
                     </button>
                   )}
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Reassign Owner</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.reassignOwner')}</h3>
                     <div className="flex gap-2 items-center">
                       <select
                         value={reassignAccountId}
                         onChange={e => { setReassignAccountId(e.target.value); setReassignError('') }}
                         className="flex-1 bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
                       >
-                        <option value="">— select account —</option>
+                        <option value="">{t('admin.selectAccount')}</option>
                         {accounts.map(a => (
                           <option key={a.id} value={a.id}>
                             {a.name} ({a.email})
@@ -1119,14 +1119,14 @@ export default function AdminPanel() {
                         disabled={!reassignAccountId}
                         className="px-3 py-1 bg-[#222] border border-[#444] rounded text-xs text-gray-300 hover:border-amber-500 disabled:opacity-40 disabled:cursor-not-allowed"
                       >
-                        Reassign
+                        {t('admin.reassign')}
                       </button>
                     </div>
                     {reassignError && <div className="text-red-400 text-xs mt-1">{reassignError}</div>}
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Attributes</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.attributes')}</h3>
                     <div className="grid grid-cols-4 gap-2 text-xs">
                       <div><span className="text-gray-500">STR:</span> <span className="text-gray-200">{selectedPlayer.strength}</span></div>
                       <div><span className="text-gray-500">AGI:</span> <span className="text-gray-200">{selectedPlayer.agility}</span></div>
@@ -1139,7 +1139,7 @@ export default function AdminPanel() {
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Resources</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.resources')}</h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div><span className="text-red-400">BP:</span> {selectedPlayer.bodyPoints}/{selectedPlayer.maxBodyPoints}</div>
                       <div><span className="text-yellow-400">FT:</span> {selectedPlayer.fatigue}/{selectedPlayer.maxFatigue}</div>
@@ -1149,49 +1149,49 @@ export default function AdminPanel() {
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Status</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.status')}</h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div><span className="text-gray-500">Room:</span> {selectedPlayer.roomNumber}</div>
+                      <div><span className="text-gray-500">{t('admin.roomLabel')}</span> {selectedPlayer.roomNumber}</div>
                       <div><span className="text-gray-500">XP:</span> {selectedPlayer.experience}</div>
-                      <div><span className="text-gray-500">Gold:</span> {selectedPlayer.gold}</div>
-                      <div><span className="text-gray-500">Silver:</span> {selectedPlayer.silver}</div>
-                      <div><span className="text-gray-500">Copper:</span> {selectedPlayer.copper}</div>
-                      <div><span className="text-gray-500">Position:</span> {['Standing','Sitting','Laying','Kneeling','Flying'][selectedPlayer.position] || selectedPlayer.position}</div>
+                      <div><span className="text-gray-500">{t('admin.gold')}</span> {selectedPlayer.gold}</div>
+                      <div><span className="text-gray-500">{t('admin.silver')}</span> {selectedPlayer.silver}</div>
+                      <div><span className="text-gray-500">{t('admin.copper')}</span> {selectedPlayer.copper}</div>
+                      <div><span className="text-gray-500">{t('admin.position')}</span> {[t('admin.positions.standing'),t('admin.positions.sitting'),t('admin.positions.laying'),t('admin.positions.kneeling'),t('admin.positions.flying')][selectedPlayer.position] || selectedPlayer.position}</div>
                     </div>
                     <div className="flex gap-2 mt-2">
-                      {selectedPlayer.isGM && <span className="text-amber-400 text-[10px] bg-amber-900/30 px-1.5 py-0.5 rounded">GM</span>}
-                      {selectedPlayer.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">DEAD</span>}
-                      {selectedPlayer.hidden && <span className="text-gray-400 text-[10px] bg-gray-900/30 px-1.5 py-0.5 rounded">HIDDEN</span>}
-                      {selectedPlayer.bleeding && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">BLEEDING</span>}
-                      {selectedPlayer.stunned && <span className="text-yellow-400 text-[10px] bg-yellow-900/30 px-1.5 py-0.5 rounded">STUNNED</span>}
-                      {selectedPlayer.diseased && <span className="text-green-400 text-[10px] bg-green-900/30 px-1.5 py-0.5 rounded">DISEASED</span>}
-                      {selectedPlayer.poisoned && <span className="text-green-400 text-[10px] bg-green-900/30 px-1.5 py-0.5 rounded">POISONED</span>}
+                      {selectedPlayer.isGM && <span className="text-amber-400 text-[10px] bg-amber-900/30 px-1.5 py-0.5 rounded">{t('admin.statusGm')}</span>}
+                      {selectedPlayer.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">{t('admin.statusDead')}</span>}
+                      {selectedPlayer.hidden && <span className="text-gray-400 text-[10px] bg-gray-900/30 px-1.5 py-0.5 rounded">{t('admin.statusHidden')}</span>}
+                      {selectedPlayer.bleeding && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">{t('admin.statusBleeding')}</span>}
+                      {selectedPlayer.stunned && <span className="text-yellow-400 text-[10px] bg-yellow-900/30 px-1.5 py-0.5 rounded">{t('admin.statusStunned')}</span>}
+                      {selectedPlayer.diseased && <span className="text-green-400 text-[10px] bg-green-900/30 px-1.5 py-0.5 rounded">{t('admin.statusDiseased')}</span>}
+                      {selectedPlayer.poisoned && <span className="text-green-400 text-[10px] bg-green-900/30 px-1.5 py-0.5 rounded">{t('admin.statusPoisoned')}</span>}
                     </div>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
                     <h3 className="text-gray-400 text-xs uppercase mb-2">
-                      Inventory ({selectedPlayer.inventory?.length || 0} items)
+                      {t('admin.inventory').replace('{count}', String(selectedPlayer.inventory?.length || 0))}
                     </h3>
                     {selectedPlayer.inventory && selectedPlayer.inventory.length > 0 ? (
                       <div className="space-y-1">
                         {selectedPlayer.inventory.map((item, i) => (
                           <div key={i} className="text-xs text-gray-300">
-                            {i}. Archetype #{item.archetype}
+                            {i}. {t('admin.archetype')} #{item.archetype}
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <div className="text-xs text-gray-600">(empty)</div>
+                      <div className="text-xs text-gray-600">{t('admin.empty')}</div>
                     )}
                   </div>
 
                   {selectedPlayer.skills && Object.keys(selectedPlayer.skills).length > 0 && (
                     <div className="bg-[#111] border border-[#333] rounded p-4">
-                      <h3 className="text-gray-400 text-xs uppercase mb-2">Skills</h3>
+                      <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.skills')}</h3>
                       <div className="grid grid-cols-3 gap-1 text-xs">
                         {Object.entries(selectedPlayer.skills).map(([id, level]) => (
-                          <div key={id} className="text-gray-300">Skill #{id}: Lvl {level}</div>
+                          <div key={id} className="text-gray-300">{t('admin.skillEntry').replace('{id}', id).replace('{level}', String(level))}</div>
                         ))}
                       </div>
                     </div>
@@ -1199,7 +1199,7 @@ export default function AdminPanel() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-600">
-                  Select a character to inspect
+                  {t('admin.selectCharacter')}
                 </div>
               )}
             </div>
@@ -1212,7 +1212,7 @@ export default function AdminPanel() {
             <div className={`${sidebarOpen ? 'flex' : 'hidden'} sm:flex w-full sm:w-80 border-r border-[#333] flex-col bg-[#111]`}>
               <div className="p-3 border-b border-[#333] text-center">
                 <div className="text-amber-400 text-lg font-bold">{accounts.length}</div>
-                <div className="text-gray-500 text-xs">Users</div>
+                <div className="text-gray-500 text-xs">{t('admin.users')}</div>
               </div>
               <div className="p-2 border-b border-[#333]">
                 <input
@@ -1236,7 +1236,7 @@ export default function AdminPanel() {
                         <span className="text-gray-300 text-xs truncate">{a.name}</span>
                       </div>
                       <div className="flex gap-1 shrink-0">
-                        {a.isAdmin && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">ADMIN</span>}
+                        {a.isAdmin && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">{t('admin.badgeAdmin')}</span>}
                       </div>
                     </div>
                     <div className="flex justify-between text-gray-600 text-[10px] mt-0.5">
@@ -1246,7 +1246,7 @@ export default function AdminPanel() {
                   </div>
                 ))}
                 {filteredAccounts.length === 0 && (
-                  <div className="p-4 text-gray-600 text-center text-xs">No users found</div>
+                  <div className="p-4 text-gray-600 text-center text-xs">{t('admin.noUsersFound')}</div>
                 )}
               </div>
             </div>
@@ -1271,26 +1271,26 @@ export default function AdminPanel() {
                           : 'bg-[#222] text-gray-400 border border-[#444] hover:border-red-500'
                       }`}
                     >
-                      {selectedAccount.account.isAdmin ? 'Revoke Admin' : 'Grant Admin'}
+                      {selectedAccount.account.isAdmin ? t('admin.revokeAdmin') : t('admin.grantAdmin')}
                     </button>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
-                    <h3 className="text-gray-400 text-xs uppercase mb-2">Account Details</h3>
+                    <h3 className="text-gray-400 text-xs uppercase mb-2">{t('admin.accountDetails')}</h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div><span className="text-gray-500">ID:</span> <span className="text-gray-300">{selectedAccount.account.id}</span></div>
-                      <div><span className="text-gray-500">Google ID:</span> <span className="text-gray-300 truncate">{selectedAccount.account.googleId}</span></div>
-                      <div><span className="text-gray-500">Created:</span> <span className="text-gray-300">{formatDate(selectedAccount.account.createdAt)}</span></div>
-                      <div><span className="text-gray-500">Updated:</span> <span className="text-gray-300">{formatDate(selectedAccount.account.updatedAt)}</span></div>
+                      <div><span className="text-gray-500">{t('admin.googleId')}</span> <span className="text-gray-300 truncate">{selectedAccount.account.googleId}</span></div>
+                      <div><span className="text-gray-500">{t('admin.created')}</span> <span className="text-gray-300">{formatDate(selectedAccount.account.createdAt)}</span></div>
+                      <div><span className="text-gray-500">{t('admin.updated')}</span> <span className="text-gray-300">{formatDate(selectedAccount.account.updatedAt)}</span></div>
                     </div>
                     <div className="flex gap-2 mt-2">
-                      {selectedAccount.account.isAdmin && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">ADMIN</span>}
+                      {selectedAccount.account.isAdmin && <span className="text-red-400 text-[10px] bg-red-900/30 px-1.5 py-0.5 rounded">{t('admin.badgeAdmin')}</span>}
                     </div>
                   </div>
 
                   <div className="bg-[#111] border border-[#333] rounded p-4">
                     <h3 className="text-gray-400 text-xs uppercase mb-2">
-                      Characters ({selectedAccount.characters?.length || 0})
+                      {t('admin.charactersCount').replace('{count}', String(selectedAccount.characters?.length || 0))}
                     </h3>
                     {selectedAccount.characters && selectedAccount.characters.length > 0 ? (
                       <div className="space-y-2">
@@ -1306,26 +1306,26 @@ export default function AdminPanel() {
                               </span>
                               <div className="flex gap-1">
                                 {c.isGM && <span className="text-amber-400 text-[10px] bg-amber-900/30 px-1 rounded">GM</span>}
-                                {c.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">DEAD</span>}
+                                {c.dead && <span className="text-red-400 text-[10px] bg-red-900/30 px-1 rounded">{t('admin.statusDead')}</span>}
                               </div>
                             </div>
                             <div className="flex gap-2 mt-0.5">
                               <span className="text-gray-600 text-[10px]">{raceName(c.race)}</span>
-                              <span className="text-gray-600 text-[10px]">Lvl {c.level}</span>
-                              <span className="text-gray-600 text-[10px]">Room {c.roomNumber}</span>
-                              <span className="text-gray-600 text-[10px]">BP {c.bodyPoints}/{c.maxBodyPoints}</span>
+                              <span className="text-gray-600 text-[10px]">{t('admin.lvl')} {c.level}</span>
+                              <span className="text-gray-600 text-[10px]">{t('admin.room')} {c.roomNumber}</span>
+                              <span className="text-gray-600 text-[10px]">{t('admin.bp')} {c.bodyPoints}/{c.maxBodyPoints}</span>
                             </div>
                           </button>
                         ))}
                       </div>
                     ) : (
-                      <div className="text-xs text-gray-600">No characters</div>
+                      <div className="text-xs text-gray-600">{t('admin.noCharactersLabel')}</div>
                     )}
                   </div>
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-600">
-                  Select a user to inspect
+                  {t('admin.selectUser')}
                 </div>
               )}
             </div>
@@ -1340,7 +1340,7 @@ export default function AdminPanel() {
                 onChange={e => setLogEventFilter(e.target.value)}
                 className="bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
               >
-                <option value="">All events</option>
+                <option value="">{t('admin.allEvents')}</option>
                 {Object.entries(EventLabels).map(([k, v]) => (
                   <option key={k} value={k}>{v}</option>
                 ))}
@@ -1349,25 +1349,25 @@ export default function AdminPanel() {
                 type="text"
                 value={logPlayerFilter}
                 onChange={e => setLogPlayerFilter(e.target.value)}
-                placeholder="Filter by player..."
+                placeholder={t('admin.filterByPlayer')}
                 className="bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs w-48"
               />
               <button
                 onClick={fetchLogs}
                 className="px-3 py-1 bg-amber-700 text-white rounded text-xs hover:bg-amber-600"
               >
-                Refresh
+                {t('admin.refresh')}
               </button>
-              <span className="text-gray-600 text-xs ml-auto">{logs.length} entries</span>
+              <span className="text-gray-600 text-xs ml-auto">{t('admin.entries').replace('{count}', String(logs.length))}</span>
             </div>
             <div className="flex-1 overflow-y-auto">
               <table className="w-full text-xs">
                 <thead className="text-gray-500 bg-[#111] sticky top-0">
                   <tr>
-                    <th className="text-left px-3 py-2 w-40">Time</th>
-                    <th className="text-left px-3 py-2 w-28">Event</th>
-                    <th className="text-left px-3 py-2 w-40">Player</th>
-                    <th className="text-left px-3 py-2">Details</th>
+                    <th className="text-left px-3 py-2 w-40">{t('admin.colTime')}</th>
+                    <th className="text-left px-3 py-2 w-28">{t('admin.colEvent')}</th>
+                    <th className="text-left px-3 py-2 w-40">{t('admin.colPlayer')}</th>
+                    <th className="text-left px-3 py-2">{t('admin.colDetails')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1390,14 +1390,14 @@ export default function AdminPanel() {
                       </td>
                       <td className="px-3 py-1.5 text-gray-500">
                         {entry.accountId && entry.event !== 'login' && entry.event !== 'logout' && (
-                          <button onClick={() => { setTab('users'); setTimeout(() => selectAccount(entry.accountId!), 100) }} className="text-blue-400 hover:underline mr-2">[user]</button>
+                          <button onClick={() => { setTab('users'); setTimeout(() => selectAccount(entry.accountId!), 100) }} className="text-blue-400 hover:underline mr-2">{t('admin.userLink')}</button>
                         )}
                         {entry.details}
                       </td>
                     </tr>
                   ))}
                   {logs.length === 0 && (
-                    <tr><td colSpan={4} className="px-3 py-8 text-center text-gray-600">No log entries</td></tr>
+                    <tr><td colSpan={4} className="px-3 py-8 text-center text-gray-600">{t('admin.noLogEntries')}</td></tr>
                   )}
                 </tbody>
               </table>
@@ -1409,34 +1409,34 @@ export default function AdminPanel() {
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex gap-2 p-3 bg-[#111] border-b border-[#333] items-center">
               <div className={`w-2 h-2 rounded-full ${eventConnected ? 'bg-green-500' : 'bg-red-500'}`} />
-              <span className="text-gray-400 text-xs">{eventConnected ? 'Connected' : 'Disconnected'}</span>
+              <span className="text-gray-400 text-xs">{eventConnected ? t('admin.connected') : t('admin.disconnected')}</span>
               <select
                 value={eventCatFilter}
                 onChange={e => setEventCatFilter(e.target.value)}
                 className="bg-[#0a0a0a] border border-[#444] rounded px-2 py-1 text-gray-200 focus:border-amber-500 focus:outline-none text-xs"
               >
-                <option value="">All categories</option>
-                <option value="system">System</option>
-                <option value="time">Time</option>
-                <option value="monster">Monster</option>
-                <option value="script">Script</option>
-                <option value="world">World State</option>
-                <option value="weather">Weather</option>
+                <option value="">{t('admin.allCategories')}</option>
+                <option value="system">{t('admin.categorySystem')}</option>
+                <option value="time">{t('admin.categoryTime')}</option>
+                <option value="monster">{t('admin.categoryMonster')}</option>
+                <option value="script">{t('admin.categoryScript')}</option>
+                <option value="world">{t('admin.categoryWorld')}</option>
+                <option value="weather">{t('admin.categoryWeather')}</option>
               </select>
               <button
                 onClick={() => setEvents([])}
                 className="px-3 py-1 bg-[#222] border border-[#444] rounded text-xs text-gray-300 hover:border-amber-500"
               >
-                Clear
+                {t('admin.clear')}
               </button>
-              <span className="text-gray-600 text-xs ml-auto">{events.length} events</span>
+              <span className="text-gray-600 text-xs ml-auto">{t('admin.eventsCount').replace('{count}', String(events.length))}</span>
             </div>
             <div ref={eventScrollRef} className="flex-1 overflow-y-auto font-mono text-xs p-2 bg-[#0a0a0a]">
               {events
                 .filter(ev => !eventCatFilter || ev.category === eventCatFilter)
                 .map((ev, i) => {
-                  const t = new Date(ev.time)
-                  const ts = t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                  const d = new Date(ev.time)
+                  const ts = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
                   return (
                     <div key={i} className="py-0.5 border-b border-[#111] flex gap-2">
                       <span className="text-gray-600 w-20 shrink-0">{ts}</span>
@@ -1448,7 +1448,7 @@ export default function AdminPanel() {
                   )
                 })}
               {events.length === 0 && (
-                <div className="text-gray-600 text-center py-8">Waiting for events...</div>
+                <div className="text-gray-600 text-center py-8">{t('admin.waitingForEvents')}</div>
               )}
             </div>
           </div>

@@ -52,7 +52,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
   }
 
   const deleteCapture = async (id: string) => {
-    if (!confirm('Delete this capture permanently?')) return
+    if (!confirm(t('capture.deleteConfirm'))) return
     try {
       const res = await fetch(`/api/captures/${id}`, { method: 'DELETE', headers: authHeaders() })
       if (res.ok) {
@@ -67,9 +67,9 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
     const s = new Date(start).getTime()
     const e = end ? new Date(end).getTime() : Date.now()
     const mins = Math.round((e - s) / 60000)
-    if (mins < 1) return '<1 min'
-    if (mins < 60) return `${mins} min`
-    return `${Math.floor(mins / 60)}h ${mins % 60}m`
+    if (mins < 1) return t('capture.lessThanMin')
+    if (mins < 60) return `${mins} ${t('capture.min')}`
+    return `${Math.floor(mins / 60)}${t('capture.hour')} ${mins % 60}${t('capture.minuteShort')}`
   }
 
   return (
@@ -89,7 +89,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
                 onClick={stopCapture}
                 className="ml-auto px-4 py-1.5 bg-red-700 text-white rounded text-xs font-mono hover:bg-red-600"
               >
-                Stop Recording
+                {t("capture.stopRecording")}
               </button>
             </div>
           ) : (
@@ -97,7 +97,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
               onClick={startCapture}
               className="w-full py-2 bg-amber-700 text-white rounded text-sm font-mono hover:bg-amber-600"
             >
-              Start Recording
+              {t("capture.startRecording")}
             </button>
           )}
         </div>
@@ -125,7 +125,7 @@ export default function CaptureModal({ wsRef, recording, onClose, onViewCapture 
                   <button
                     onClick={(e) => { e.stopPropagation(); deleteCapture(c.id) }}
                     className="px-2 py-2 text-gray-600 hover:text-red-400 text-xs"
-                    title="Delete capture"
+                    title={t("capture.deleteTitle")}
                   >
                     &times;
                   </button>

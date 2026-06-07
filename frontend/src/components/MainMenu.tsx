@@ -80,7 +80,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
   }, [user, isLoggedIn])
 
   const formatDate = (dateStr: string) => {
-    if (!dateStr) return 'Unknown'
+    if (!dateStr) return t('main.unknown')
     const d = new Date(dateStr)
     return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }
@@ -115,9 +115,9 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
           p.firstName === firstName ? { ...p, apiKeyPrefix: data.key.substring(0, 13) } : p
         ))
       } else {
-        alert(data.error || 'Failed to generate key')
+        alert(data.error || t('main.failedToGenerateKey'))
       }
-    } catch (_) { alert('Failed to generate key') }
+    } catch (_) { alert(t('main.failedToGenerateKey')) }
   }
 
   const handleRevokeAPIKey = async (firstName: string) => {
@@ -138,7 +138,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
     try {
       await loginWithPassword(emailInput, passwordInput)
     } catch (err) {
-      setLoginError(err instanceof Error ? err.message : 'Login failed')
+      setLoginError(err instanceof Error ? err.message : t('main.loginFailed'))
     }
     setSubmitting(false)
   }
@@ -150,7 +150,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
     try {
       await register(emailInput, passwordInput, nameInput)
     } catch (err) {
-      setLoginError(err instanceof Error ? err.message : 'Registration failed')
+      setLoginError(err instanceof Error ? err.message : t('main.registrationFailed'))
     }
     setSubmitting(false)
   }
@@ -167,7 +167,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
       })
       setForgotSent(true)
     } catch {
-      setLoginError('Failed to send reset email')
+      setLoginError(t('main.failedToSendResetEmail'))
     }
     setSubmitting(false)
   }
@@ -178,7 +178,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
       setLoginError('')
       await login(credentialResponse.credential)
     } catch (err) {
-      setLoginError(err instanceof Error ? err.message : 'Login failed. Please try again.')
+      setLoginError(err instanceof Error ? err.message : t('main.loginFailedRetry'))
     }
   }
 
@@ -254,7 +254,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
                       </div>
                       <GoogleLogin
                         onSuccess={handleGoogleSuccess}
-                        onError={() => setLoginError('Login failed.')}
+                        onError={() => setLoginError(t('main.loginFailed'))}
                         theme="filled_black"
                         size="large"
                         shape="rectangular"
@@ -334,7 +334,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
                 ) : (
                   <form onSubmit={handleForgotPassword} className="space-y-3">
                     <input
-                      type="email" placeholder="Email" value={emailInput}
+                      type="email" placeholder={t("main.emailPlaceholder")} value={emailInput}
                       onChange={e => setEmailInput(e.target.value)}
                       className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                       autoFocus
@@ -416,14 +416,14 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
                             title={p.apiKeyPrefix ? t("main.manageBotKey") : t("main.generateBotKey")}
                           >
                             {p.apiKeyPrefix ? '🤖' : '⚙'}
-                            <span className="hidden sm:inline"> Bot</span>
+                            <span className="hidden sm:inline"> {t("main.bot")}</span>
                           </button>
                           <button
                             onClick={(ev) => { ev.stopPropagation(); setDeleteConfirm(p.firstName) }}
                             className="text-gray-600 hover:text-red-400 text-xs font-mono transition-colors px-2 py-2 min-h-[36px] rounded hover:bg-[#222]"
                             title={t("main.deleteCharacter")}
                           >
-                            ✕<span className="hidden sm:inline"> Delete</span>
+                            ✕<span className="hidden sm:inline"> {t("main.delete")}</span>
                           </button>
                         </div>
                       </div>
