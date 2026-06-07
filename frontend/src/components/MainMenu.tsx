@@ -214,7 +214,7 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
             <div className="text-amber-400 font-mono text-sm tracking-wider">of Future Past</div>
           </div>
           <p className="text-gray-500 font-mono text-sm mt-4">
-            The Shattered Realms of Andor await your return...
+            {t("main.subtitle")}
           </p>
         </div>
 
@@ -273,13 +273,13 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
                 <h2 className="text-amber-400 font-mono font-bold text-lg mb-4 text-center">{t("main.signIn")}</h2>
                 <form onSubmit={handleEmailLogin} className="space-y-3">
                   <input
-                    type="email" placeholder="Email" value={emailInput}
+                    type="email" placeholder={t("main.emailPlaceholder")} value={emailInput}
                     onChange={e => setEmailInput(e.target.value)}
                     className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                     autoFocus
                   />
                   <input
-                    type="password" placeholder="Password" value={passwordInput}
+                    type="password" placeholder={t("main.passwordPlaceholder")} value={passwordInput}
                     onChange={e => setPasswordInput(e.target.value)}
                     className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                   />
@@ -300,18 +300,18 @@ export default function MainMenu({ onNewCharacter, onSelectCharacter, onVersionN
                 <h2 className="text-amber-400 font-mono font-bold text-lg mb-4 text-center">{t("main.createAccount")}</h2>
                 <form onSubmit={handleRegister} className="space-y-3">
                   <input
-                    type="text" placeholder="Display Name" value={nameInput}
+                    type="text" placeholder={t("main.displayNamePlaceholder")} value={nameInput}
                     onChange={e => setNameInput(e.target.value)}
                     className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                     autoFocus
                   />
                   <input
-                    type="email" placeholder="Email" value={emailInput}
+                    type="email" placeholder={t("main.emailPlaceholder")} value={emailInput}
                     onChange={e => setEmailInput(e.target.value)}
                     className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                   />
                   <input
-                    type="password" placeholder="Password (10+ chars, mixed case, digit, special)" value={passwordInput}
+                    type="password" placeholder={t("main.passwordPlaceholder")} value={passwordInput}
                     onChange={e => setPasswordInput(e.target.value)}
                     className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                   />

@@ -126,20 +126,20 @@ export default function AccountModal({ onClose }: Props) {
         <div className="flex gap-1 mb-4 border-b border-[#333] pb-2">
           <button onClick={() => { setTab('info'); setError(''); setMessage('') }}
             className={`px-3 py-1 text-xs font-mono rounded-t ${tab === 'info' ? 'bg-[#333] text-amber-400' : 'text-gray-500 hover:text-gray-300'}`}>
-            Info
+            {t("account.tabInfo")}
           </button>
           <button onClick={() => { setTab('name'); setError(''); setMessage('') }}
             className={`px-3 py-1 text-xs font-mono rounded-t ${tab === 'name' ? 'bg-[#333] text-amber-400' : 'text-gray-500 hover:text-gray-300'}`}>
-            Name
+            {t("account.tabName")}
           </button>
           <button onClick={() => { setTab('password'); setError(''); setMessage('') }}
             className={`px-3 py-1 text-xs font-mono rounded-t ${tab === 'password' ? 'bg-[#333] text-amber-400' : 'text-gray-500 hover:text-gray-300'}`}>
-            Password
+            {t("account.tabPassword")}
           </button>
           {!isVerified && (
             <button onClick={() => { setTab('verify'); setError(''); setMessage('') }}
               className={`px-3 py-1 text-xs font-mono rounded-t ${tab === 'verify' ? 'bg-[#333] text-amber-400' : 'text-yellow-500 hover:text-yellow-300 animate-pulse'}`}>
-              Verify Email
+              {t("account.tabVerify")}
             </button>
           )}
         </div>
@@ -174,13 +174,13 @@ export default function AccountModal({ onClose }: Props) {
         {tab === 'name' && (
           <form onSubmit={handleUpdateName} className="space-y-3">
             <input type="text" value={newName} onChange={e => setNewName(e.target.value)}
-              placeholder="Display name"
+              placeholder={t("account.displayNamePlaceholder")}
               className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none" />
             {error && <p className="text-red-400 font-mono text-xs">{error}</p>}
             {message && <p className="text-green-400 font-mono text-xs">{message}</p>}
             <button type="submit" disabled={submitting}
               className="w-full py-2 bg-amber-700 hover:bg-amber-600 text-white font-mono text-sm rounded disabled:opacity-50">
-              {submitting ? 'Updating...' : 'Update Name'}
+              {submitting ? t("account.updating") : t("account.updateName")}
             </button>
           </form>
         )}
@@ -189,20 +189,20 @@ export default function AccountModal({ onClose }: Props) {
           <form onSubmit={handleUpdatePassword} className="space-y-3">
             {user?.account?.picture && (
               <p className="text-gray-500 font-mono text-xs">
-                Set a password to enable login via telnet or SSH MUD clients.
+                {t("account.setPasswordHint")}
               </p>
             )}
             <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-              placeholder="New password (10+ chars, mixed case, digit, special)"
+              placeholder={t("account.newPassword")}
               className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none" />
             <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
-              placeholder="Confirm new password"
+              placeholder={t("account.confirmPassword")}
               className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none" />
             {error && <p className="text-red-400 font-mono text-xs">{error}</p>}
             {message && <p className="text-green-400 font-mono text-xs">{message}</p>}
             <button type="submit" disabled={submitting}
               className="w-full py-2 bg-amber-700 hover:bg-amber-600 text-white font-mono text-sm rounded disabled:opacity-50">
-              {submitting ? 'Updating...' : 'Update Password'}
+              {submitting ? t("account.updatingPassword") : t("account.updatePassword")}
             </button>
           </form>
         )}
@@ -210,23 +210,23 @@ export default function AccountModal({ onClose }: Props) {
         {tab === 'verify' && (
           <div className="space-y-3">
             <p className="text-gray-400 font-mono text-sm">
-              Enter the verification code from your email, or click below to resend.
+              {t("account.verifyHint")}
             </p>
             <form onSubmit={handleVerifyCode} className="space-y-3">
               <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value.toUpperCase())}
-                placeholder="Verification code (e.g. ABCD1234)"
+                placeholder={t("account.verificationCode")}
                 className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none tracking-widest text-center text-lg"
                 maxLength={8} autoFocus />
               {error && <p className="text-red-400 font-mono text-xs">{error}</p>}
               {message && <p className="text-green-400 font-mono text-xs">{message}</p>}
               <button type="submit" disabled={submitting || verifyCode.length < 8}
                 className="w-full py-2 bg-amber-700 hover:bg-amber-600 text-white font-mono text-sm rounded disabled:opacity-50">
-                {submitting ? 'Verifying...' : 'Verify'}
+                {submitting ? t("account.verifying") : t("account.verify")}
               </button>
             </form>
             <button onClick={handleResendVerification} disabled={submitting}
               className="w-full py-2 bg-[#222] hover:bg-[#333] text-gray-400 font-mono text-xs rounded border border-[#444] disabled:opacity-50">
-              Resend verification email
+              {t("account.resendVerification")}
             </button>
           </div>
         )}

@@ -150,7 +150,7 @@ function App() {
     })
     if (!resp.ok) {
       const errData = await resp.json().catch(() => null)
-      throw new Error(errData?.error || `Login failed (${resp.status})`)
+      throw new Error(errData?.error || `${t('main.loginFailed')} (${resp.status})`)
     }
     setAuthUser(await resp.json())
   }
@@ -163,7 +163,7 @@ function App() {
     })
     if (!resp.ok) {
       const errData = await resp.json().catch(() => null)
-      throw new Error(errData?.error || `Login failed (${resp.status})`)
+      throw new Error(errData?.error || `${t('main.loginFailed')} (${resp.status})`)
     }
     setAuthUser(await resp.json())
   }
@@ -176,7 +176,7 @@ function App() {
     })
     if (!resp.ok) {
       const errData = await resp.json().catch(() => null)
-      throw new Error(errData?.error || `Registration failed (${resp.status})`)
+      throw new Error(errData?.error || `${t('main.registrationFailed')} (${resp.status})`)
     }
     setAuthUser(await resp.json())
   }
@@ -186,25 +186,25 @@ function App() {
     setCharacter(null)
     localStorage.removeItem('lofp_auth')
     setView('menu')
-    document.title = 'Legends of Future Past'
+    document.title = `${t('app.title')} | ${t('app.subtitle')}`
   }
 
   const handleCharacterCreated = (char: Character) => {
     setCharacter(char)
     setView('play')
-    document.title = `${char.firstName} | Legends of Future Past`
+    document.title = `${char.firstName} | ${t('app.title')} ${t('app.subtitle')}`
   }
 
   const handleSelectCharacter = (char: Character) => {
     setCharacter(char)
     setView('play')
-    document.title = `${char.firstName} | Legends of Future Past`
+    document.title = `${char.firstName} | ${t('app.title')} ${t('app.subtitle')}`
   }
 
   if (authLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-[#0a0a0a]">
-        <div className="text-gray-500 font-mono">Loading...</div>
+        <div className="text-gray-500 font-mono">{t('app.loading')}</div>
       </div>
     )
   }
@@ -219,8 +219,8 @@ function App() {
             onClick={() => setView('menu')}
           >
             {/* Full title on desktop, short on mobile */}
-            <span className="hidden sm:inline text-lg">LEGENDS OF FUTURE PAST</span>
-            <span className="sm:hidden text-base">LoFP</span>
+            <span className="hidden sm:inline text-lg">{t('app.header')}</span>
+            <span className="sm:hidden text-base">{t('app.shortTitle')}</span>
           </h1>
           <div className="flex gap-1 sm:gap-2 items-center overflow-hidden">
             {!backendOnline && (
@@ -236,20 +236,20 @@ function App() {
               onClick={() => setView('menu')}
               className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${view === 'menu' ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
             >
-              Menu
+              {t('app.menu')}
             </button>
             <button
               onClick={() => character ? setView('play') : null}
               className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${view === 'play' ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'} ${!character ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              Play
+              {t('app.play')}
             </button>
             {user?.account?.isAdmin && (
               <button
                 onClick={() => setView('admin')}
                 className={`hidden sm:block px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${view === 'admin' ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
               >
-                Admin
+                {t('app.admin')}
               </button>
             )}
             {character?.isGM && (
@@ -257,7 +257,7 @@ function App() {
                 onClick={() => setView('gm')}
                 className={`hidden sm:block px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${view === 'gm' ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
               >
-                GM
+                {t('app.gm')}
               </button>
             )}
             {character && view === 'play' && (
@@ -265,14 +265,14 @@ function App() {
                 onClick={() => setShowCaptureModal(true)}
                 className={`hidden sm:block px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${captureRecording ? 'bg-red-700 text-white animate-pulse' : 'text-gray-400 hover:text-white'}`}
               >
-                {captureRecording ? '● Rec' : 'Capture'}
+                {captureRecording ? t('app.recording') : t('app.capture')}
               </button>
             )}
             <button
               onClick={() => setShowManual(!showManual)}
               className={`hidden sm:block px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-mono min-h-[36px] ${showManual ? 'bg-amber-700 text-white' : 'text-gray-400 hover:text-white'}`}
             >
-              Manual
+              {t('manual.title')}
             </button>
             {user && (
               <div className="flex items-center gap-1 sm:gap-2 ml-1 sm:ml-3 pl-1 sm:pl-3 border-l border-[#444]">
