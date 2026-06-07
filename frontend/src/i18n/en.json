@@ -219,8 +219,9 @@
   "terminal.send": "Send",
   "terminal.connecting": "Connecting...",
   "terminal.disconnected": "Disconnected",
-  "terminal.reconnecting": "Reconnecting...",
+  "terminal.reconnecting": "Connection lost. Reconnecting in {seconds}s...",
   "terminal.connected": "Connected",
+  "terminal.room": "Room",
 
   "api.title": "Bot API Documentation",
   "api.generateKey": "Generate Key",
@@ -293,6 +294,7 @@
   "gm.scripts.selectHint": "Select a script or create a new one",
   "gm.scripts.filename": "Filename",
   "gm.scripts.name": "Name",
+  "gm.scripts.namePlaceholder": "Descriptive name",
   "gm.scripts.priority": "Priority",
   "gm.scripts.upload": "Upload .scr",
   "gm.scripts.saving": "Saving...",
@@ -308,6 +310,7 @@
   "gm.scripts.restoreConfirm": "Restore version from {date}?",
   "gm.scripts.restoreFailed": "Restore failed",
   "gm.scripts.restored": "Version restored and applied",
+  "gm.scripts.by": "by",
 
   "manual.title": "Legends of Future Past",
   "manual.loading": "Loading manual...",

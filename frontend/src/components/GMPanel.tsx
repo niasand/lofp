@@ -261,7 +261,7 @@ export default function GMPanel({ characterName }: Props) {
                     value={editorName}
                     onChange={e => setEditorName(e.target.value)}
                     className="bg-[#0a0a0a] border border-[#333] rounded px-2 py-1 text-gray-200 text-sm w-48"
-                    placeholder="Descriptive name"
+                    placeholder={t('gm.scripts.namePlaceholder')}
                   />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -337,7 +337,7 @@ A vast hall stretches before you.
                   {selected.history.map((v, i) => (
                     <div key={i} className="flex items-center justify-between px-3 py-1.5 border-b border-[#222] text-xs">
                       <span className="text-gray-400">
-                        {formatDate(v.uploadedAt)} by {v.uploadedBy}
+                        {formatDate(v.uploadedAt)} {t('gm.scripts.by')} {v.uploadedBy}
                       </span>
                       <button
                         onClick={() => restoreVersion(i)}

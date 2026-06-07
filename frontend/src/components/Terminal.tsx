@@ -114,7 +114,7 @@ export default function Terminal({ character, onQuit, wsRefOut, onCaptureStatus 
       ws.onclose = () => {
         setConnected(false)
         if (quit || intentionalClose) return
-        addLines([`Connection lost. Reconnecting in ${retryDelay / 1000}s...`], 'system')
+        addLines([t('terminal.reconnecting').replace('{seconds}', String(retryDelay / 1000))], 'system')
         setTimeout(() => {
           if (!intentionalClose) connect()
         }, retryDelay)
@@ -225,7 +225,7 @@ export default function Terminal({ character, onQuit, wsRefOut, onCaptureStatus 
           <span className="text-yellow-400">FT <span className="text-gray-300">{playerState.fatigue}/{playerState.maxFatigue}</span></span>
           <span className="text-blue-400">MP <span className="text-gray-300">{playerState.mana}/{playerState.maxMana}</span></span>
           <span className="text-purple-400">PSI <span className="text-gray-300">{playerState.psi}/{playerState.maxPsi}</span></span>
-          <span className="text-gray-500 truncate max-w-[140px] sm:max-w-none">{roomName || `Room ${playerState.roomNumber}`}</span>
+          <span className="text-gray-500 truncate max-w-[140px] sm:max-w-none">{roomName || `${t('terminal.room')} ${playerState.roomNumber}`}</span>
           <span className={`ml-auto ${connected ? 'text-green-500' : 'text-red-500'}`}>
             {connected ? '●' : '○'}
           </span>

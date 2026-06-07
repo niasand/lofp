@@ -183,8 +183,9 @@
   "terminal.send": "发送",
   "terminal.connecting": "连接中...",
   "terminal.disconnected": "已断开连接",
-  "terminal.reconnecting": "重新连接中...",
+  "terminal.reconnecting": "连接断开，{seconds}秒后重新连接...",
   "terminal.connected": "已连接",
+  "terminal.room": "房间",
 
   "api.title": "机器人API文档",
   "api.generateKey": "生成密钥",
@@ -382,6 +383,7 @@
   "gm.scripts.selectHint": "选择一个脚本或创建新脚本",
   "gm.scripts.filename": "文件名",
   "gm.scripts.name": "名称",
+  "gm.scripts.namePlaceholder": "描述性名称",
   "gm.scripts.priority": "优先级",
   "gm.scripts.upload": "上传 .scr",
   "gm.scripts.saving": "保存中...",
@@ -397,6 +399,7 @@
   "gm.scripts.restoreConfirm": "确定恢复 {date} 的版本？",
   "gm.scripts.restoreFailed": "恢复失败",
   "gm.scripts.restored": "版本已恢复并应用",
+  "gm.scripts.by": "由",
 
   "admin.tabs.rooms": "房间",
   "admin.tabs.items": "物品",
