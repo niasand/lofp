@@ -982,13 +982,13 @@ func (s *Server) handleTelnetConn(rawConn net.Conn, isTLS bool) {
 	tc.writeLine(ansiYellow + ` / ____/ /_/ (__  ) /_` + ansiReset)
 	tc.writeLine(ansiYellow + `/_/    \__,_/____/\__/` + ansiReset)
 	tc.writeLine("")
-	tc.writeLine("  The Shattered Realms of Andor await your return...")
+	tc.writeLine(i18n.T("  The Shattered Realms of Andor await your return..."))
 	tc.writeLine("")
 
 	// Security notice — we can't distinguish TLS-terminated (port 4001) from plain (4000)
 	// since Fly.io forwards both to internal port 4000. Show a brief tip instead.
-	tc.writeLine(ansiYellow + "  Tip: For encrypted connections, use SSL/TLS on port 4001" + ansiReset)
-	tc.writeLine(ansiYellow + "  or SSH on port 4022." + ansiReset)
+	tc.writeLine(ansiYellow + i18n.T("  Tip: For encrypted connections, use SSL/TLS on port 4001") + ansiReset)
+	tc.writeLine(ansiYellow + i18n.T("  or SSH on port 4022.") + ansiReset)
 	tc.writeLine("")
 
 	// Per-IP connection limit
@@ -996,7 +996,7 @@ func (s *Server) handleTelnetConn(rawConn net.Conn, isTLS bool) {
 	s.connMu.Lock()
 	if s.connsByIP[ip] >= 5 {
 		s.connMu.Unlock()
-		tc.writeLine("Too many connections from your address. Try again later.")
+		tc.writeLine(i18n.T("Too many connections from your address. Try again later."))
 		return
 	}
 	s.connsByIP[ip]++
@@ -1013,7 +1013,7 @@ func (s *Server) handleTelnetConn(rawConn net.Conn, isTLS bool) {
 	// Authentication
 	account, player, isBot := s.telnetAuthenticate(tc)
 	if player == nil {
-		tc.writeLine("Disconnected.")
+		tc.writeLine(i18n.T("Disconnected."))
 		return
 	}
 	_ = isBot
@@ -1063,12 +1063,12 @@ func (s *Server) handleTelnetConn(rawConn net.Conn, isTLS bool) {
 
 	if !player.GMInvis && !player.GMHidden {
 		s.broadcastGlobal(player.FirstName,
-			[]string{fmt.Sprintf("** %s has just entered the Realms.", player.FirstName)})
+			[]string{fmt.Sprintf(i18n.T("** %s has just entered the Realms."), player.FirstName)})
 		s.broadcastToRoom(player.RoomNumber, player.FirstName,
-			[]string{fmt.Sprintf("%s materializes from the mists.", player.FirstName)})
+			[]string{fmt.Sprintf(i18n.T("%s materializes from the mists."), player.FirstName)})
 	}
 
-	tc.writeLine(fmt.Sprintf("\r\nWelcome back, %s the %s!", player.FullName(), player.RaceName()))
+	tc.writeLine(fmt.Sprintf(i18n.T("\r\nWelcome back, %s the %s!"), player.FullName(), player.RaceName()))
 	tc.writeLine("")
 
 	ctx := context.Background()
@@ -1099,17 +1099,17 @@ func (s *Server) handleTelnetConn(rawConn net.Conn, isTLS bool) {
 		if !player.GMInvis && !player.GMHidden {
 			if !session.quitSent {
 				s.broadcastGlobal(player.FirstName,
-					[]string{fmt.Sprintf("** %s has just left the Realms.", player.FirstName)})
+					[]string{fmt.Sprintf(i18n.T("** %s has just left the Realms."), player.FirstName)})
 			}
 			s.broadcastToRoom(player.RoomNumber, player.FirstName,
-				[]string{fmt.Sprintf("%s fades from the Realms.", player.FirstName)})
+				[]string{fmt.Sprintf(i18n.T("%s fades from the Realms."), player.FirstName)})
 		}
 		s.gamelog.Log(gamelog.EventGameExit, player.FullName(), accountID,
 			fmt.Sprintf("telnet from %s", ip), player.RoomNumber, "")
 		s.hub.UnregisterPlayer(player.FirstName)
 	}
 
-	tc.writeLine("Farewell from the Shattered Realms.")
+	tc.writeLine(i18n.T("Farewell from the Shattered Realms."))
 }
 
 func (s *Server) telnetAuthenticate(tc *telnetConn) (account *auth.Account, player *engine.Player, isBot bool) {
@@ -1120,7 +1120,7 @@ func (s *Server) telnetAuthenticate(tc *telnetConn) (account *auth.Account, play
 		if banner := s.engine.GetBanner(); banner != "" {
 			tc.writeLine("")
 			tc.writeLine(ansiYellow + "╔══════════════════════════════════════════════════════════════╗" + ansiReset)
-			tc.writeLine(ansiYellow + "║  SERVER NOTICE                                               ║" + ansiReset)
+			tc.writeLine(ansiYellow + "║  " + i18n.T("SERVER NOTICE") + strings.Repeat(" ", max(0, 60-len(i18n.T("SERVER NOTICE")))) + " ║" + ansiReset)
 			tc.writeLine(ansiYellow + "║  " + ansiBold + banner + ansiReset + ansiYellow + strings.Repeat(" ", max(0, 60-len(banner))) + "║" + ansiReset)
 			tc.writeLine(ansiYellow + "╚══════════════════════════════════════════════════════════════╝" + ansiReset)
 			tc.writeLine("")
@@ -1128,12 +1128,12 @@ func (s *Server) telnetAuthenticate(tc *telnetConn) (account *auth.Account, play
 	}
 
 	for attempts := 0; attempts < 3; attempts++ {
-		tc.writeLine("Login options:")
-		tc.writeLine("  1) Sign in with email/password")
-		tc.writeLine("  2) Create a new account")
-		tc.writeLine("  Q) Quit")
+		tc.writeLine(i18n.T("Login options:"))
+		tc.writeLine(i18n.T("  1) Sign in with email/password"))
+		tc.writeLine(i18n.T("  2) Create a new account"))
+		tc.writeLine(i18n.T("  Q) Quit"))
 		tc.writeLine("")
-		tc.writePrompt("Choice: ")
+		tc.writePrompt(i18n.T("Choice: "))
 
 		choice, err := tc.readLine(2 * time.Minute)
 		if err != nil {
@@ -1171,23 +1171,23 @@ func (s *Server) telnetAuthenticate(tc *telnetConn) (account *auth.Account, play
 		case "Q", "QUIT":
 			return nil, nil, false
 		default:
-			tc.writeLine(ansiRed + "Invalid choice." + ansiReset)
+			tc.writeLine(ansiRed + i18n.T("Invalid choice.") + ansiReset)
 		}
 
-		tc.writeLine(ansiRed + "Login failed. Try again." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Login failed. Try again.") + ansiReset)
 		tc.writeLine("")
 	}
 
-	tc.writeLine("Too many failed attempts.")
+	tc.writeLine(i18n.T("Too many failed attempts."))
 	return nil, nil, false
 }
 
 func (s *Server) telnetLoginByPassword(tc *telnetConn, ctx context.Context) *auth.Account {
 	if s.auth == nil {
-		tc.writeLine(ansiRed + "Authentication service is not configured." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Authentication service is not configured.") + ansiReset)
 		return nil
 	}
-	tc.writePrompt("Email: ")
+	tc.writePrompt(i18n.T("Email: "))
 	email, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
@@ -1198,7 +1198,7 @@ func (s *Server) telnetLoginByPassword(tc *telnetConn, ctx context.Context) *aut
 	}
 
 	tc.enterPasswordMode()
-	tc.writePrompt("Password: ")
+	tc.writePrompt(i18n.T("Password: "))
 	password, err := tc.readLine(time.Minute)
 	tc.exitPasswordMode()
 	if err != nil {
@@ -1211,44 +1211,44 @@ func (s *Server) telnetLoginByPassword(tc *telnetConn, ctx context.Context) *aut
 		tc.writeLine(ansiRed + err.Error() + ansiReset)
 		return nil
 	}
-	tc.writeLine(ansiGreen + fmt.Sprintf("Welcome, %s!", account.Name) + ansiReset)
+	tc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Welcome, %s!"), account.Name) + ansiReset)
 	return account
 }
 
 func (s *Server) telnetRegister(tc *telnetConn, ctx context.Context) *auth.Account {
 	if s.auth == nil {
-		tc.writeLine(ansiRed + "Authentication service is not configured." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Authentication service is not configured.") + ansiReset)
 		return nil
 	}
 	tc.writeLine("")
-	tc.writeLine(ansiBoldCyan + "=== Create Account ===" + ansiReset)
+	tc.writeLine(ansiBoldCyan + i18n.T("=== Create Account ===") + ansiReset)
 	tc.writeLine("")
 
-	tc.writePrompt("Display name: ")
+	tc.writePrompt(i18n.T("Display name: "))
 	name, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
 	}
 	name = strings.TrimSpace(name)
 	if name == "" {
-		tc.writeLine(ansiRed + "Name is required." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Name is required.") + ansiReset)
 		return nil
 	}
 
-	tc.writePrompt("Email: ")
+	tc.writePrompt(i18n.T("Email: "))
 	email, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
 	}
 	email = strings.TrimSpace(email)
 	if email == "" {
-		tc.writeLine(ansiRed + "Email is required." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Email is required.") + ansiReset)
 		return nil
 	}
 
-	tc.writeLine(ansiYellow + "Password must be 10+ characters with uppercase, lowercase, digit, and special character." + ansiReset)
+	tc.writeLine(ansiYellow + i18n.T("Password must be 10+ characters with uppercase, lowercase, digit, and special character.") + ansiReset)
 	tc.enterPasswordMode()
-	tc.writePrompt("Password: ")
+	tc.writePrompt(i18n.T("Password: "))
 	password, err := tc.readLine(time.Minute)
 	tc.exitPasswordMode()
 	if err != nil {
@@ -1257,7 +1257,7 @@ func (s *Server) telnetRegister(tc *telnetConn, ctx context.Context) *auth.Accou
 	password = strings.TrimSpace(password)
 
 	tc.enterPasswordMode()
-	tc.writePrompt("Confirm password: ")
+	tc.writePrompt(i18n.T("Confirm password: "))
 	confirm, err := tc.readLine(time.Minute)
 	tc.exitPasswordMode()
 	if err != nil {
@@ -1266,7 +1266,7 @@ func (s *Server) telnetRegister(tc *telnetConn, ctx context.Context) *auth.Accou
 	confirm = strings.TrimSpace(confirm)
 
 	if password != confirm {
-		tc.writeLine(ansiRed + "Passwords do not match." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Passwords do not match.") + ansiReset)
 		return nil
 	}
 
@@ -1280,9 +1280,9 @@ func (s *Server) telnetRegister(tc *telnetConn, ctx context.Context) *auth.Accou
 		if err := s.email.SendVerification(account.Email, verifyToken, verifyCode); err != nil {
 			log.Printf("Failed to send verification email to %s: %v", account.Email, err)
 		}
-		tc.writeLine(ansiGreen + "Account created! A verification email has been sent to " + email + "." + ansiReset)
+		tc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Account created! A verification email has been sent to %s."), email) + ansiReset)
 	} else {
-		tc.writeLine(ansiGreen + "Account created!" + ansiReset)
+		tc.writeLine(ansiGreen + i18n.T("Account created!") + ansiReset)
 	}
 	return account
 }
@@ -1294,19 +1294,19 @@ func (s *Server) telnetCharacterSelect(tc *telnetConn, ctx context.Context, acco
 		players, _ := s.engine.ListPlayersByAccount(ctx, accountID)
 
 		tc.writeLine("")
-		tc.writeLine(ansiBoldCyan + "=== Character Selection ===" + ansiReset)
+		tc.writeLine(ansiBoldCyan + i18n.T("=== Character Selection ===") + ansiReset)
 		if len(players) > 0 {
 			for i, p := range players {
-				tc.writeLine(fmt.Sprintf("  %d) %s %s (Level %d %s)",
+				tc.writeLine(fmt.Sprintf(i18n.T("  %d) %s %s (Level %d %s)"),
 					i+1, p.FirstName, p.LastName, p.Level, engine.RaceNameByID(p.Race)))
 			}
 		} else {
-			tc.writeLine("  No characters yet.")
+			tc.writeLine(i18n.T("  No characters yet."))
 		}
-		tc.writeLine("  N) Create a new character")
-		tc.writeLine("  Q) Quit")
+		tc.writeLine(i18n.T("  N) Create a new character"))
+		tc.writeLine(i18n.T("  Q) Quit"))
 		tc.writeLine("")
-		tc.writePrompt("Choice: ")
+		tc.writePrompt(i18n.T("Choice: "))
 
 		input, err := tc.readLine(2 * time.Minute)
 		if err != nil {
@@ -1331,35 +1331,35 @@ func (s *Server) telnetCharacterSelect(tc *telnetConn, ctx context.Context, acco
 			p := players[idx-1]
 			player, err := s.engine.LoadPlayer(ctx, p.FirstName, p.LastName)
 			if err != nil {
-				tc.writeLine(ansiRed + "Failed to load character." + ansiReset)
+						tc.writeLine(ansiRed + i18n.T("Failed to load character.") + ansiReset)
 				continue
 			}
 			return player
 		}
 
-		tc.writeLine(ansiRed + "Invalid choice." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("Invalid choice.") + ansiReset)
 	}
 }
 
 func (s *Server) telnetCreateCharacter(tc *telnetConn, ctx context.Context, accountID string) *engine.Player {
 	existing, _ := s.engine.ListPlayersByAccount(ctx, accountID)
 	if len(existing) >= 8 {
-		tc.writeLine(ansiRed + "You can have at most 8 characters." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("You can have at most 8 characters.") + ansiReset)
 		return nil
 	}
 
 	tc.writeLine("")
-	tc.writeLine(ansiBoldCyan + "=== Create Character ===" + ansiReset)
+	tc.writeLine(ansiBoldCyan + i18n.T("=== Create Character ===") + ansiReset)
 	tc.writeLine("")
 
-	tc.writePrompt("First name: ")
+	tc.writePrompt(i18n.T("First name: "))
 	firstName, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
 	}
 	firstName = strings.TrimSpace(firstName)
 
-	tc.writePrompt("Last name: ")
+	tc.writePrompt(i18n.T("Last name: "))
 	lastName, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
@@ -1367,10 +1367,10 @@ func (s *Server) telnetCreateCharacter(tc *telnetConn, ctx context.Context, acco
 	lastName = strings.TrimSpace(lastName)
 
 	tc.writeLine("")
-	tc.writeLine("Races:")
+	tc.writeLine(i18n.T("Races:"))
 	tc.writeLine("  1) Human      2) Aelfen     3) Highlander  4) Wolfling")
 	tc.writeLine("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral")
-	tc.writePrompt("Race (1-8): ")
+	tc.writePrompt(i18n.T("Race (1-8): "))
 	raceStr, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
@@ -1378,8 +1378,8 @@ func (s *Server) telnetCreateCharacter(tc *telnetConn, ctx context.Context, acco
 	var race int
 	fmt.Sscanf(strings.TrimSpace(raceStr), "%d", &race)
 
-	tc.writeLine("Gender: 1) Male  2) Female")
-	tc.writePrompt("Gender (1-2): ")
+	tc.writeLine(i18n.T("Gender: 1) Male  2) Female"))
+	tc.writePrompt(i18n.T("Gender (1-2): "))
 	genderStr, err := tc.readLine(time.Minute)
 	if err != nil {
 		return nil
@@ -1393,47 +1393,47 @@ func (s *Server) telnetCreateCharacter(tc *telnetConn, ctx context.Context, acco
 	}
 	taken, _ := s.engine.IsFirstNameTaken(ctx, firstName)
 	if taken {
-		tc.writeLine(ansiRed + "That first name is already taken." + ansiReset)
+		tc.writeLine(ansiRed + i18n.T("That first name is already taken.") + ansiReset)
 		return nil
 	}
 
 	player := s.engine.CreateNewPlayer(ctx, firstName, lastName, race, gender, accountID)
-	tc.writeLine(ansiGreen + fmt.Sprintf("Welcome to the Shattered Realms, %s the %s!", player.FullName(), engine.RaceNameByID(player.Race)) + ansiReset)
+	tc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Welcome to the Shattered Realms, %s the %s!"), player.FullName(), engine.RaceNameByID(player.Race)) + ansiReset)
 	return player
 }
 
 func (s *Server) telnetVerifyPrompt(tc *telnetConn, ctx context.Context, account *auth.Account) bool {
 	tc.writeLine("")
-	tc.writeLine(ansiYellow + "Your email address is not yet verified." + ansiReset)
-	tc.writeLine("Check your email for a verification code, then enter it below.")
-	tc.writeLine("(You can also press Enter to skip and come back later.)")
+	tc.writeLine(ansiYellow + i18n.T("Your email address is not yet verified.") + ansiReset)
+	tc.writeLine(i18n.T("Check your email for a verification code, then enter it below."))
+	tc.writeLine(i18n.T("(You can also press Enter to skip and come back later.)"))
 	tc.writeLine("")
 
 	for i := 0; i < 3; i++ {
-		tc.writePrompt("Verification code: ")
+		tc.writePrompt(i18n.T("Verification code: "))
 		code, err := tc.readLine(2 * time.Minute)
 		if err != nil {
 			return false
 		}
 		code = strings.TrimSpace(code)
 		if code == "" {
-			tc.writeLine("Skipped. You must verify your email before you can create or play a character.")
+			tc.writeLine(i18n.T("Skipped. You must verify your email before you can create or play a character."))
 			return false
 		}
 		if err := s.auth.VerifyEmailByCode(ctx, code); err != nil {
 			tc.writeLine(ansiRed + err.Error() + ansiReset)
 			continue
 		}
-		tc.writeLine(ansiGreen + "Email verified!" + ansiReset)
+		tc.writeLine(ansiGreen + i18n.T("Email verified!") + ansiReset)
 		return true
 	}
-	tc.writeLine(ansiRed + "Too many failed attempts." + ansiReset)
+	tc.writeLine(ansiRed + i18n.T("Too many failed attempts.") + ansiReset)
 	return false
 }
 
 func (s *Server) telnetAuthByAPIKey(tc *telnetConn, ctx context.Context) *engine.Player {
 	tc.enterPasswordMode()
-	tc.writePrompt("API key: ")
+	tc.writePrompt(i18n.T("API key: "))
 	key, err := tc.readLine(time.Minute)
 	tc.exitPasswordMode()
 	if err != nil {
@@ -1446,7 +1446,7 @@ func (s *Server) telnetAuthByAPIKey(tc *telnetConn, ctx context.Context) *engine
 
 	player, err := s.engine.ValidateAPIKey(ctx, key)
 	if err != nil {
-		tc.writeLine("Invalid API key.")
+		tc.writeLine(i18n.T("Invalid API key."))
 		return nil
 	}
 	return player
@@ -1475,7 +1475,7 @@ func (s *Server) telnetCommandLoop(ctx context.Context, session *Session, tc *te
 		}
 		session.cmdCount++
 		if session.cmdCount > 4 {
-			tc.writeLine("[Slow down! Too many commands.]")
+			tc.writeLine(i18n.T("[Slow down! Too many commands.]"))
 			continue
 		}
 
@@ -1488,7 +1488,7 @@ func (s *Server) telnetCommandLoop(ctx context.Context, session *Session, tc *te
 		}
 		session.cmdTimes = append(recentCmds, now)
 		if len(session.cmdTimes) > 10 {
-			tc.writeLine("[Slow down! Too many commands.]")
+			tc.writeLine(i18n.T("[Slow down! Too many commands.]"))
 			continue
 		}
 
@@ -1520,7 +1520,7 @@ func (s *Server) telnetCommandLoop(ctx context.Context, session *Session, tc *te
 			}
 			session.chatTimes = recent
 			if len(session.chatTimes) >= 5 {
-				tc.writeLine("[You are sending messages too quickly. Please wait.]")
+				tc.writeLine(i18n.T("[You are sending messages too quickly. Please wait.]"))
 				continue
 			}
 			session.chatTimes = append(session.chatTimes, now)

@@ -291,7 +291,7 @@ func (s *Server) handleSSHSession(channel ssh.Channel, remoteAddr string) {
 	s.connMu.Lock()
 	if s.connsByIP[ip] >= 5 {
 		s.connMu.Unlock()
-		sc.writeLine("Too many connections from your address.")
+		sc.writeLine(i18n.T("Too many connections from your address. Try again later."))
 		return
 	}
 	s.connsByIP[ip]++
@@ -327,13 +327,13 @@ func (s *Server) handleSSHSession(channel ssh.Channel, remoteAddr string) {
 	sc.writeLine(ansiYellow + ` / ____/ /_/ (__  ) /_` + ansiReset)
 	sc.writeLine(ansiYellow + `/_/    \__,_/____/\__/` + ansiReset)
 	sc.writeLine("")
-	sc.writeLine("  The Shattered Realms of Andor await your return...")
+	sc.writeLine(i18n.T("  The Shattered Realms of Andor await your return..."))
 	sc.writeLine("")
 
 	// Interactive authentication (same flow as telnet)
 	account, player := s.sshAuthenticate(sc)
 	if player == nil {
-		sc.writeLine("Disconnected.")
+		sc.writeLine(i18n.T("Disconnected."))
 		return
 	}
 
@@ -368,12 +368,12 @@ func (s *Server) handleSSHSession(channel ssh.Channel, remoteAddr string) {
 
 	if !player.GMInvis && !player.GMHidden {
 		s.broadcastGlobal(player.FirstName,
-			[]string{fmt.Sprintf("** %s has just entered the Realms.", player.FirstName)})
+			[]string{fmt.Sprintf(i18n.T("** %s has just entered the Realms."), player.FirstName)})
 		s.broadcastToRoom(player.RoomNumber, player.FirstName,
-			[]string{fmt.Sprintf("%s materializes from the mists.", player.FirstName)})
+			[]string{fmt.Sprintf(i18n.T("%s materializes from the mists."), player.FirstName)})
 	}
 
-	sc.writeLine(fmt.Sprintf("\r\nWelcome back, %s the %s!", player.FullName(), player.RaceName()))
+	sc.writeLine(fmt.Sprintf(i18n.T("\r\nWelcome back, %s the %s!"), player.FullName(), player.RaceName()))
 	sc.writeLine("")
 
 	ctx := context.Background()
@@ -399,17 +399,17 @@ func (s *Server) handleSSHSession(channel ssh.Channel, remoteAddr string) {
 		if !player.GMInvis && !player.GMHidden {
 			if !session.quitSent {
 				s.broadcastGlobal(player.FirstName,
-					[]string{fmt.Sprintf("** %s has just left the Realms.", player.FirstName)})
+					[]string{fmt.Sprintf(i18n.T("** %s has just left the Realms."), player.FirstName)})
 			}
 			s.broadcastToRoom(player.RoomNumber, player.FirstName,
-				[]string{fmt.Sprintf("%s fades from the Realms.", player.FirstName)})
+				[]string{fmt.Sprintf(i18n.T("%s fades from the Realms."), player.FirstName)})
 		}
 		s.gamelog.Log(gamelog.EventGameExit, player.FullName(), accountID,
 			fmt.Sprintf("ssh from %s", ip), player.RoomNumber, "")
 		s.hub.UnregisterPlayer(player.FirstName)
 	}
 
-	sc.writeLine("Farewell from the Shattered Realms.")
+	sc.writeLine(i18n.T("Farewell from the Shattered Realms."))
 }
 
 func (s *Server) sshAuthenticate(sc *sshConn) (*auth.Account, *engine.Player) {
@@ -420,7 +420,7 @@ func (s *Server) sshAuthenticate(sc *sshConn) (*auth.Account, *engine.Player) {
 		if banner := s.engine.GetBanner(); banner != "" {
 			sc.writeLine("")
 			sc.writeLine(ansiYellow + "╔══════════════════════════════════════════════════════════════╗" + ansiReset)
-			sc.writeLine(ansiYellow + "║  SERVER NOTICE                                               ║" + ansiReset)
+			sc.writeLine(ansiYellow + "║  " + i18n.T("SERVER NOTICE") + strings.Repeat(" ", max(0, 60-len(i18n.T("SERVER NOTICE")))) + " ║" + ansiReset)
 			sc.writeLine(ansiYellow + "║  " + ansiBold + banner + ansiReset + ansiYellow + strings.Repeat(" ", max(0, 60-len(banner))) + "║" + ansiReset)
 			sc.writeLine(ansiYellow + "╚══════════════════════════════════════════════════════════════╝" + ansiReset)
 			sc.writeLine("")
@@ -428,12 +428,12 @@ func (s *Server) sshAuthenticate(sc *sshConn) (*auth.Account, *engine.Player) {
 	}
 
 	for attempts := 0; attempts < 3; attempts++ {
-		sc.writeLine("Login options:")
-		sc.writeLine("  1) Sign in with email/password")
-		sc.writeLine("  2) Create a new account")
-		sc.writeLine("  Q) Quit")
+		sc.writeLine(i18n.T("Login options:"))
+		sc.writeLine(i18n.T("  1) Sign in with email/password"))
+		sc.writeLine(i18n.T("  2) Create a new account"))
+		sc.writeLine(i18n.T("  Q) Quit"))
 		sc.writeLine("")
-		sc.writePrompt("Choice: ")
+		sc.writePrompt(i18n.T("Choice: "))
 
 		choice, err := sc.readLine(2*time.Minute, true)
 		if err != nil {
@@ -471,23 +471,23 @@ func (s *Server) sshAuthenticate(sc *sshConn) (*auth.Account, *engine.Player) {
 		case "Q", "QUIT":
 			return nil, nil
 		default:
-			sc.writeLine(ansiRed + "Invalid choice." + ansiReset)
+			sc.writeLine(ansiRed + i18n.T("Invalid choice.") + ansiReset)
 		}
 
-		sc.writeLine(ansiRed + "Login failed. Try again." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Login failed. Try again.") + ansiReset)
 		sc.writeLine("")
 	}
 
-	sc.writeLine("Too many failed attempts.")
+	sc.writeLine(i18n.T("Too many failed attempts."))
 	return nil, nil
 }
 
 func (s *Server) sshLoginByPassword(sc *sshConn, ctx context.Context) *auth.Account {
 	if s.auth == nil {
-		sc.writeLine(ansiRed + "Authentication service is not configured." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Authentication service is not configured.") + ansiReset)
 		return nil
 	}
-	sc.writePrompt("Email: ")
+	sc.writePrompt(i18n.T("Email: "))
 	email, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
@@ -497,7 +497,7 @@ func (s *Server) sshLoginByPassword(sc *sshConn, ctx context.Context) *auth.Acco
 		return nil
 	}
 
-	sc.writePrompt("Password: ")
+	sc.writePrompt(i18n.T("Password: "))
 	password, err := sc.readLine(time.Minute, false)
 	if err != nil {
 		return nil
@@ -509,50 +509,50 @@ func (s *Server) sshLoginByPassword(sc *sshConn, ctx context.Context) *auth.Acco
 		sc.writeLine(ansiRed + err.Error() + ansiReset)
 		return nil
 	}
-	sc.writeLine(ansiGreen + fmt.Sprintf("Welcome, %s!", account.Name) + ansiReset)
+	sc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Welcome, %s!"), account.Name) + ansiReset)
 	return account
 }
 
 func (s *Server) sshRegister(sc *sshConn, ctx context.Context) *auth.Account {
 	if s.auth == nil {
-		sc.writeLine(ansiRed + "Authentication service is not configured." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Authentication service is not configured.") + ansiReset)
 		return nil
 	}
 	sc.writeLine("")
-	sc.writeLine(ansiBoldCyan + "=== Create Account ===" + ansiReset)
+	sc.writeLine(ansiBoldCyan + i18n.T("=== Create Account ===") + ansiReset)
 	sc.writeLine("")
 
-	sc.writePrompt("Display name: ")
+	sc.writePrompt(i18n.T("Display name: "))
 	name, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
 	}
 	name = strings.TrimSpace(name)
 	if name == "" {
-		sc.writeLine(ansiRed + "Name is required." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Name is required.") + ansiReset)
 		return nil
 	}
 
-	sc.writePrompt("Email: ")
+	sc.writePrompt(i18n.T("Email: "))
 	email, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
 	}
 	email = strings.TrimSpace(email)
 	if email == "" {
-		sc.writeLine(ansiRed + "Email is required." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Email is required.") + ansiReset)
 		return nil
 	}
 
-	sc.writeLine(ansiYellow + "Password must be 10+ characters with uppercase, lowercase, digit, and special character." + ansiReset)
-	sc.writePrompt("Password: ")
+	sc.writeLine(ansiYellow + i18n.T("Password must be 10+ characters with uppercase, lowercase, digit, and special character.") + ansiReset)
+	sc.writePrompt(i18n.T("Password: "))
 	password, err := sc.readLine(time.Minute, false)
 	if err != nil {
 		return nil
 	}
 	password = strings.TrimSpace(password)
 
-	sc.writePrompt("Confirm password: ")
+	sc.writePrompt(i18n.T("Confirm password: "))
 	confirm, err := sc.readLine(time.Minute, false)
 	if err != nil {
 		return nil
@@ -560,7 +560,7 @@ func (s *Server) sshRegister(sc *sshConn, ctx context.Context) *auth.Account {
 	confirm = strings.TrimSpace(confirm)
 
 	if password != confirm {
-		sc.writeLine(ansiRed + "Passwords do not match." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Passwords do not match.") + ansiReset)
 		return nil
 	}
 
@@ -574,39 +574,39 @@ func (s *Server) sshRegister(sc *sshConn, ctx context.Context) *auth.Account {
 		if err := s.email.SendVerification(account.Email, verifyToken, verifyCode); err != nil {
 			log.Printf("Failed to send verification email to %s: %v", account.Email, err)
 		}
-		sc.writeLine(ansiGreen + "Account created! A verification email has been sent to " + email + "." + ansiReset)
+		sc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Account created! A verification email has been sent to %s."), email) + ansiReset)
 	} else {
-		sc.writeLine(ansiGreen + "Account created!" + ansiReset)
+		sc.writeLine(ansiGreen + i18n.T("Account created!") + ansiReset)
 	}
 	return account
 }
 
 func (s *Server) sshVerifyPrompt(sc *sshConn, ctx context.Context, account *auth.Account) bool {
 	sc.writeLine("")
-	sc.writeLine(ansiYellow + "Your email address is not yet verified." + ansiReset)
-	sc.writeLine("Check your email for a verification code, then enter it below.")
-	sc.writeLine("(You can also press Enter to skip and come back later.)")
+	sc.writeLine(ansiYellow + i18n.T("Your email address is not yet verified.") + ansiReset)
+	sc.writeLine(i18n.T("Check your email for a verification code, then enter it below."))
+	sc.writeLine(i18n.T("(You can also press Enter to skip and come back later.)"))
 	sc.writeLine("")
 
 	for i := 0; i < 3; i++ {
-		sc.writePrompt("Verification code: ")
+		sc.writePrompt(i18n.T("Verification code: "))
 		code, err := sc.readLine(2*time.Minute, true)
 		if err != nil {
 			return false
 		}
 		code = strings.TrimSpace(code)
 		if code == "" {
-			sc.writeLine("Skipped. You must verify your email before you can create or play a character.")
+			sc.writeLine(i18n.T("Skipped. You must verify your email before you can create or play a character."))
 			return false
 		}
 		if err := s.auth.VerifyEmailByCode(ctx, code); err != nil {
 			sc.writeLine(ansiRed + err.Error() + ansiReset)
 			continue
 		}
-		sc.writeLine(ansiGreen + "Email verified!" + ansiReset)
+		sc.writeLine(ansiGreen + i18n.T("Email verified!") + ansiReset)
 		return true
 	}
-	sc.writeLine(ansiRed + "Too many failed attempts." + ansiReset)
+	sc.writeLine(ansiRed + i18n.T("Too many failed attempts.") + ansiReset)
 	return false
 }
 
@@ -617,19 +617,19 @@ func (s *Server) sshCharacterSelect(sc *sshConn, ctx context.Context, account *a
 		players, _ := s.engine.ListPlayersByAccount(ctx, accountID)
 
 		sc.writeLine("")
-		sc.writeLine(ansiBoldCyan + "=== Character Selection ===" + ansiReset)
+		sc.writeLine(ansiBoldCyan + i18n.T("=== Character Selection ===") + ansiReset)
 		if len(players) > 0 {
 			for i, p := range players {
-				sc.writeLine(fmt.Sprintf("  %d) %s %s (Level %d %s)",
+				sc.writeLine(fmt.Sprintf(i18n.T("  %d) %s %s (Level %d %s)"),
 					i+1, p.FirstName, p.LastName, p.Level, engine.RaceNameByID(p.Race)))
 			}
 		} else {
-			sc.writeLine("  No characters yet.")
+			sc.writeLine(i18n.T("  No characters yet."))
 		}
-		sc.writeLine("  N) Create a new character")
-		sc.writeLine("  Q) Quit")
+		sc.writeLine(i18n.T("  N) Create a new character"))
+		sc.writeLine(i18n.T("  Q) Quit"))
 		sc.writeLine("")
-		sc.writePrompt("Choice: ")
+		sc.writePrompt(i18n.T("Choice: "))
 
 		input, err := sc.readLine(2*time.Minute, true)
 		if err != nil {
@@ -654,35 +654,35 @@ func (s *Server) sshCharacterSelect(sc *sshConn, ctx context.Context, account *a
 			p := players[idx-1]
 			player, err := s.engine.LoadPlayer(ctx, p.FirstName, p.LastName)
 			if err != nil {
-				sc.writeLine(ansiRed + "Failed to load character." + ansiReset)
+				sc.writeLine(ansiRed + i18n.T("Failed to load character.") + ansiReset)
 				continue
 			}
 			return player
 		}
 
-		sc.writeLine(ansiRed + "Invalid choice." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("Invalid choice.") + ansiReset)
 	}
 }
 
 func (s *Server) sshCreateCharacter(sc *sshConn, ctx context.Context, accountID string) *engine.Player {
 	existing, _ := s.engine.ListPlayersByAccount(ctx, accountID)
 	if len(existing) >= 8 {
-		sc.writeLine(ansiRed + "You can have at most 8 characters." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("You can have at most 8 characters.") + ansiReset)
 		return nil
 	}
 
 	sc.writeLine("")
-	sc.writeLine(ansiBoldCyan + "=== Create Character ===" + ansiReset)
+	sc.writeLine(ansiBoldCyan + i18n.T("=== Create Character ===") + ansiReset)
 	sc.writeLine("")
 
-	sc.writePrompt("First name: ")
+	sc.writePrompt(i18n.T("First name: "))
 	firstName, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
 	}
 	firstName = strings.TrimSpace(firstName)
 
-	sc.writePrompt("Last name: ")
+	sc.writePrompt(i18n.T("Last name: "))
 	lastName, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
@@ -690,10 +690,10 @@ func (s *Server) sshCreateCharacter(sc *sshConn, ctx context.Context, accountID 
 	lastName = strings.TrimSpace(lastName)
 
 	sc.writeLine("")
-	sc.writeLine("Races:")
+	sc.writeLine(i18n.T("Races:"))
 	sc.writeLine("  1) Human      2) Aelfen     3) Highlander  4) Wolfling")
 	sc.writeLine("  5) Murg       6) Drakin     7) Mechanoid   8) Ephemeral")
-	sc.writePrompt("Race (1-8): ")
+	sc.writePrompt(i18n.T("Race (1-8): "))
 	raceStr, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
@@ -701,8 +701,8 @@ func (s *Server) sshCreateCharacter(sc *sshConn, ctx context.Context, accountID 
 	var race int
 	fmt.Sscanf(strings.TrimSpace(raceStr), "%d", &race)
 
-	sc.writeLine("Gender: 1) Male  2) Female")
-	sc.writePrompt("Gender (1-2): ")
+	sc.writeLine(i18n.T("Gender: 1) Male  2) Female"))
+	sc.writePrompt(i18n.T("Gender (1-2): "))
 	genderStr, err := sc.readLine(time.Minute, true)
 	if err != nil {
 		return nil
@@ -716,12 +716,12 @@ func (s *Server) sshCreateCharacter(sc *sshConn, ctx context.Context, accountID 
 	}
 	taken, _ := s.engine.IsFirstNameTaken(ctx, firstName)
 	if taken {
-		sc.writeLine(ansiRed + "That first name is already taken." + ansiReset)
+		sc.writeLine(ansiRed + i18n.T("That first name is already taken.") + ansiReset)
 		return nil
 	}
 
 	player := s.engine.CreateNewPlayer(ctx, firstName, lastName, race, gender, accountID)
-	sc.writeLine(ansiGreen + fmt.Sprintf("Welcome to the Shattered Realms, %s the %s!", player.FullName(), engine.RaceNameByID(player.Race)) + ansiReset)
+	sc.writeLine(ansiGreen + fmt.Sprintf(i18n.T("Welcome to the Shattered Realms, %s the %s!"), player.FullName(), engine.RaceNameByID(player.Race)) + ansiReset)
 	return player
 }
 
@@ -749,7 +749,7 @@ func (s *Server) sshCommandLoop(ctx context.Context, session *Session, sc *sshCo
 		}
 		session.cmdCount++
 		if session.cmdCount > 4 {
-			sc.writeLine("[Slow down! Too many commands.]")
+			sc.writeLine(i18n.T("[Slow down! Too many commands.]"))
 			continue
 		}
 
@@ -762,7 +762,7 @@ func (s *Server) sshCommandLoop(ctx context.Context, session *Session, sc *sshCo
 		}
 		session.cmdTimes = append(recentCmds, now)
 		if len(session.cmdTimes) > 10 {
-			sc.writeLine("[Slow down! Too many commands.]")
+			sc.writeLine(i18n.T("[Slow down! Too many commands.]"))
 			continue
 		}
 
@@ -782,7 +782,7 @@ func (s *Server) sshCommandLoop(ctx context.Context, session *Session, sc *sshCo
 			}
 			session.chatTimes = recent
 			if len(session.chatTimes) >= 5 {
-				sc.writeLine("[You are sending messages too quickly. Please wait.]")
+				sc.writeLine(i18n.T("[You are sending messages too quickly. Please wait.]"))
 				continue
 			}
 			session.chatTimes = append(session.chatTimes, chatNow)
