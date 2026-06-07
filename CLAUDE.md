@@ -45,11 +45,17 @@ Production runs multiple Fly.io machines. ALL mutable world state must be coordi
 
 ## After Server Changes
 
-After making changes to the backend (engine/), restart the Go server:
+After making changes to the backend (engine/), restart using start.sh (loads .env automatically):
 ```sh
-kill $(lsof -ti:4993) 2>/dev/null; sleep 1; cd engine && go run cmd/lofp/main.go &
+./start.sh
 ```
-Load .env first if needed: `source .env`
+
+Or manually (must load .env first):
+```sh
+set -a && source .env && set +a && kill $(lsof -ti:4993) 2>/dev/null; sleep 1; cd engine && go run cmd/lofp/main.go &
+```
+
+**IMPORTANT**: The Bash tool's shell state does NOT persist between commands. Always load .env in the same command chain when restarting manually, or use start.sh.
 
 ## Deploying to Production
 
