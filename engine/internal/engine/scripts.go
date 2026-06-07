@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/gameworld"
 )
 
@@ -358,12 +359,12 @@ func (sc *ScriptContext) doEcho(args []string) {
 
 	switch target {
 	case "PLAYER":
-		sc.Messages = append(sc.Messages, text)
+		sc.Messages = append(sc.Messages, i18n.T(text))
 	case "ALL":
-		sc.Messages = append(sc.Messages, text)
-		sc.RoomMsgs = append(sc.RoomMsgs, text)
+		sc.Messages = append(sc.Messages, i18n.T(text))
+		sc.RoomMsgs = append(sc.RoomMsgs, i18n.T(text))
 	case "OTHERS":
-		sc.RoomMsgs = append(sc.RoomMsgs, text)
+		sc.RoomMsgs = append(sc.RoomMsgs, i18n.T(text))
 	}
 }
 

@@ -520,8 +520,8 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 		Messages: []string{
 			"",
 			"====================================",
-			" LEGENDS OF FUTURE PAST",
-			" The Shattered Realms Await...",
+			" " + i18n.T("LEGENDS OF FUTURE PAST"),
+			" " + i18n.T("The Shattered Realms Await..."),
 			"====================================",
 			"",
 		},

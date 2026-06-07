@@ -1,3 +1,28 @@
+## [2026-06-07] 游戏内多处英文未翻译
+
+**现象**：进入游戏后，标题、出口提示、脚本输出等多处显示英文，未进行 i18n 翻译。
+
+**来源**：
+1. **UI 字符串**（硬编码在 Go 代码中）：
+   - "LEGENDS OF FUTURE PAST" - 标题
+   - "The Shattered Realms Await..." - 副标题
+   - "Obvious exits" - 出口提示（engine.go, telnet.go, ssh.go）
+   - "Type HELP to access the help system" - 帮助提示
+
+2. **脚本字符串**（来自原始 .SCR 文件）：
+   - "A trader appears" - 怪物生成文本覆盖（TEXG）
+   - "You have been given tunic, breeches and boots" - 来自 FAYDFALL.SCR
+   - "A little voice inside your head says..." - 来自 FAYDFALL.SCR
+
+**修复**：
+- api.go：标题和欢迎信息使用 i18n.T()
+- engine.go：Obvious exits、时间描述、"You see" 等字符串使用 i18n.T()
+- telnet.go/ssh.go：Obvious exits 使用 i18n.T()
+- scripts.go：doEcho 函数对 ECHO PLAYER 文本使用 i18n.T()
+- messages_zh.go：添加所有翻译
+
+**教训**：i18n 覆盖不完整，需要系统性检查所有用户可见字符串。
+
 [AI-REVIEW] Large commit detected: 571 lines added. Consider reviewing for AI Psychosis.
 [AI-REVIEW] Large commit detected: 573 lines added. Consider reviewing for AI Psychosis.
 [AI-REVIEW] Large commit detected: 201 lines added. Consider reviewing for AI Psychosis.

@@ -371,6 +371,8 @@ var zhMessages = map[string]string{
 	"Winter":                                                "冬天",
 	"day":                                                   "白天",
 	"night":                                                 "夜晚",
+	"It is %s %d, %d. It is %s. %s":                         "现在是 %s %d, %d。%s。%s",
+	"It is %s %d, %d. It is %s.":                            "现在是 %s %d, %d。%s。",
 	// ── Monsters ─────────────────────────────────────────────────────
 	"%s%s appears.":                                         "%s%s出现了。",
 	"You also see %s.":                                      "你还看到了%s。",
@@ -397,6 +399,31 @@ var zhMessages = map[string]string{
 	"Mechanoid": "机械体",
 	"Ephemeral": "虚灵",
 	"Unknown":   "未知",
+	// ── UI Strings ──────────────────────────────────────────────────
+	"LEGENDS OF FUTURE PAST":  "未来传奇",
+	"The Shattered Realms Await...": "破碎领域等待着你……",
+	"Obvious exits: ":         "明显出口：",
+	"There are no obvious exits.": "没有明显出口。",
+	"You see ":                "你看到 ",
+	"You see nothing.":        "你什么也没看到。",
+	"You see nothing of interest in that direction.": "你朝那个方向看不到什么有趣的东西。",
+	"You see nothing noteworthy %s %s.": "你在%s %s没有看到什么值得注意的东西。",
+	"You see nothing noteworthy %s the %s.": "你在%s %s没有看到什么值得注意的东西。",
+	"You see a %s.": "你看到一个%s。",
+	"Welcome, adventurer! Here are some tips:": "欢迎，冒险者！以下是一些提示：",
+	"- Use LOOK to examine your surroundings": "- 使用 LOOK 检查周围环境",
+	"- Move with N, S, E, W, NE, NW, SE, SW, or GO <portal>": "- 使用 N、S、E、W、NE、NW、SE、SW 或 GO <门户> 移动",
+	"- GET and DROP items, WIELD weapons, WEAR armor": "- GET 和 DROP 物品，WIELD 武器，WEAR 护甲",
+	"- Check your STATUS, HEALTH, INVENTORY, and WEALTH": "- 检查你的 STATUS、HEALTH、INVENTORY 和 WEALTH",
+	"- Type HELP for a full command list": "- 输入 HELP 查看完整命令列表",
+
+	// ── Script Strings ──────────────────────────────────────────────
+	"[Type HELP to access the help system. Type ASSIST to request a gamemaster as soon as one is available. Type ADVICE for hints on getting started.]": "[输入 HELP 访问帮助系统。输入 ASSIST 请求游戏管理员。输入 ADVICE 获取入门提示。]",
+	"You have been given tunic, breeches and boots. Please WEAR them immediately. (WEAR TUNIC, WEAR BREECHES, WEAR TUNIC)": "你获得了束腰外衣、马裤和靴子。请立即穿上它们。（WEAR TUNIC、WEAR BREECHES、WEAR BOOTS）",
+	"You have also been given a roleplaying OBJECT, which allows you to do enhanced roleplaying actions. TAP the OBJECT to see the rules. Make sure you practice in private.": "你还获得了一个角色扮演物品，它允许你执行增强的角色扮演动作。TAP 该物品查看规则。请确保在私下练习。",
+	"A little voice inside your head says, \"Keep going west, young one, keep going west.\"": "你脑海中响起一个微弱的声音：\"继续向西走，年轻人，继续向西。\"",
+	"A trader appears.": "一个商人出现了。",
+
 	// ── Directions ────────────────────────────────────────────────────
 	"north":     "北",
 	"south":     "南",

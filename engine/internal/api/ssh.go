@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/auth"
 	"github.com/jonradoff/lofp/internal/engine"
 	"github.com/jonradoff/lofp/internal/gamelog"
@@ -39,7 +40,7 @@ func (s *sshConn) SendResult(result *engine.CommandResult) error {
 		buf.WriteString(wordWrap(result.RoomDesc, s.width) + "\r\n")
 	}
 	if len(result.Exits) > 0 {
-		buf.WriteString(ansiGreen + "Obvious exits: " + strings.Join(result.Exits, ", ") + ansiReset + "\r\n")
+		buf.WriteString(ansiGreen + i18n.T("Obvious exits: ") + strings.Join(result.Exits, ", ") + ansiReset + "\r\n")
 	}
 	if len(result.Items) > 0 {
 		for _, item := range result.Items {

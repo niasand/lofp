@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jonradoff/lofp/i18n"
 	"github.com/jonradoff/lofp/internal/auth"
 	"github.com/jonradoff/lofp/internal/engine"
 	"github.com/jonradoff/lofp/internal/gamelog"
@@ -155,13 +156,14 @@ func (t *telnetConn) colorizeMessage(msg string) string {
 	}
 
 	// Obvious exits line
-	if strings.HasPrefix(msg, "Obvious exits: ") {
+	obviousExitsPrefix := i18n.T("Obvious exits: ")
+	if strings.HasPrefix(msg, obviousExitsPrefix) {
 		if t.mxpEnabled {
-			exitsPart := strings.TrimPrefix(msg, "Obvious exits: ")
+			exitsPart := strings.TrimPrefix(msg, obviousExitsPrefix)
 			exitsPart = strings.TrimSuffix(exitsPart, ".")
 			exits := strings.Split(exitsPart, ", ")
 			var b strings.Builder
-			b.WriteString(mxpSecureLine + ansiGreen + "Obvious exits: ")
+			b.WriteString(mxpSecureLine + ansiGreen + obviousExitsPrefix)
 			for i, exit := range exits {
 				if i > 0 {
 					b.WriteString(", ")
@@ -176,7 +178,7 @@ func (t *telnetConn) colorizeMessage(msg string) string {
 	}
 
 	// "There are no obvious exits."
-	if msg == "There are no obvious exits." {
+	if msg == i18n.T("There are no obvious exits.") {
 		return ansiGreen + msg + ansiReset
 	}
 

@@ -1055,12 +1055,12 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 		return e.doHelp()
 	case "ADVICE":
 		return &CommandResult{Messages: []string{
-			"Welcome, adventurer! Here are some tips:",
-			"- Use LOOK to examine your surroundings",
-			"- Move with N, S, E, W, NE, NW, SE, SW, or GO <portal>",
-			"- GET and DROP items, WIELD weapons, WEAR armor",
-			"- Check your STATUS, HEALTH, INVENTORY, and WEALTH",
-			"- Type HELP for a full command list",
+			i18n.T("Welcome, adventurer! Here are some tips:"),
+			i18n.T("- Use LOOK to examine your surroundings"),
+			i18n.T("- Move with N, S, E, W, NE, NW, SE, SW, or GO <portal>"),
+			i18n.T("- GET and DROP items, WIELD weapons, WEAR armor"),
+			i18n.T("- Check your STATUS, HEALTH, INVENTORY, and WEALTH"),
+			i18n.T("- Type HELP for a full command list"),
 		}}
 	case "HOLD":
 		// HOLD <player> → group hold; otherwise fallthrough to emote
@@ -1369,7 +1369,7 @@ func (e *GameEngine) ProcessCommand(ctx context.Context, player *Player, input s
 	case "CREDITS":
 		return &CommandResult{Messages: []string{
 			"",
-			"  LEGENDS OF FUTURE PAST",
+			"  " + i18n.T("LEGENDS OF FUTURE PAST"),
 			"  ======================",
 			"",
 			"  Original Game (1992-1999)",
@@ -1929,17 +1929,17 @@ func (e *GameEngine) doMove(ctx context.Context, player *Player, dir string) *Co
 // EnterRoom performs a look and runs IFENTRY scripts. Used on login/creation.
 func (e *GameEngine) EnterRoom(ctx context.Context, player *Player) *CommandResult {
 	// Show date and time on entry
-	period := "day"
+	period := i18n.T("day")
 	if IsNight() {
-		period = "night"
+		period = i18n.T("night")
 	}
 	weather := strings.ToLower(e.GetRoomWeather(player.RoomNumber))
 	var timeMsg string
 	if weather != "" {
-		timeMsg = fmt.Sprintf("It is %s %d, %d. It is %s. %s",
+		timeMsg = fmt.Sprintf(i18n.T("It is %s %d, %d. It is %s. %s"),
 			GameMonthName(), GameDay()%28+1, GameYear(), period, weather)
 	} else {
-		timeMsg = fmt.Sprintf("It is %s %d, %d. It is %s.",
+		timeMsg = fmt.Sprintf(i18n.T("It is %s %d, %d. It is %s."),
 			GameMonthName(), GameDay()%28+1, GameYear(), period)
 	}
 
@@ -2190,7 +2190,7 @@ func (e *GameEngine) doLook(player *Player) *CommandResult {
 		msgs = append(msgs, descriptionToMessages(result.RoomDesc)...)
 	}
 	if len(result.Items) > 0 {
-		msgs = append(msgs, "You see "+joinList(result.Items)+".")
+		msgs = append(msgs, i18n.T("You see ")+joinList(result.Items)+".")
 	}
 	if len(playersHere) > 0 {
 		// Format like original: "You see Player1 and Player2." or "You see Player1, Player2 and Player3."
@@ -2200,7 +2200,7 @@ func (e *GameEngine) doLook(player *Player) *CommandResult {
 		} else {
 			pList = strings.Join(playersHere[:len(playersHere)-1], ", ") + " and " + playersHere[len(playersHere)-1]
 		}
-		msgs = append(msgs, "You see "+pList+".")
+		msgs = append(msgs, i18n.T("You see ")+pList+".")
 	}
 	// Show monsters in the room
 	monsterLines := e.MonsterLookLines(player.RoomNumber)
@@ -2210,9 +2210,9 @@ func (e *GameEngine) doLook(player *Player) *CommandResult {
 		msgs = append(msgs, weatherLine)
 	}
 	if len(exits) > 0 {
-		msgs = append(msgs, "Obvious exits: "+strings.Join(exits, ", ")+".")
+		msgs = append(msgs, i18n.T("Obvious exits: ")+strings.Join(exits, ", ")+".")
 	} else {
-		msgs = append(msgs, "There are no obvious exits.")
+		msgs = append(msgs, i18n.T("There are no obvious exits."))
 	}
 	result.Messages = msgs
 	return result
@@ -2279,7 +2279,7 @@ func (e *GameEngine) doLookAt(player *Player, args []string) *CommandResult {
 					return &CommandResult{Messages: msgs}
 				}
 			}
-			return &CommandResult{Messages: []string{"You see nothing of interest in that direction."}}
+			return &CommandResult{Messages: []string{i18n.T("You see nothing of interest in that direction.")}}
 		}
 	}
 
@@ -2313,7 +2313,7 @@ func (e *GameEngine) doLookAt(player *Player, args []string) *CommandResult {
 
 	room := e.rooms[player.RoomNumber]
 	if room == nil {
-		return &CommandResult{Messages: []string{"You see nothing."}}
+		return &CommandResult{Messages: []string{i18n.T("You see nothing.")}}
 	}
 
 	isContainer := func(def *gameworld.ItemDef) bool {
@@ -2362,7 +2362,7 @@ func (e *GameEngine) doLookAt(player *Player, args []string) *CommandResult {
 			}
 			if prefix != "" {
 				displayName := e.formatItemName(itemDef, ii.Adj1, ii.Adj2, ii.Adj3)
-				return &CommandResult{Messages: []string{fmt.Sprintf("You see nothing noteworthy %s %s.", strings.ToLower(prefix), displayName)}}
+				return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You see nothing noteworthy %s %s."), strings.ToLower(prefix), displayName)}}
 			}
 			return &CommandResult{Messages: []string{fmt.Sprintf("You look at your %s.", name)}}
 		}
@@ -2446,7 +2446,7 @@ func (e *GameEngine) examineMonster(def *gameworld.MonsterDef) *CommandResult {
 	if def.Description != "" {
 		msgs = append(msgs, def.Description)
 	} else {
-		msgs = append(msgs, fmt.Sprintf("You see a %s.", name))
+		msgs = append(msgs, fmt.Sprintf(i18n.T("You see a %s."), name))
 	}
 	return &CommandResult{Messages: msgs}
 }
@@ -5648,7 +5648,7 @@ func (e *GameEngine) lookPrefixRoomItem(room *gameworld.Room, def *gameworld.Ite
 		return &CommandResult{Messages: descriptionToMessages(desc)}
 	}
 	name := e.getItemNounName(def)
-	return &CommandResult{Messages: []string{fmt.Sprintf("You see nothing noteworthy %s the %s.", strings.ToLower(prefix), name)}}
+	return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("You see nothing noteworthy %s the %s."), strings.ToLower(prefix), name)}}
 }
 
 // descriptionToMessages splits a description into message lines.
