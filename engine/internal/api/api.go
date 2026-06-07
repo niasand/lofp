@@ -623,6 +623,8 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 				s.broadcastToRoom(player.RoomNumber, player.FirstName, []string{fmt.Sprintf("%s arrives.", player.FirstName)})
 			}
 			result := s.engine.EnterRoom(ctx, player)
+			result.PlayerState = player
+			result.PromptIndicators = player.PromptIndicators()
 			s.sendResult(session, result)
 			session.Conn.SendTypedMessage("auth_result", map[string]interface{}{
 				"success":   true,
@@ -711,6 +713,8 @@ func (s *Server) handleGameWS(w http.ResponseWriter, r *http.Request) {
 			}
 
 			result := s.engine.EnterRoom(ctx, player)
+			result.PlayerState = player
+			result.PromptIndicators = player.PromptIndicators()
 			s.sendResult(session, result)
 			if len(result.GMBroadcast) > 0 {
 				s.broadcastToGMs(result.GMBroadcast)

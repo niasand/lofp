@@ -108,6 +108,9 @@ export default function Terminal({ character, onQuit, wsRefOut, onCaptureStatus 
         } else if (msg.type === 'capture_status') {
           const data = typeof msg.data === 'string' ? JSON.parse(msg.data) : msg.data
           if (onCaptureStatus) onCaptureStatus(data.recording, data.id || '')
+        } else if (msg.type === 'error') {
+          const errMsg = typeof msg.data === 'string' ? msg.data : (msg.data?.message || JSON.stringify(msg.data))
+          addLines([errMsg], 'error')
         }
       }
 
