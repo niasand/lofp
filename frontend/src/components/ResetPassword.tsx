@@ -31,7 +31,7 @@ export default function ResetPassword({ onBack }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirm) {
-      setError('Passwords do not match.')
+      setError(t("reset.passwordsDoNotMatch"))
       return
     }
     setSubmitting(true)
@@ -46,11 +46,11 @@ export default function ResetPassword({ onBack }: Props) {
         setStatus('success')
       } else {
         const data = await resp.json().catch(() => null)
-        setError(data?.error || 'Reset failed.')
+        setError(data?.error || t("reset.resetFailed"))
         setStatus('error')
       }
     } catch {
-      setError('Network error.')
+      setError(t("reset.networkError"))
       setStatus('error')
     }
     setSubmitting(false)
@@ -64,20 +64,20 @@ export default function ResetPassword({ onBack }: Props) {
             <h2 className="text-amber-400 font-mono font-bold text-lg mb-4 text-center">{t("reset.title")}</h2>
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
-                type="password" placeholder="New password (10+ chars, mixed case, digit, special)" value={password}
+                type="password" placeholder={t("reset.newPasswordPlaceholder")} value={password}
                 onChange={e => setPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
                 autoFocus
               />
               <input
-                type="password" placeholder="Confirm password" value={confirm}
+                type="password" placeholder={t("reset.confirmPassword")} value={confirm}
                 onChange={e => setConfirm(e.target.value)}
                 className="w-full px-3 py-2 bg-[#111] border border-[#444] rounded font-mono text-sm text-gray-200 focus:border-amber-600 focus:outline-none"
               />
               {error && <p className="text-red-400 font-mono text-xs">{error}</p>}
               <button type="submit" disabled={submitting}
                 className="w-full py-2 bg-amber-700 hover:bg-amber-600 text-white font-mono text-sm rounded disabled:opacity-50 transition-colors">
-                {submitting ? 'Resetting...' : t("reset.title")}
+                {submitting ? t("reset.resetting") : t("reset.title")}
               </button>
             </form>
           </div>
