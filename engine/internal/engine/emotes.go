@@ -17,184 +17,184 @@ type emoteEntry struct {
 }
 
 var emoteTable = map[string]emoteEntry{
-	"SMILE":     {Self: "You smile.", Room: "%N smiles.", SelfTarget: "You smile at %T.", RoomTarget: "%N smiles at %T."},
-	"BOW":       {Self: "You bow.", Room: "%N bows.", SelfTarget: "You bow to %T.", RoomTarget: "%N bows to %T."},
-	"CURTSEY":   {Self: "You curtsey.", Room: "%N curtseys.", SelfTarget: "You curtsey to %T.", RoomTarget: "%N curtseys to %T."},
-	"CURTSY":    {Self: "You curtsy.", Room: "%N curtsies.", SelfTarget: "You curtsy to %T.", RoomTarget: "%N curtsies to %T."},
-	"WAVE":      {Self: "You wave.", Room: "%N waves.", SelfTarget: "You wave to %T.", RoomTarget: "%N waves to %T."},
-	"NOD":       {Self: "You nod.", Room: "%N nods.", SelfTarget: "You nod to %T.", RoomTarget: "%N nods to %T."},
-	"LAUGH":     {Self: "You laugh.", Room: "%N laughs.", SelfTarget: "You laugh at %T.", RoomTarget: "%N laughs at %T."},
-	"CHUCKLE":   {Self: "You chuckle.", Room: "%N chuckles.", SelfTarget: "You chuckle at %T.", RoomTarget: "%N chuckles at %T."},
-	"GRIN":      {Self: "You grin.", Room: "%N grins.", SelfTarget: "You grin at %T.", RoomTarget: "%N grins at %T."},
-	"FROWN":     {Self: "You frown.", Room: "%N frowns.", SelfTarget: "You frown at %T.", RoomTarget: "%N frowns at %T."},
-	"SIGH":      {Self: "You sigh.", Room: "%N sighs.", SelfTarget: "You sigh at %T.", RoomTarget: "%N sighs at %T."},
-	"SHRUG":     {Self: "You shrug.", Room: "%N shrugs.", SelfTarget: "You shrug at %T.", RoomTarget: "%N shrugs at %T."},
-	"WINK":      {Self: "You wink.", Room: "%N winks.", SelfTarget: "You wink at %T.", RoomTarget: "%N winks at %T."},
-	"CRY":       {Self: "You cry.", Room: "%N cries.", SelfTarget: "You cry on %T's shoulder.", RoomTarget: "%N cries on %T's shoulder."},
-	"DANCE":     {Self: "You dance.", Room: "%N dances.", SelfTarget: "You dance with %T.", RoomTarget: "%N dances with %T."},
-	"HUG":       {Self: "You hug yourself.", Room: "%N hugs themselves.", SelfTarget: "You hug %T.", RoomTarget: "%N hugs %T."},
-	"KISS":      {Self: "You blow a kiss.", Room: "%N blows a kiss.", SelfTarget: "You kiss %T.", RoomTarget: "%N kisses %T."},
-	"POKE":      {Self: "You poke yourself.", Room: "%N pokes themselves.", SelfTarget: "You poke %T.", RoomTarget: "%N pokes %T."},
-	"TICKLE":    {Self: "You tickle yourself.", Room: "%N tickles themselves.", SelfTarget: "You tickle %T.", RoomTarget: "%N tickles %T."},
-	"SLAP":      {Self: "You slap yourself.", Room: "%N slaps themselves.", SelfTarget: "You slap %T.", RoomTarget: "%N slaps %T."},
-	"HOWL":      {Self: "You howl.", Room: "%N howls.", SelfTarget: "You howl at %T.", RoomTarget: "%N howls at %T."},
-	"SING":      {Self: "You sing.", Room: "%N sings.", SelfTarget: "You sing to %T.", RoomTarget: "%N sings to %T."},
-	"PACE":      {Self: "You pace back and forth.", Room: "%N paces back and forth."},
-	"FIDGET":    {Self: "You fidget.", Room: "%N fidgets."},
-	"SHIVER":    {Self: "You shiver.", Room: "%N shivers."},
-	"SNORT":     {Self: "You snort.", Room: "%N snorts.", SelfTarget: "You snort at %T.", RoomTarget: "%N snorts at %T."},
-	"GROAN":     {Self: "You groan.", Room: "%N groans."},
-	"MUMBLE":    {Self: "You mumble something.", Room: "%N mumbles something."},
-	"BABBLE":    {Self: "You babble.", Room: "%N babbles."},
-	"BEAM":      {Self: "You beam.", Room: "%N beams.", SelfTarget: "You beam at %T.", RoomTarget: "%N beams at %T."},
-	"SWOON":     {Self: "You swoon.", Room: "%N swoons."},
-	"TOAST":     {Self: "You raise your glass in a toast.", Room: "%N raises a toast.", SelfTarget: "You raise a toast to %T.", RoomTarget: "%N raises a toast to %T."},
-	"SHUDDER":   {Self: "You shudder.", Room: "%N shudders."},
-	"POINT":     {Self: "You point.", Room: "%N points.", SelfTarget: "You point at %T.", RoomTarget: "%N points at %T."},
-	"KICK":      {Self: "You kick at the ground.", Room: "%N kicks at the ground.", SelfTarget: "You kick %T.", RoomTarget: "%N kicks %T."},
-	"KNOCK":     {Self: "You knock.", Room: "%N knocks.", SelfTarget: "You knock on %T.", RoomTarget: "%N knocks on %T."},
-	"TOUCH":     {Self: "You touch yourself.", Room: "%N touches themselves.", SelfTarget: "You touch %T.", RoomTarget: "%N touches %T."},
-	"RUB":       {Self: "You rub your hands together.", Room: "%N rubs %P hands together.", SelfTarget: "You rub %T.", RoomTarget: "%N rubs %T."},
-	"PET":       {Self: "You pet yourself.", Room: "%N pets themselves.", SelfTarget: "You pet %T.", RoomTarget: "%N pets %T."},
-	"PUNCH":     {Self: "You punch the air.", Room: "%N punches the air.", SelfTarget: "You punch %T.", RoomTarget: "%N punches %T."},
-	"SPIT":      {Self: "You spit.", Room: "%N spits.", SelfTarget: "You spit at %T.", RoomTarget: "%N spits at %T."},
-	"GAZE":      {Self: "You gaze about.", Room: "%N gazes about.", SelfTarget: "You gaze at %T.", RoomTarget: "%N gazes at %T."},
-	"GLARE":     {Self: "You glare.", Room: "%N glares.", SelfTarget: "You glare at %T.", RoomTarget: "%N glares at %T."},
-	"SCOWL":     {Self: "You scowl.", Room: "%N scowls.", SelfTarget: "You scowl at %T.", RoomTarget: "%N scowls at %T."},
-	"COMFORT":   {Self: "You comfort yourself.", Room: "%N comforts themselves.", SelfTarget: "You comfort %T.", RoomTarget: "%N comforts %T."},
-	"RECITE":    {Self: "You recite.", Room: "%N recites."},
-	"YAWN":      {Self: "You yawn.", Room: "%N yawns.", SelfTarget: "You yawn at %T.", RoomTarget: "%N yawns at %T."},
-	"BLINK":     {Self: "You blink.", Room: "%N blinks.", SelfTarget: "You blink at %T.", RoomTarget: "%N blinks at %T."},
-	"BLUSH":     {Self: "You blush.", Room: "%N blushes."},
-	"CRINGE":    {Self: "You cringe.", Room: "%N cringes."},
-	"CUDDLE":    {Self: "You cuddle up.", Room: "%N cuddles up.", SelfTarget: "You cuddle up to %T.", RoomTarget: "%N cuddles up to %T."},
-	"COUGH":     {Self: "You cough.", Room: "%N coughs."},
-	"FURROW":    {Self: "You furrow your brow.", Room: "%N furrows %P brow."},
-	"GASP":      {Self: "You gasp.", Room: "%N gasps."},
-	"GIGGLE":    {Self: "You giggle.", Room: "%N giggles.", SelfTarget: "You giggle at %T.", RoomTarget: "%N giggles at %T."},
-	"GRIMACE":   {Self: "You grimace.", Room: "%N grimaces."},
-	"GROWL":     {Self: "You growl.", Room: "%N growls.", SelfTarget: "You growl at %T.", RoomTarget: "%N growls at %T."},
-	"GULP":      {Self: "You gulp.", Room: "%N gulps."},
-	"JUMP":      {Self: "You jump up and down.", Room: "%N jumps up and down."},
-	"LEAN":      {Self: "You lean back.", Room: "%N leans back.", SelfTarget: "You lean on %T.", RoomTarget: "%N leans on %T."},
-	"NUZZLE":    {Self: "You nuzzle.", Room: "%N nuzzles.", SelfTarget: "You nuzzle %T affectionately.", RoomTarget: "%N nuzzles %T affectionately."},
-	"PANT":      {Self: "You pant.", Room: "%N pants."},
-	"PONDER":    {Self: "You ponder for a moment.", Room: "%N ponders."},
-	"POUT":      {Self: "You pout.", Room: "%N pouts."},
-	"ROLL":      {Self: "You roll your eyes.", Room: "%N rolls %P eyes.", SelfTarget: "You roll your eyes at %T.", RoomTarget: "%N rolls %P eyes at %T."},
-	"SCREAM":    {Self: "You scream!", Room: "%N screams!"},
-	"SMIRK":     {Self: "You smirk.", Room: "%N smirks.", SelfTarget: "You smirk at %T.", RoomTarget: "%N smirks at %T."},
-	"SNICKER":   {Self: "You snicker.", Room: "%N snickers."},
-	"SALUTE":    {Self: "You salute.", Room: "%N salutes.", SelfTarget: "You salute %T.", RoomTarget: "%N salutes %T."},
-	"STRETCH":   {Self: "You stretch your arms lazily.", Room: "%N stretches %P arms lazily."},
-	"TAP":       {Self: "You tap your foot.", Room: "%N taps %P foot.", SelfTarget: "You tap %T on the shoulder.", RoomTarget: "%N taps %T on the shoulder."},
-	"TWIRL":     {Self: "You twirl around.", Room: "%N twirls around."},
-	"WINCE":     {Self: "You wince.", Room: "%N winces."},
-	"WHISTLE":   {Self: "You whistle innocently.", Room: "%N whistles innocently."},
-	"MUTTER":    {Self: "You mutter something under your breath.", Room: "%N mutters something you can't quite make out."},
-	"CARESS":    {Self: "You caress yourself.", Room: "%N caresses themselves.", SelfTarget: "You caress %T.", RoomTarget: "%N caresses %T."},
-	"NUDGE":     {Self: "You nudge.", Room: "%N nudges.", SelfTarget: "You nudge %T.", RoomTarget: "%N nudges %T."},
-	"ARCH":      {Self: "You arch an eyebrow.", Room: "%N arches %P eyebrow.", SelfTarget: "You arch an eyebrow at %T.", RoomTarget: "%N arches %P eyebrow at %T."},
-	"RAISE":     {Self: "You raise an eyebrow.", Room: "%N raises an eyebrow.", SelfTarget: "You raise an eyebrow towards %T.", RoomTarget: "%N raises an eyebrow towards %T."},
-	"HEAD":      {Self: "You shake your head.", Room: "%N shakes %P head back and forth.", SelfTarget: "You shake your head at %T.", RoomTarget: "%N shakes %P head at %T."},
-	"SCRATCH":   {Self: "You scratch your head.", Room: "%N scratches %P head."},
-	"CLAP":      {Self: "You clap.", Room: "%N claps.", SelfTarget: "You clap for %T.", RoomTarget: "%N claps for %T."},
-	"SNIFF":     {Self: "You sniff.", Room: "%N sniffs.", SelfTarget: "You sniff %T.", RoomTarget: "%N sniffs %T."},
-	"LISTEN":    {Self: "You listen carefully.", Room: "%N listens carefully.", SelfTarget: "You listen carefully to %T.", RoomTarget: "%N listens carefully to %T."},
+	"SMILE":     {Self: i18n.T("You smile."), Room: i18n.T("%N smiles."), SelfTarget: i18n.T("You smile at %T."), RoomTarget: i18n.T("%N smiles at %T.")},
+	"BOW":       {Self: i18n.T("You bow."), Room: i18n.T("%N bows."), SelfTarget: i18n.T("You bow to %T."), RoomTarget: i18n.T("%N bows to %T.")},
+	"CURTSEY":   {Self: i18n.T("You curtsey."), Room: i18n.T("%N curtseys."), SelfTarget: i18n.T("You curtsey to %T."), RoomTarget: i18n.T("%N curtseys to %T.")},
+	"CURTSY":    {Self: i18n.T("You curtsy."), Room: i18n.T("%N curtsies."), SelfTarget: i18n.T("You curtsy to %T."), RoomTarget: i18n.T("%N curtsies to %T.")},
+	"WAVE":      {Self: i18n.T("You wave."), Room: i18n.T("%N waves."), SelfTarget: i18n.T("You wave to %T."), RoomTarget: i18n.T("%N waves to %T.")},
+	"NOD":       {Self: i18n.T("You nod."), Room: i18n.T("%N nods."), SelfTarget: i18n.T("You nod to %T."), RoomTarget: i18n.T("%N nods to %T.")},
+	"LAUGH":     {Self: i18n.T("You laugh."), Room: i18n.T("%N laughs."), SelfTarget: i18n.T("You laugh at %T."), RoomTarget: i18n.T("%N laughs at %T.")},
+	"CHUCKLE":   {Self: i18n.T("You chuckle."), Room: i18n.T("%N chuckles."), SelfTarget: i18n.T("You chuckle at %T."), RoomTarget: i18n.T("%N chuckles at %T.")},
+	"GRIN":      {Self: i18n.T("You grin."), Room: i18n.T("%N grins."), SelfTarget: i18n.T("You grin at %T."), RoomTarget: i18n.T("%N grins at %T.")},
+	"FROWN":     {Self: i18n.T("You frown."), Room: i18n.T("%N frowns."), SelfTarget: i18n.T("You frown at %T."), RoomTarget: i18n.T("%N frowns at %T.")},
+	"SIGH":      {Self: i18n.T("You sigh."), Room: i18n.T("%N sighs."), SelfTarget: i18n.T("You sigh at %T."), RoomTarget: i18n.T("%N sighs at %T.")},
+	"SHRUG":     {Self: i18n.T("You shrug."), Room: i18n.T("%N shrugs."), SelfTarget: i18n.T("You shrug at %T."), RoomTarget: i18n.T("%N shrugs at %T.")},
+	"WINK":      {Self: i18n.T("You wink."), Room: i18n.T("%N winks."), SelfTarget: i18n.T("You wink at %T."), RoomTarget: i18n.T("%N winks at %T.")},
+	"CRY":       {Self: i18n.T("You cry."), Room: i18n.T("%N cries."), SelfTarget: i18n.T("You cry on %T's shoulder."), RoomTarget: i18n.T("%N cries on %T's shoulder.")},
+	"DANCE":     {Self: i18n.T("You dance."), Room: i18n.T("%N dances."), SelfTarget: i18n.T("You dance with %T."), RoomTarget: i18n.T("%N dances with %T.")},
+	"HUG":       {Self: i18n.T("You hug yourself."), Room: i18n.T("%N hugs themselves."), SelfTarget: i18n.T("You hug %T."), RoomTarget: i18n.T("%N hugs %T.")},
+	"KISS":      {Self: i18n.T("You blow a kiss."), Room: i18n.T("%N blows a kiss."), SelfTarget: i18n.T("You kiss %T."), RoomTarget: i18n.T("%N kisses %T.")},
+	"POKE":      {Self: i18n.T("You poke yourself."), Room: i18n.T("%N pokes themselves."), SelfTarget: i18n.T("You poke %T."), RoomTarget: i18n.T("%N pokes %T.")},
+	"TICKLE":    {Self: i18n.T("You tickle yourself."), Room: i18n.T("%N tickles themselves."), SelfTarget: i18n.T("You tickle %T."), RoomTarget: i18n.T("%N tickles %T.")},
+	"SLAP":      {Self: i18n.T("You slap yourself."), Room: i18n.T("%N slaps themselves."), SelfTarget: i18n.T("You slap %T."), RoomTarget: i18n.T("%N slaps %T.")},
+	"HOWL":      {Self: i18n.T("You howl."), Room: i18n.T("%N howls."), SelfTarget: i18n.T("You howl at %T."), RoomTarget: i18n.T("%N howls at %T.")},
+	"SING":      {Self: i18n.T("You sing."), Room: i18n.T("%N sings."), SelfTarget: i18n.T("You sing to %T."), RoomTarget: i18n.T("%N sings to %T.")},
+	"PACE":      {Self: i18n.T("You pace back and forth."), Room: i18n.T("%N paces back and forth.")},
+	"FIDGET":    {Self: i18n.T("You fidget."), Room: i18n.T("%N fidgets.")},
+	"SHIVER":    {Self: i18n.T("You shiver."), Room: i18n.T("%N shivers.")},
+	"SNORT":     {Self: i18n.T("You snort."), Room: i18n.T("%N snorts."), SelfTarget: i18n.T("You snort at %T."), RoomTarget: i18n.T("%N snorts at %T.")},
+	"GROAN":     {Self: i18n.T("You groan."), Room: i18n.T("%N groans.")},
+	"MUMBLE":    {Self: i18n.T("You mumble something."), Room: i18n.T("%N mumbles something.")},
+	"BABBLE":    {Self: i18n.T("You babble."), Room: i18n.T("%N babbles.")},
+	"BEAM":      {Self: i18n.T("You beam."), Room: i18n.T("%N beams."), SelfTarget: i18n.T("You beam at %T."), RoomTarget: i18n.T("%N beams at %T.")},
+	"SWOON":     {Self: i18n.T("You swoon."), Room: i18n.T("%N swoons.")},
+	"TOAST":     {Self: i18n.T("You raise your glass in a toast."), Room: i18n.T("%N raises a toast."), SelfTarget: i18n.T("You raise a toast to %T."), RoomTarget: i18n.T("%N raises a toast to %T.")},
+	"SHUDDER":   {Self: i18n.T("You shudder."), Room: i18n.T("%N shudders.")},
+	"POINT":     {Self: i18n.T("You point."), Room: i18n.T("%N points."), SelfTarget: i18n.T("You point at %T."), RoomTarget: i18n.T("%N points at %T.")},
+	"KICK":      {Self: i18n.T("You kick at the ground."), Room: i18n.T("%N kicks at the ground."), SelfTarget: i18n.T("You kick %T."), RoomTarget: i18n.T("%N kicks %T.")},
+	"KNOCK":     {Self: i18n.T("You knock."), Room: i18n.T("%N knocks."), SelfTarget: i18n.T("You knock on %T."), RoomTarget: i18n.T("%N knocks on %T.")},
+	"TOUCH":     {Self: i18n.T("You touch yourself."), Room: i18n.T("%N touches themselves."), SelfTarget: i18n.T("You touch %T."), RoomTarget: i18n.T("%N touches %T.")},
+	"RUB":       {Self: i18n.T("You rub your hands together."), Room: i18n.T("%N rubs %P hands together."), SelfTarget: i18n.T("You rub %T."), RoomTarget: i18n.T("%N rubs %T.")},
+	"PET":       {Self: i18n.T("You pet yourself."), Room: i18n.T("%N pets themselves."), SelfTarget: i18n.T("You pet %T."), RoomTarget: i18n.T("%N pets %T.")},
+	"PUNCH":     {Self: i18n.T("You punch the air."), Room: i18n.T("%N punches the air."), SelfTarget: i18n.T("You punch %T."), RoomTarget: i18n.T("%N punches %T.")},
+	"SPIT":      {Self: i18n.T("You spit."), Room: i18n.T("%N spits."), SelfTarget: i18n.T("You spit at %T."), RoomTarget: i18n.T("%N spits at %T.")},
+	"GAZE":      {Self: i18n.T("You gaze about."), Room: i18n.T("%N gazes about."), SelfTarget: i18n.T("You gaze at %T."), RoomTarget: i18n.T("%N gazes at %T.")},
+	"GLARE":     {Self: i18n.T("You glare."), Room: i18n.T("%N glares."), SelfTarget: i18n.T("You glare at %T."), RoomTarget: i18n.T("%N glares at %T.")},
+	"SCOWL":     {Self: i18n.T("You scowl."), Room: i18n.T("%N scowls."), SelfTarget: i18n.T("You scowl at %T."), RoomTarget: i18n.T("%N scowls at %T.")},
+	"COMFORT":   {Self: i18n.T("You comfort yourself."), Room: i18n.T("%N comforts themselves."), SelfTarget: i18n.T("You comfort %T."), RoomTarget: i18n.T("%N comforts %T.")},
+	"RECITE":    {Self: i18n.T("You recite."), Room: i18n.T("%N recites.")},
+	"YAWN":      {Self: i18n.T("You yawn."), Room: i18n.T("%N yawns."), SelfTarget: i18n.T("You yawn at %T."), RoomTarget: i18n.T("%N yawns at %T.")},
+	"BLINK":     {Self: i18n.T("You blink."), Room: i18n.T("%N blinks."), SelfTarget: i18n.T("You blink at %T."), RoomTarget: i18n.T("%N blinks at %T.")},
+	"BLUSH":     {Self: i18n.T("You blush."), Room: i18n.T("%N blushes.")},
+	"CRINGE":    {Self: i18n.T("You cringe."), Room: i18n.T("%N cringes.")},
+	"CUDDLE":    {Self: i18n.T("You cuddle up."), Room: i18n.T("%N cuddles up."), SelfTarget: i18n.T("You cuddle up to %T."), RoomTarget: i18n.T("%N cuddles up to %T.")},
+	"COUGH":     {Self: i18n.T("You cough."), Room: i18n.T("%N coughs.")},
+	"FURROW":    {Self: i18n.T("You furrow your brow."), Room: i18n.T("%N furrows %P brow.")},
+	"GASP":      {Self: i18n.T("You gasp."), Room: i18n.T("%N gasps.")},
+	"GIGGLE":    {Self: i18n.T("You giggle."), Room: i18n.T("%N giggles."), SelfTarget: i18n.T("You giggle at %T."), RoomTarget: i18n.T("%N giggles at %T.")},
+	"GRIMACE":   {Self: i18n.T("You grimace."), Room: i18n.T("%N grimaces.")},
+	"GROWL":     {Self: i18n.T("You growl."), Room: i18n.T("%N growls."), SelfTarget: i18n.T("You growl at %T."), RoomTarget: i18n.T("%N growls at %T.")},
+	"GULP":      {Self: i18n.T("You gulp."), Room: i18n.T("%N gulps.")},
+	"JUMP":      {Self: i18n.T("You jump up and down."), Room: i18n.T("%N jumps up and down.")},
+	"LEAN":      {Self: i18n.T("You lean back."), Room: i18n.T("%N leans back."), SelfTarget: i18n.T("You lean on %T."), RoomTarget: i18n.T("%N leans on %T.")},
+	"NUZZLE":    {Self: i18n.T("You nuzzle."), Room: i18n.T("%N nuzzles."), SelfTarget: i18n.T("You nuzzle %T affectionately."), RoomTarget: i18n.T("%N nuzzles %T affectionately.")},
+	"PANT":      {Self: i18n.T("You pant."), Room: i18n.T("%N pants.")},
+	"PONDER":    {Self: i18n.T("You ponder for a moment."), Room: i18n.T("%N ponders.")},
+	"POUT":      {Self: i18n.T("You pout."), Room: i18n.T("%N pouts.")},
+	"ROLL":      {Self: i18n.T("You roll your eyes."), Room: i18n.T("%N rolls %P eyes."), SelfTarget: i18n.T("You roll your eyes at %T."), RoomTarget: i18n.T("%N rolls %P eyes at %T.")},
+	"SCREAM":    {Self: i18n.T("You scream!"), Room: i18n.T("%N screams!")},
+	"SMIRK":     {Self: i18n.T("You smirk."), Room: i18n.T("%N smirks."), SelfTarget: i18n.T("You smirk at %T."), RoomTarget: i18n.T("%N smirks at %T.")},
+	"SNICKER":   {Self: i18n.T("You snicker."), Room: i18n.T("%N snickers.")},
+	"SALUTE":    {Self: i18n.T("You salute."), Room: i18n.T("%N salutes."), SelfTarget: i18n.T("You salute %T."), RoomTarget: i18n.T("%N salutes %T.")},
+	"STRETCH":   {Self: i18n.T("You stretch your arms lazily."), Room: i18n.T("%N stretches %P arms lazily.")},
+	"TAP":       {Self: i18n.T("You tap your foot."), Room: i18n.T("%N taps %P foot."), SelfTarget: i18n.T("You tap %T on the shoulder."), RoomTarget: i18n.T("%N taps %T on the shoulder.")},
+	"TWIRL":     {Self: i18n.T("You twirl around."), Room: i18n.T("%N twirls around.")},
+	"WINCE":     {Self: i18n.T("You wince."), Room: i18n.T("%N winces.")},
+	"WHISTLE":   {Self: i18n.T("You whistle innocently."), Room: i18n.T("%N whistles innocently.")},
+	"MUTTER":    {Self: i18n.T("You mutter something under your breath."), Room: i18n.T("%N mutters something you can't quite make out.")},
+	"CARESS":    {Self: i18n.T("You caress yourself."), Room: i18n.T("%N caresses themselves."), SelfTarget: i18n.T("You caress %T."), RoomTarget: i18n.T("%N caresses %T.")},
+	"NUDGE":     {Self: i18n.T("You nudge."), Room: i18n.T("%N nudges."), SelfTarget: i18n.T("You nudge %T."), RoomTarget: i18n.T("%N nudges %T.")},
+	"ARCH":      {Self: i18n.T("You arch an eyebrow."), Room: i18n.T("%N arches %P eyebrow."), SelfTarget: i18n.T("You arch an eyebrow at %T."), RoomTarget: i18n.T("%N arches %P eyebrow at %T.")},
+	"RAISE":     {Self: i18n.T("You raise an eyebrow."), Room: i18n.T("%N raises an eyebrow."), SelfTarget: i18n.T("You raise an eyebrow towards %T."), RoomTarget: i18n.T("%N raises an eyebrow towards %T.")},
+	"HEAD":      {Self: i18n.T("You shake your head."), Room: i18n.T("%N shakes %P head back and forth."), SelfTarget: i18n.T("You shake your head at %T."), RoomTarget: i18n.T("%N shakes %P head at %T.")},
+	"SCRATCH":   {Self: i18n.T("You scratch your head."), Room: i18n.T("%N scratches %P head.")},
+	"CLAP":      {Self: i18n.T("You clap."), Room: i18n.T("%N claps."), SelfTarget: i18n.T("You clap for %T."), RoomTarget: i18n.T("%N claps for %T.")},
+	"SNIFF":     {Self: i18n.T("You sniff."), Room: i18n.T("%N sniffs."), SelfTarget: i18n.T("You sniff %T."), RoomTarget: i18n.T("%N sniffs %T.")},
+	"LISTEN":    {Self: i18n.T("You listen carefully."), Room: i18n.T("%N listens carefully."), SelfTarget: i18n.T("You listen carefully to %T."), RoomTarget: i18n.T("%N listens carefully to %T.")},
 
 	// Additional emotes from alphabetical list
-	"LICK":      {Self: "You lick your lips.", Room: "%N licks %P lips.", SelfTarget: "You kiss %T passionately.", RoomTarget: "%N kisses %T passionately."},
-	"NIBBLE":    {Self: "You nibble.", Room: "%N nibbles.", SelfTarget: "You nibble on %T.", RoomTarget: "%N nibbles on %T."},
-	"BARK":      {Self: "You bark.", Room: "%N barks."},
-	"CLAW":      {Self: "You claw at the air.", Room: "%N claws at the air.", SelfTarget: "You claw at %T.", RoomTarget: "%N claws at %T."},
-	"CURSE":     {Self: "You curse.", Room: "%N curses."},
-	"DUCK":      {Self: "You duck.", Room: "%N ducks."},
-	"HISS":      {Self: "You hiss.", Room: "%N hisses.", SelfTarget: "You hiss at %T.", RoomTarget: "%N hisses at %T."},
-	"HOLD":      {Self: "You hold your hands together.", Room: "%N holds %P hands together.", SelfTarget: "You hold %T.", RoomTarget: "%N holds %T."},
-	"HULA":      {Self: "You do a little hula dance.", Room: "%N does a little hula dance."},
-	"JIG":       {Self: "You do a little jig.", Room: "%N does a little jig."},
-	"MOAN":      {Self: "You moan.", Room: "%N moans."},
-	"MASSAGE":   {Self: "You massage your temples.", Room: "%N massages %P temples.", SelfTarget: "You massage %T.", RoomTarget: "%N massages %T."},
-	"PINCH":     {Self: "You pinch yourself.", Room: "%N pinches themselves.", SelfTarget: "You pinch %T.", RoomTarget: "%N pinches %T."},
-	"PLAY":      {Self: "You play around.", Room: "%N plays around."},
-	"PURR":      {Self: "You purr.", Room: "%N purrs.", SelfTarget: "You purr at %T.", RoomTarget: "%N purrs at %T."},
-	"ROAR":      {Self: "You roar!", Room: "%N roars!"},
-	"SNARL":     {Self: "You snarl.", Room: "%N snarls.", SelfTarget: "You snarl at %T.", RoomTarget: "%N snarls at %T."},
-	"SNUGGLE":   {Self: "You snuggle up.", Room: "%N snuggles up.", SelfTarget: "You snuggle up to %T.", RoomTarget: "%N snuggles up to %T."},
-	"WAG":       {Self: "You wag your finger.", Room: "%N wags %P finger.", SelfTarget: "You wag your finger at %T.", RoomTarget: "%N wags %P finger at %T."},
-	"WAIT":      {Self: "You wait patiently.", Room: "%N waits patiently."},
-	"WRITE":     {Self: "You write something.", Room: "%N writes something."},
-	"YOWL":      {Self: "You yowl!", Room: "%N yowls!"},
-	"THUMP":     {Self: "You thump the ground.", Room: "%N thumps the ground.", SelfTarget: "You thump %T.", RoomTarget: "%N thumps %T."},
-	"STOMP":     {Self: "You stomp your feet.", Room: "%N stomps %p feet.", SelfTarget: "You stomp towards %T.", RoomTarget: "%N stomps towards %T."},
-	"APPLAUD":   {Self: "You applaud.", Room: "%N applauds.", SelfTarget: "You applaud %T.", RoomTarget: "%N applauds %T."},
-	"PEER":      {Self: "You peer around.", Room: "%N peers around.", SelfTarget: "You peer at %T.", RoomTarget: "%N peers at %T."},
-	"GRUNT":     {Self: "You grunt.", Room: "%N grunts."},
-	"DIP":       {Self: "You dip.", Room: "%N dips.", SelfTarget: "You dip %T.", RoomTarget: "%N dips %T."},
-	"HANDRAISE": {Self: "You raise your hand.", Room: "%N raises %P hand."},
-	"HANDSHAKE": {Self: "You extend your hand.", Room: "%N extends %P hand.", SelfTarget: "You shake hands with %T.", RoomTarget: "%N shakes hands with %T."},
-	"HEADSHAKE": {Self: "You shake your head.", Room: "%N shakes %P head."},
-	"PICK":      {Self: "You pick at something.", Room: "%N picks at something."},
-	"GESTURE":   {Self: "You gesture.", Room: "%N gestures.", SelfTarget: "You gesture at %T.", RoomTarget: "%N gestures at %T."},
+	"LICK":      {Self: i18n.T("You lick your lips."), Room: i18n.T("%N licks %P lips."), SelfTarget: i18n.T("You kiss %T passionately."), RoomTarget: i18n.T("%N kisses %T passionately.")},
+	"NIBBLE":    {Self: i18n.T("You nibble."), Room: i18n.T("%N nibbles."), SelfTarget: i18n.T("You nibble on %T."), RoomTarget: i18n.T("%N nibbles on %T.")},
+	"BARK":      {Self: i18n.T("You bark."), Room: i18n.T("%N barks.")},
+	"CLAW":      {Self: i18n.T("You claw at the air."), Room: i18n.T("%N claws at the air."), SelfTarget: i18n.T("You claw at %T."), RoomTarget: i18n.T("%N claws at %T.")},
+	"CURSE":     {Self: i18n.T("You curse."), Room: i18n.T("%N curses.")},
+	"DUCK":      {Self: i18n.T("You duck."), Room: i18n.T("%N ducks.")},
+	"HISS":      {Self: i18n.T("You hiss."), Room: i18n.T("%N hisses."), SelfTarget: i18n.T("You hiss at %T."), RoomTarget: i18n.T("%N hisses at %T.")},
+	"HOLD":      {Self: i18n.T("You hold your hands together."), Room: i18n.T("%N holds %P hands together."), SelfTarget: i18n.T("You hold %T."), RoomTarget: i18n.T("%N holds %T.")},
+	"HULA":      {Self: i18n.T("You do a little hula dance."), Room: i18n.T("%N does a little hula dance.")},
+	"JIG":       {Self: i18n.T("You do a little jig."), Room: i18n.T("%N does a little jig.")},
+	"MOAN":      {Self: i18n.T("You moan."), Room: i18n.T("%N moans.")},
+	"MASSAGE":   {Self: i18n.T("You massage your temples."), Room: i18n.T("%N massages %P temples."), SelfTarget: i18n.T("You massage %T."), RoomTarget: i18n.T("%N massages %T.")},
+	"PINCH":     {Self: i18n.T("You pinch yourself."), Room: i18n.T("%N pinches themselves."), SelfTarget: i18n.T("You pinch %T."), RoomTarget: i18n.T("%N pinches %T.")},
+	"PLAY":      {Self: i18n.T("You play around."), Room: i18n.T("%N plays around.")},
+	"PURR":      {Self: i18n.T("You purr."), Room: i18n.T("%N purrs."), SelfTarget: i18n.T("You purr at %T."), RoomTarget: i18n.T("%N purrs at %T.")},
+	"ROAR":      {Self: i18n.T("You roar!"), Room: i18n.T("%N roars!")},
+	"SNARL":     {Self: i18n.T("You snarl."), Room: i18n.T("%N snarls."), SelfTarget: i18n.T("You snarl at %T."), RoomTarget: i18n.T("%N snarls at %T.")},
+	"SNUGGLE":   {Self: i18n.T("You snuggle up."), Room: i18n.T("%N snuggles up."), SelfTarget: i18n.T("You snuggle up to %T."), RoomTarget: i18n.T("%N snuggles up to %T.")},
+	"WAG":       {Self: i18n.T("You wag your finger."), Room: i18n.T("%N wags %P finger."), SelfTarget: i18n.T("You wag your finger at %T."), RoomTarget: i18n.T("%N wags %P finger at %T.")},
+	"WAIT":      {Self: i18n.T("You wait patiently."), Room: i18n.T("%N waits patiently.")},
+	"WRITE":     {Self: i18n.T("You write something."), Room: i18n.T("%N writes something.")},
+	"YOWL":      {Self: i18n.T("You yowl!"), Room: i18n.T("%N yowls!")},
+	"THUMP":     {Self: i18n.T("You thump the ground."), Room: i18n.T("%N thumps the ground."), SelfTarget: i18n.T("You thump %T."), RoomTarget: i18n.T("%N thumps %T.")},
+	"STOMP":     {Self: i18n.T("You stomp your feet."), Room: i18n.T("%N stomps %p feet."), SelfTarget: i18n.T("You stomp towards %T."), RoomTarget: i18n.T("%N stomps towards %T.")},
+	"APPLAUD":   {Self: i18n.T("You applaud."), Room: i18n.T("%N applauds."), SelfTarget: i18n.T("You applaud %T."), RoomTarget: i18n.T("%N applauds %T.")},
+	"PEER":      {Self: i18n.T("You peer around."), Room: i18n.T("%N peers around."), SelfTarget: i18n.T("You peer at %T."), RoomTarget: i18n.T("%N peers at %T.")},
+	"GRUNT":     {Self: i18n.T("You grunt."), Room: i18n.T("%N grunts.")},
+	"DIP":       {Self: i18n.T("You dip."), Room: i18n.T("%N dips."), SelfTarget: i18n.T("You dip %T."), RoomTarget: i18n.T("%N dips %T.")},
+	"HANDRAISE": {Self: i18n.T("You raise your hand."), Room: i18n.T("%N raises %P hand.")},
+	"HANDSHAKE": {Self: i18n.T("You extend your hand."), Room: i18n.T("%N extends %P hand."), SelfTarget: i18n.T("You shake hands with %T."), RoomTarget: i18n.T("%N shakes hands with %T.")},
+	"HEADSHAKE": {Self: i18n.T("You shake your head."), Room: i18n.T("%N shakes %P head.")},
+	"PICK":      {Self: i18n.T("You pick at something."), Room: i18n.T("%N picks at something.")},
+	"GESTURE":   {Self: i18n.T("You gesture."), Room: i18n.T("%N gestures."), SelfTarget: i18n.T("You gesture at %T."), RoomTarget: i18n.T("%N gestures at %T.")},
 }
 
 // selfOverrides maps verb+target to special self-targeted messages.
 // Key format: "VERB:me" for self-targeting overrides.
 var selfOverrides = map[string][2]string{
-	"SPIT:me":   {"You drool all over yourself.", "%N drools all over themselves."},
-	"LICK:me":   {"You lick your lips.", "%N licks %P lips."},
-	"LAUGH:me":  {"You laugh at yourself.", "%N laughs at themselves."},
-	"KICK:me":   {"You kick yourself.", "%N kicks themselves."},
-	"THUMP:me":  {"You thump yourself on the head.", "%N thumps themselves on the head."},
+	"SPIT:me":   {i18n.T("You drool all over yourself."), i18n.T("%N drools all over themselves.")},
+	"LICK:me":   {i18n.T("You lick your lips."), i18n.T("%N licks %P lips.")},
+	"LAUGH:me":  {i18n.T("You laugh at yourself."), i18n.T("%N laughs at themselves.")},
+	"KICK:me":   {i18n.T("You kick yourself."), i18n.T("%N kicks themselves.")},
+	"THUMP:me":  {i18n.T("You thump yourself on the head."), i18n.T("%N thumps themselves on the head.")},
 }
 
 // raceEmotes are emotes only available to specific races. Key = "RACE:VERB".
 var raceEmotes = map[string]emoteEntry{
 	// Drakin
-	"6:FLICK":   {Self: "You flick your forked tongue.", Room: "%N flicks %P forked tongue."},
-	"6:BARE":    {Self: "You bare your teeth menacingly.", Room: "%N bares %P teeth menacingly."},
-	"6:SPREAD":  {Self: "You spread your wings wide.", Room: "%N spreads %P wings wide."},
-	"6:FOLD":    {Self: "You fold your wings against your body.", Room: "%N folds %P wings."},
-	"6:SWISH":   {Self: "You swish your tail.", Room: "%N swishes %P tail."},
+	"6:FLICK":   {Self: i18n.T("You flick your forked tongue."), Room: i18n.T("%N flicks %P forked tongue.")},
+	"6:BARE":    {Self: i18n.T("You bare your teeth menacingly."), Room: i18n.T("%N bares %P teeth menacingly.")},
+	"6:SPREAD":  {Self: i18n.T("You spread your wings wide."), Room: i18n.T("%N spreads %P wings wide.")},
+	"6:FOLD":    {Self: i18n.T("You fold your wings against your body."), Room: i18n.T("%N folds %P wings.")},
+	"6:SWISH":   {Self: i18n.T("You swish your tail."), Room: i18n.T("%N swishes %P tail.")},
 	// Aelfen
-	"2:RUBEARS": {Self: "You rub the points of your ears.", Room: "%N rubs the points of %P ears."},
+	"2:RUBEARS": {Self: i18n.T("You rub the points of your ears."), Room: i18n.T("%N rubs the points of %P ears.")},
 	// Highlander
-	"3:PULLBEARD": {Self: "You pull on your beard.", Room: "%N pulls on %P beard."},
+	"3:PULLBEARD": {Self: i18n.T("You pull on your beard."), Room: i18n.T("%N pulls on %P beard.")},
 	// Wolf form emotes (wolfling)
-	"4:SCRATCH": {Self: "You scratch behind your ear.", Room: "%N scratches behind %P ear."},
-	"4:BARE":    {Self: "You bare your fangs.", Room: "%N bares %P fangs."},
-	"4:CHASE":   {Self: "You chase your tail.", Room: "%N chases %P tail."},
-	"4:SCENT":   {Self: "You lift your nose and scent the air.", Room: "%N lifts %P nose and scents the air."},
-	"4:WHINE":   {Self: "You whine softly.", Room: "%N whines softly."},
-	"4:DROOP":   {Self: "You droop your tail.", Room: "%N droops %P tail."},
+	"4:SCRATCH": {Self: i18n.T("You scratch behind your ear."), Room: i18n.T("%N scratches behind %P ear.")},
+	"4:BARE":    {Self: i18n.T("You bare your fangs."), Room: i18n.T("%N bares %P fangs.")},
+	"4:CHASE":   {Self: i18n.T("You chase your tail."), Room: i18n.T("%N chases %P tail.")},
+	"4:SCENT":   {Self: i18n.T("You lift your nose and scent the air."), Room: i18n.T("%N lifts %P nose and scents the air.")},
+	"4:WHINE":   {Self: i18n.T("You whine softly."), Room: i18n.T("%N whines softly.")},
+	"4:DROOP":   {Self: i18n.T("You droop your tail."), Room: i18n.T("%N droops %P tail.")},
 }
 
 // additionalSelfEmotes — emotes with no target that aren't in the main table.
 // These are triggered by specific verbs with no arguments.
 var additionalSelfEmotes = map[string][2]string{
-	"FUME":     {"You fume.", "%N fumes."},
-	"SQUINT":   {"You squint your eyes.", "%N squints %P eyes."},
-	"HUM":      {"You hum softly to yourself.", "%N hums softly."},
-	"SNIFFLE":  {"You sniffle.", "%N sniffles."},
-	"SLOUCH":   {"You slouch.", "%N slouches."},
-	"SNORE":    {"You snore loudly.", "%N snores loudly."},
-	"SNEEZE":   {"You sneeze.", "%N sneezes."},
-	"STARE":    {"You stare off into space.", "%N stares off into space."},
-	"PUCKER":   {"You pucker your lips.", "%N puckers %P lips."},
-	"CRACK":    {"You crack your knuckles.", "%N cracks %P knuckles."},
-	"BITE":     {"You bite your lower lip.", "%N bites %P lower lip."},
-	"BOUNCE":   {"You bounce up and down.", "%N bounces up and down."},
-	"STRIKE":   {"You strike a heroic pose.", "%N strikes a heroic pose."},
-	"CLUTCH":   {"You clutch your head.", "%N clutches %P head."},
-	"WIPE":     {"You wipe your brow.", "%N wipes %P brow."},
-	"GRIT":     {"You grit your teeth.", "%N grits %P teeth."},
-	"TOSS":     {"You toss your hands up in the air.", "%N tosses %P hands up in the air."},
-	"ATTENTION": {"You stand at attention.", "%N stands at attention."},
-	"TONGUE":   {"You stick your tongue out.", "%N sticks %P tongue out."},
-	"WRINKLE":  {"You wrinkle your nose.", "%N wrinkles %P nose."},
-	"PUFF":     {"You puff out your cheeks.", "%N puffs out %P cheeks."},
-	"DIZZY":    {"You feel dizzy.", "%N looks dizzy."},
-	"BAT":      {"You bat your eyelashes.", "%N bats %P eyelashes."},
+	"FUME":     {i18n.T("You fume."), i18n.T("%N fumes.")},
+	"SQUINT":   {i18n.T("You squint your eyes."), i18n.T("%N squints %P eyes.")},
+	"HUM":      {i18n.T("You hum softly to yourself."), i18n.T("%N hums softly.")},
+	"SNIFFLE":  {i18n.T("You sniffle."), i18n.T("%N sniffles.")},
+	"SLOUCH":   {i18n.T("You slouch."), i18n.T("%N slouches.")},
+	"SNORE":    {i18n.T("You snore loudly."), i18n.T("%N snores loudly.")},
+	"SNEEZE":   {i18n.T("You sneeze."), i18n.T("%N sneezes.")},
+	"STARE":    {i18n.T("You stare off into space."), i18n.T("%N stares off into space.")},
+	"PUCKER":   {i18n.T("You pucker your lips."), i18n.T("%N puckers %P lips.")},
+	"CRACK":    {i18n.T("You crack your knuckles."), i18n.T("%N cracks %P knuckles.")},
+	"BITE":     {i18n.T("You bite your lower lip."), i18n.T("%N bites %P lower lip.")},
+	"BOUNCE":   {i18n.T("You bounce up and down."), i18n.T("%N bounces up and down.")},
+	"STRIKE":   {i18n.T("You strike a heroic pose."), i18n.T("%N strikes a heroic pose.")},
+	"CLUTCH":   {i18n.T("You clutch your head."), i18n.T("%N clutches %P head.")},
+	"WIPE":     {i18n.T("You wipe your brow."), i18n.T("%N wipes %P brow.")},
+	"GRIT":     {i18n.T("You grit your teeth."), i18n.T("%N grits %P teeth.")},
+	"TOSS":     {i18n.T("You toss your hands up in the air."), i18n.T("%N tosses %P hands up in the air.")},
+	"ATTENTION": {i18n.T("You stand at attention."), i18n.T("%N stands at attention.")},
+	"TONGUE":   {i18n.T("You stick your tongue out."), i18n.T("%N sticks %P tongue out.")},
+	"WRINKLE":  {i18n.T("You wrinkle your nose."), i18n.T("%N wrinkles %P nose.")},
+	"PUFF":     {i18n.T("You puff out your cheeks."), i18n.T("%N puffs out %P cheeks.")},
+	"DIZZY":    {i18n.T("You feel dizzy."), i18n.T("%N looks dizzy.")},
+	"BAT":      {i18n.T("You bat your eyelashes."), i18n.T("%N bats %P eyelashes.")},
 }
 
 // kissBodyParts defines the body parts that can be kissed and whether they require submit.
@@ -204,17 +204,17 @@ var kissBodyParts = map[string]struct {
 	roomMsg        string
 	targetMsg      string
 }{
-	"head":  {false, "You kiss %T on the head.", "%N kisses %T on the head.", "%N kisses you on the head."},
-	"nose":  {false, "You kiss %T on the nose.", "%N kisses %T on the nose.", "%N kisses you on the nose."},
-	"ears":  {false, "You kiss %T on the ears.", "%N kisses %T on the ears.", "%N kisses you on the ears."},
-	"neck":  {false, "You kiss %T on the neck.", "%N kisses %T on the neck.", "%N kisses you on the neck."},
-	"chest": {false, "You kiss %T on the chest.", "%N kisses %T on the chest.", "%N kisses you on the chest."},
-	"hand":  {false, "You kiss %T's hand.", "%N kisses %T's hand.", "%N kisses your hand."},
-	"lips":  {true, "You kiss %T on the lips.", "%N kisses %T on the lips.", "%N kisses you on the lips."},
-	"navel": {true, "You kiss %T on the navel.", "%N kisses %T on the navel.", "%N kisses you on the navel."},
-	"leg":   {true, "You kiss %T on the leg.", "%N kisses %T on the leg.", "%N kisses you on the leg."},
-	"knee":  {true, "You kiss %T on the knee.", "%N kisses %T on the knee.", "%N kisses you on the knee."},
-	"feet":  {true, "You kiss %T's feet.", "%N kisses %T's feet.", "%N kisses your feet."},
+	"head":  {false, i18n.T("You kiss %T on the head."), i18n.T("%N kisses %T on the head."), i18n.T("%N kisses you on the head.")},
+	"nose":  {false, i18n.T("You kiss %T on the nose."), i18n.T("%N kisses %T on the nose."), i18n.T("%N kisses you on the nose.")},
+	"ears":  {false, i18n.T("You kiss %T on the ears."), i18n.T("%N kisses %T on the ears."), i18n.T("%N kisses you on the ears.")},
+	"neck":  {false, i18n.T("You kiss %T on the neck."), i18n.T("%N kisses %T on the neck."), i18n.T("%N kisses you on the neck.")},
+	"chest": {false, i18n.T("You kiss %T on the chest."), i18n.T("%N kisses %T on the chest."), i18n.T("%N kisses you on the chest.")},
+	"hand":  {false, i18n.T("You kiss %T's hand."), i18n.T("%N kisses %T's hand."), i18n.T("%N kisses your hand.")},
+	"lips":  {true, i18n.T("You kiss %T on the lips."), i18n.T("%N kisses %T on the lips."), i18n.T("%N kisses you on the lips.")},
+	"navel": {true, i18n.T("You kiss %T on the navel."), i18n.T("%N kisses %T on the navel."), i18n.T("%N kisses you on the navel.")},
+	"leg":   {true, i18n.T("You kiss %T on the leg."), i18n.T("%N kisses %T on the leg."), i18n.T("%N kisses you on the leg.")},
+	"knee":  {true, i18n.T("You kiss %T on the knee."), i18n.T("%N kisses %T on the knee."), i18n.T("%N kisses you on the knee.")},
+	"feet":  {true, i18n.T("You kiss %T's feet."), i18n.T("%N kisses %T's feet."), i18n.T("%N kisses your feet.")},
 }
 
 // expandEmote replaces %N, %P, %O, %E, %T placeholders in emote strings.
@@ -273,8 +273,8 @@ func (e *GameEngine) processEmote(player *Player, verb string, args []string) *C
 		// Fallback generic
 		v := strings.ToLower(verb)
 		return &CommandResult{
-			Messages:      []string{fmt.Sprintf("You %s.", v)},
-			RoomBroadcast: []string{fmt.Sprintf("%s %ss.", player.FirstName, v)},
+			Messages:      []string{fmt.Sprintf(i18n.T("You %s."), v)},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s %ss."), player.FirstName, v)},
 		}
 	}
 
@@ -384,7 +384,7 @@ func (e *GameEngine) processEmote(player *Player, verb string, args []string) *C
 // "kiss <person> <bodypart>" — kiss on specific body part (some require submit)
 func (e *GameEngine) processKiss(player *Player, args []string) *CommandResult {
 	if len(args) == 0 {
-		return &CommandResult{Messages: []string{"You blow a kiss."}, RoomBroadcast: []string{fmt.Sprintf("%s blows a kiss.", player.FirstName)}}
+		return &CommandResult{Messages: []string{i18n.T("You blow a kiss.")}, RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s blows a kiss."), player.FirstName)}}
 	}
 
 	// Check if last arg is a body part
@@ -433,7 +433,7 @@ func (e *GameEngine) processKiss(player *Player, args []string) *CommandResult {
 	if bodyPart != "" {
 		bp := kissBodyParts[bodyPart]
 		if bp.requiresSubmit && !found.Submitting {
-			return &CommandResult{Messages: []string{fmt.Sprintf("%s is not allowing that.", displayTarget)}}
+			return &CommandResult{Messages: []string{fmt.Sprintf(i18n.T("%s is not allowing that."), displayTarget)}}
 		}
 		selfMsg := expandEmote(bp.selfMsg, player, displayTarget)
 		roomMsg := expandEmote(bp.roomMsg, player, displayTarget)
@@ -447,9 +447,9 @@ func (e *GameEngine) processKiss(player *Player, args []string) *CommandResult {
 	}
 
 	// Basic kiss (no body part)
-	selfMsg := fmt.Sprintf("You kiss %s.", displayTarget)
-	roomMsg := fmt.Sprintf("%s kisses %s.", player.FirstName, displayTarget)
-	targetMsg := fmt.Sprintf("%s kisses you.", player.FirstName)
+	selfMsg := fmt.Sprintf(i18n.T("You kiss %s."), displayTarget)
+	roomMsg := fmt.Sprintf(i18n.T("%s kisses %s."), player.FirstName, displayTarget)
+	targetMsg := fmt.Sprintf(i18n.T("%s kisses you."), player.FirstName)
 	return &CommandResult{
 		Messages:      []string{selfMsg},
 		RoomBroadcast: []string{roomMsg},
@@ -464,8 +464,8 @@ func (e *GameEngine) processKiss(player *Player, args []string) *CommandResult {
 func (e *GameEngine) processLick(player *Player, args []string) *CommandResult {
 	if len(args) == 0 {
 		return &CommandResult{
-			Messages:      []string{"You lick your lips."},
-			RoomBroadcast: []string{fmt.Sprintf("%s licks %s lips.", player.FirstName, player.Possessive())},
+			Messages:      []string{i18n.T("You lick your lips.")},
+			RoomBroadcast: []string{fmt.Sprintf(i18n.T("%s licks %s lips."), player.FirstName, player.Possessive())},
 		}
 	}
 
@@ -474,9 +474,9 @@ func (e *GameEngine) processLick(player *Player, args []string) *CommandResult {
 	if found != nil {
 		displayTarget := found.FirstName
 		if found.Submitting {
-			selfMsg := fmt.Sprintf("You lick %s all over their body.", displayTarget)
-			roomMsg := fmt.Sprintf("%s licks %s all over their body.", player.FirstName, displayTarget)
-			targetMsg := fmt.Sprintf("%s licks you all over your body.", player.FirstName)
+			selfMsg := fmt.Sprintf(i18n.T("You lick %s all over their body."), displayTarget)
+			roomMsg := fmt.Sprintf(i18n.T("%s licks %s all over their body."), player.FirstName, displayTarget)
+			targetMsg := fmt.Sprintf(i18n.T("%s licks you all over your body."), player.FirstName)
 			return &CommandResult{
 				Messages:      []string{selfMsg},
 				RoomBroadcast: []string{roomMsg},
@@ -484,9 +484,9 @@ func (e *GameEngine) processLick(player *Player, args []string) *CommandResult {
 				TargetMsg:     []string{targetMsg},
 			}
 		}
-		selfMsg := fmt.Sprintf("You kiss %s passionately.", displayTarget)
-		roomMsg := fmt.Sprintf("%s kisses %s passionately.", player.FirstName, displayTarget)
-		targetMsg := fmt.Sprintf("%s kisses you passionately.", player.FirstName)
+		selfMsg := fmt.Sprintf(i18n.T("You kiss %s passionately."), displayTarget)
+		roomMsg := fmt.Sprintf(i18n.T("%s kisses %s passionately."), player.FirstName, displayTarget)
+		targetMsg := fmt.Sprintf(i18n.T("%s kisses you passionately."), player.FirstName)
 		return &CommandResult{
 			Messages:      []string{selfMsg},
 			RoomBroadcast: []string{roomMsg},
