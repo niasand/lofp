@@ -11,6 +11,7 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -448,11 +449,12 @@ func (s *Service) RegisterWithPassword(ctx context.Context, email, password, dis
 
 	verifyToken := generateToken()
 	verifyCode := generateCode()
+	skipVerification := os.Getenv("SKIP_EMAIL_VERIFICATION") == "true"
 	account := Account{
 		Email:         email,
 		Name:          displayName,
 		PasswordHash:  hash,
-		EmailVerified: false,
+		EmailVerified: skipVerification,
 		VerifyToken:   verifyToken,
 		VerifyCode:    verifyCode,
 		VerifyExpiry:  time.Now().Add(24 * time.Hour),
